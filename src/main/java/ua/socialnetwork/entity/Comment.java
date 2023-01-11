@@ -1,26 +1,20 @@
 package ua.socialnetwork.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "post")
-public class Post {
-
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "comment_id")
     private int id;
-
-    @Column(name = "title")
-    private String title;
 
     @Column(name = "body")
     private String body;
@@ -37,12 +31,7 @@ public class Post {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
-    //here a multiple posts has 1 user, so @ManyToOne
-    @Column(name = "user_id")      //TODO decide what to do with this column(user_id)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+    @JoinColumn(name = "post_id",nullable = false)
+    private Post post;
 }
