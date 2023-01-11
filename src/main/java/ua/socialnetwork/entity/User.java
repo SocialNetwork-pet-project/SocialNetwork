@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -53,6 +54,12 @@ public class User {
 
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
+
+    //here we 1 user has multiple posts, so @OneToMany
+    @OneToMany(mappedBy = "user")
+    //TODO figure out what column to write here and in Post class, user field
+    //@Column(name = ??? )
+    private List<Post> posts;
 
 
 
