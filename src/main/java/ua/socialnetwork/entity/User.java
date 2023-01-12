@@ -44,7 +44,7 @@ public class User {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole role;
 
     @Column(name = "banned")
     private boolean banned;
@@ -60,6 +60,9 @@ public class User {
     //TODO figure out what column to write here and in Post class, user field
     //@Column(name = ??? )
     private List<Post> posts;
+
+    @OneToOne(mappedBy = "user")
+    private Account account;
 
 
 

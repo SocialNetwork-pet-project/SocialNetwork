@@ -1,6 +1,6 @@
 package ua.socialnetwork.entity;
 
-public enum Role {
+public enum UserRole {
     GUEST,
     USER,
     ADMIN
