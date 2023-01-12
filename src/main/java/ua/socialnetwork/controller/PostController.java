@@ -16,7 +16,7 @@ import ua.socialnetwork.service.PostService;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping({"/posts", "/"})
 @AllArgsConstructor
 @Slf4j
 public class PostController {
