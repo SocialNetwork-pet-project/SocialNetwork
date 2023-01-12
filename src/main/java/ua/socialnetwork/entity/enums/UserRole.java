@@ -1,4 +1,4 @@
-package ua.socialnetwork.entity;
+package ua.socialnetwork.entity.enums;
 
 public enum UserRole {
     GUEST,

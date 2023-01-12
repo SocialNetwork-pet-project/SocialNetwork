@@ -3,6 +3,7 @@ package ua.socialnetwork.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import ua.socialnetwork.entity.enums.AccountStatus;
 
 @Entity
 @Data

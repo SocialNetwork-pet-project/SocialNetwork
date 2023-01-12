@@ -3,6 +3,7 @@ package ua.socialnetwork.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.List;
