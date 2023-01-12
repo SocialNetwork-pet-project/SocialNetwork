@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.service.PostService;
@@ -25,7 +26,7 @@ public class PostController {
         return "feed";
     }
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     public String create(Model model){
         model.addAttribute("post", new Post());
 
