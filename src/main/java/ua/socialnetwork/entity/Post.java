@@ -41,8 +41,18 @@ public class Post {
     @Column(name = "user_id")      //TODO decide what to do with this column(user_id)
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user;   //owner ?? TODO
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", creationDate=" + creationDate +
+                ", user=" + user +
+                '}';
+    }
 }
