@@ -28,13 +28,13 @@ public class Friend {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User sender;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_id")
+//    private User sender;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User receiver;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_id")
+//    private User receiver;
 
 
 

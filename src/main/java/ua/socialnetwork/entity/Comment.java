@@ -31,6 +31,9 @@ public class Comment {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
+    @Column(name = "deletionDate")
+    private LocalDateTime deletionDate;
+
 
     @ManyToOne
     @JoinColumn(name = "post_id",nullable = false)

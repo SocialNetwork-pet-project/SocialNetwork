@@ -37,10 +37,13 @@ public class Post {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
+    @Column(name = "deletionDate")
+    private LocalDateTime deletionDate;
+
     //here a multiple posts has 1 user, so @ManyToOne
-    @Column(name = "user_id")      //TODO decide what to do with this column(user_id)
+  //  @Column(name = "user_id")      //TODO decide what to do with this column(user_id)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;   //owner ?? TODO
 
     @OneToMany(mappedBy = "post")
