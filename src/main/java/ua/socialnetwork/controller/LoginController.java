@@ -10,8 +10,9 @@ import ua.socialnetwork.service.UserService;
 public class LoginController {
 
 
+
     @GetMapping("/login")
-    public String login() {
+    public String two() {
 
         return "login";
     }

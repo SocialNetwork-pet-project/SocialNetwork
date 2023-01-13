@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Styled Login Form - UI/UX Tutorial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="/login-css.css">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <title>Login page</title>
 </head>
 <body>
-<form class="login-form" th:action="@{/login}" method="POST">
-
-  <div th:if="${param.error}">
-    <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-  </div>
-  <div th:if="${param.logout}">
-    <p class="text-warning">You have been logged out.</p>
-  </div>
-
-  <div class="login-form__logo-container">
-    <img class="login-form__logo" src="https://via.placeholder.com/350x150" alt="Logo">
-  </div>
-  <div class="login-form__content">
-    <div class="login-form__header">Login to your account</div>
-
-    <input class="login-form__input" type="text" name="dc_username" placeholder="Username">
-
-    <input class="login-form__input" type="password" name="dc_username" placeholder="Password">
-
-    <button class="login-form__button" type="submit">Login</button>
-
-    <div class="login-form__links">
-      <a class="login-form__link" th:href="@{/users/create}">Don`t have an account? Register now!</a>
+<div class="col-md-offset-2">
+  <h1>LogIn Page</h1>
+</div>
+<br>
+<br>
+<form class="form-horizontal" th:action="@{/login}" method="post">
+  <fieldset>
+    <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
+    <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="username">Username</label>
+      <div class="col-sm-8">
+        <input class="form-control" type="text" id="username" name="username" autofocus="autofocus" placeholder="Email" required/>
+      </div>
     </div>
 
-  </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="password">Password</label>
+      <div class="col-sm-8">
+        <input class="form-control" type="password" id="password" name="password" placeholder="Password" required/>
+        <br><br>
+        <input class="btn btn-info" type="submit" value="Login"/>
+        <br><br><br>
+        <p>Don't have an account? <a th:href="@{/users/create}">Register now!</a></p>
+      </div>
+    </div>
+  </fieldset>
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 </body>

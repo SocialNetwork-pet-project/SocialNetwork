@@ -20,26 +20,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests().requestMatchers("/posts").permitAll()
+                .csrf().disable()
+                .authorizeHttpRequests().requestMatchers("/posts")
+                .permitAll()
+                .requestMatchers("/two").permitAll()
                 .and()
+
                 .authorizeHttpRequests().anyRequest().authenticated()
                 .and()
+
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/posts")
                 .and()
+
+
+                //we dont have .deleteCookies() because logout function provides it automaticly
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutSuccessUrl("/login");
 
-//                .and()
-//                .logout();//ToDo logout implement later
+
 
         return http.build();
     }
+
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
