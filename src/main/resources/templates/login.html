@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Styled Login Form - UI/UX Tutorial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/login-css.css">
+</head>
+<body>
+<form class="login-form" th:action="@{/login}" method="POST">
+
+  <div th:if="${param.error}">
+    <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+  </div>
+  <div th:if="${param.logout}">
+    <p class="text-warning">You have been logged out.</p>
+  </div>
+
+  <div class="login-form__logo-container">
+    <img class="login-form__logo" src="https://via.placeholder.com/350x150" alt="Logo">
+  </div>
+  <div class="login-form__content">
+    <div class="login-form__header">Login to your account</div>
+
+    <input class="login-form__input" type="text" name="dc_username" placeholder="Username">
+
+    <input class="login-form__input" type="password" name="dc_username" placeholder="Password">
+
+    <button class="login-form__button" type="submit">Login</button>
+
+    <div class="login-form__links">
+      <a class="login-form__link" th:href="@{/users/create}">Don`t have an account? Register now!</a>
+    </div>
+
+  </div>
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
+</body>
+</html>
