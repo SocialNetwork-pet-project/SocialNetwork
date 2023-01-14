@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Integer> {
 
-    //Write own Query
+    //The correct one is SELECT u FROM User u WHERE u.username = :username
     @Query("""
     SELECT u FROM User u WHERE u.username = :username
     """)
-    Optional<User> findUserByUsername(String email);
+    Optional<User> findUserByUsername(String username);
 
 
 }
