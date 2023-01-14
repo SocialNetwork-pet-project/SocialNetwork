@@ -1,39 +1,122 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <title>Login page</title>
+  <title>Styled Login Form - UI/UX Tutorial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap');
+
+    body {
+      background: #009578;
+      margin: 15px;
+      margin-top: 50px;
+    }
+
+    .login-form,
+    .login-form * {
+      box-sizing: border-box;
+      font-family: 'Source Sans Pro';
+    }
+
+    .login-form {
+      max-width: 350px;
+      margin: 0 auto;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-form__logo-container {
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .login-form__logo {
+      display: block;
+      max-width: 125px;
+      margin: 0 auto;
+    }
+
+    .login-form__content {
+      padding: 30px;
+      background: #eeeeee;
+    }
+
+    .login-form__header {
+      margin-bottom: 15px;
+      text-align: center;
+      color: #333333;
+    }
+
+    .login-form__input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid #dddddd;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.5s;
+    }
+
+    .login-form__input:focus {
+      border-color: #009578;
+    }
+
+    .login-form__input::placeholder {
+      color: #aaaaaa;
+    }
+
+    .login-form__button {
+      padding: 10px;
+      color: #ffffff;
+      font-weight: bold;
+      background: #009578;
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-form__button:active {
+      background: #008067;
+    }
+
+    .login-form__links {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .login-form__link {
+      font-size: 0.9em;
+      color: #008067;
+      text-decoration: none;
+    }
+
+  </style>
 </head>
 <body>
-<div class="col-md-offset-2">
-  <h1>LogIn Page</h1>
-</div>
-<br>
-<br>
-<form class="form-horizontal" th:action="@{/login}" method="post">
-  <fieldset>
-    <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
-    <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="username">Username</label>
-      <div class="col-sm-8">
-        <input class="form-control" type="text" id="username" name="username" autofocus="autofocus" placeholder="Email" required/>
-      </div>
-    </div>
+<form class="login-form" th:action="@{/login}" method="post">
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="password">Password</label>
-      <div class="col-sm-8">
-        <input class="form-control" type="password" id="password" name="password" placeholder="Password" required/>
-        <br><br>
-        <input class="btn btn-info" type="submit" value="Login"/>
-        <br><br><br>
-        <p>Don't have an account? <a th:href="@{/users/create}">Register now!</a></p>
-      </div>
+  <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
+  <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
+
+  <div class="login-form__logo-container">
+    <img class="login-form__logo" src="https://via.placeholder.com/350x150" alt="Logo">
+  </div>
+  <div class="login-form__content">
+    <div class="login-form__header">Login to your account</div>
+
+    <input class="login-form__input" type="text" name="username" placeholder="Username">
+    <input class="login-form__input" type="password" name="password" placeholder="Password">
+
+    <button class="login-form__button" type="submit">Login</button>
+    <div class="login-form__links">
+      <a class="login-form__link" th:href="@{/users/create}">Don`t have an account? Sign up now!</a>
     </div>
-  </fieldset>
-  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  </div>
 </form>
 </body>
 </html>

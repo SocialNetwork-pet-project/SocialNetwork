@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests().requestMatchers("/posts")
                 .permitAll()
                 .requestMatchers("/two").permitAll()
+                .requestMatchers("/users/create").permitAll()
                 .and()
 
                 .authorizeHttpRequests().anyRequest().authenticated()
