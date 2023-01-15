@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/posts")
+                .defaultSuccessUrl("/posts", true)
                 .and()
 
 
@@ -50,10 +50,11 @@ public class SecurityConfig {
     }
 
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(7);
-//    }
+    //ToDo change later to BCyrpt
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
 
 
 

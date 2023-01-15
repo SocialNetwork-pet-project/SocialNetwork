@@ -1,6 +1,8 @@
 package ua.socialnetwork.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.repo.UserRepo;
@@ -9,8 +11,10 @@ import ua.socialnetwork.service.UserService;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    PasswordEncoder encoder;
     UserRepo userRepo;
 
     //ToDO implement validation and exception handler later
@@ -18,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
 
-
+        user.setPassword(encoder.encode(user.getPassword()));
         return userRepo.save(user);
 
     }

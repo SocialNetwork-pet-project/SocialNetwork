@@ -158,7 +158,7 @@
 <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-        <form th:action="@{/users/create}" th:object="${user}">
+        <form th:action="@{/users/create}" th:object="${user}" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">First Name</span>
@@ -167,6 +167,10 @@
                 <div class="input-box">
                     <span class="details">Last Name</span>
                     <input type="text" th:field="*{lastName}" placeholder="Enter your last name" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    <input type="text" th:field="*{username}" placeholder="Enter your username" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Email</span>

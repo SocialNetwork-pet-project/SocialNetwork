@@ -29,9 +29,9 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, Model model, BindingResult result){
+    public String create(@ModelAttribute("user") User user){
         //ToDo add actions with BindingResult later
         userService.create(user);
-        return "redirect:/posts";
+        return "redirect:/login";
     }
 }
