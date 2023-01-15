@@ -3,6 +3,7 @@ package ua.socialnetwork.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
@@ -41,7 +42,8 @@ public class User {
     private String bio;
 
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "employed")
     private boolean employed;
