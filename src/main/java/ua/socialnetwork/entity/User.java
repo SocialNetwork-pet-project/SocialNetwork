@@ -3,6 +3,7 @@ package ua.socialnetwork.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,9 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     private String password;
 
@@ -37,8 +41,9 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
-    @Column(name = "sex")
-    private String sex;
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "employed")
     private boolean employed;
