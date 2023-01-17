@@ -63,8 +63,6 @@ public class User {
 
     //here we 1 user has multiple posts, so @OneToMany
     @OneToMany(mappedBy = "user")
-    //TODO figure out what column to write here and in Post class, user field
-    //@Column(name = ??? )
     private List<Post> posts;
 
     @OneToOne(mappedBy = "user")

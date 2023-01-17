@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    PasswordEncoder encoder;
-    UserRepo userRepo;
+    private PasswordEncoder encoder;
+    private UserRepo userRepo;
 
     //ToDO implement validation and exception handler later
 
