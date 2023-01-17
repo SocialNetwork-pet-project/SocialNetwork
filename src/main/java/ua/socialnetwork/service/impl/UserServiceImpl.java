@@ -8,6 +8,7 @@ import ua.socialnetwork.entity.User;
 import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
 
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
         return userRepo.save(user);
 
     }
