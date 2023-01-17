@@ -70,6 +70,17 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Account account;
 
+    @OneToOne(mappedBy = "user")
+    private UserImage image;
+
+
+
+    public void addImageToUser(UserImage userImage){
+
+        userImage.setUser(this);
+        image = userImage; //?
+    }
+
 
 
 }

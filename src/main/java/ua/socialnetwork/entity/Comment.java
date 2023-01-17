@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 //@Data
 //@NoArgsConstructor
 @Table(name = "comment")
-public class tComment {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")

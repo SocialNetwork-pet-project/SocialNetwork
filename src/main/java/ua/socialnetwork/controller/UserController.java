@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.UserService;
 
@@ -29,9 +27,9 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user){
+    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
         //ToDo add actions with BindingResult later
-        userService.create(user);
+        userService.create(user, userImage);
         return "redirect:/login";
     }
 }
