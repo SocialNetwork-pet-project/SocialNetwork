@@ -27,6 +27,7 @@ public class PostController {
     public String getAll(Model model){
         model.addAttribute("posts", postService.getAll());
 
+
         return "feed";
     }
 

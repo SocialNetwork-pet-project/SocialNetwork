@@ -70,7 +70,7 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Account account;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserImage image;
 
 

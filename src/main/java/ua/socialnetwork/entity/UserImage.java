@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "imahes")
+@Table(name = "images")
 public class UserImage {
 
 
@@ -33,7 +33,7 @@ public class UserImage {
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

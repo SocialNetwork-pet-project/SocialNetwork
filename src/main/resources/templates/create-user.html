@@ -231,7 +231,7 @@
 <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-        <form th:action="@{/users/create}" th:object="${user}" method="post">
+        <form th:action="@{/users/create}" th:object="${user}" enctype="multipart/form-data" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">First Name</span>
@@ -280,11 +280,7 @@
                         </option>
                     </select>
                 </div>
-
                 <input type="file" name="userImage">
-
-
-
 
 
             </div>
