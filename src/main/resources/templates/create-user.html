@@ -19,8 +19,12 @@
             align-items: center;
             padding: 10px;
             /*background: linear-gradient(135deg, #71b7e6, #9b59b6);*/
+
+
             background: rgb(34,193,195);
             background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(45,253,48,1) 100%);
+
+
         }
         .container{
             max-width: 700px;
@@ -227,7 +231,7 @@
 <div class="container">
     <div class="title">Registration</div>
     <div class="content">
-        <form th:action="@{/users/create}" th:object="${user}" method="post">
+        <form th:action="@{/users/create}" th:object="${user}" enctype="multipart/form-data" method="post">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">First Name</span>
@@ -277,8 +281,7 @@
                         </option>
                     </select>
                 </div>
-
-
+                <input type="file" name="userImage">
 
 
             </div>

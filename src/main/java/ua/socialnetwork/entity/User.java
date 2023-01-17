@@ -68,6 +68,25 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Account account;
 
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    private UserImage image;
+
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true,
+
+            cascade = CascadeType.ALL)
+    private UserImage image;
+
+
+
+
+    public void addImageToUser(UserImage userImage){
+
+        userImage.setUser(this);
+        image = userImage; //?
+    }
+
 
 
 }
