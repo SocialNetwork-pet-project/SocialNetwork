@@ -4,6 +4,7 @@ package ua.socialnetwork.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Data
@@ -33,9 +34,15 @@ public class UserImage {
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
     @JoinColumn(name = "user_id")
     private User user;
+
+
+
+//    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//    private User user;
+
 
 
 

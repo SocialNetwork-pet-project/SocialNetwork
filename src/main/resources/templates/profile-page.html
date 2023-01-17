@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+  <p th:text="${user.getFirstName() + ' '+ user.getLastName()}"> FULL NAME</p>
+  <img th:src="@{|/images/${image.getId()}|}" height="60px"/><br><br>
+
+
+</body>
+</html>

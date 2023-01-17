@@ -22,7 +22,6 @@ public class UserController {
 
         model.addAttribute("user", new User());
 
-
         return "create-user";
     }
 
@@ -31,5 +30,16 @@ public class UserController {
         //ToDo add actions with BindingResult later
         userService.create(user, userImage);
         return "redirect:/login";
+    }
+
+
+    @GetMapping("/{username}")
+    public String getUser(@PathVariable("username") String username, Model model){
+        User user = userService.readByUsername(username);
+        model.addAttribute("user", user);
+        model.addAttribute("image", user.getImage());
+        return "profile-page";
+
+
     }
 }

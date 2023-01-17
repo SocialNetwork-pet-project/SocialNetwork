@@ -1,6 +1,7 @@
 package ua.socialnetwork.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     //ToDO implement validation and exception handler later
 
     @Override
+    @Transactional
     public User create(User user, MultipartFile userImage) {
         UserImage image;
 
@@ -75,6 +77,12 @@ public class UserServiceImpl implements UserService {
 
         return userRepo.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("User with id: " + id + "not found"));
+    }
+
+    @Override
+    public User readByUsername(String username) {
+        return userRepo.findUserByUsername(username).orElseThrow(() ->
+                new EntityNotFoundException("User with id: " + username + "not found"));
     }
 
     @Override
