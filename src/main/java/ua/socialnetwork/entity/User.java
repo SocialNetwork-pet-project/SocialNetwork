@@ -77,6 +77,7 @@ public class User {
 
             cascade = CascadeType.ALL)
     private UserImage image;
+    //ToDO set EAGER fetch
 
 
 
