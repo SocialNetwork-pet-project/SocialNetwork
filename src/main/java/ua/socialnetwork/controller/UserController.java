@@ -2,13 +2,17 @@ package ua.socialnetwork.controller;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.UserService;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/users")
@@ -32,6 +36,34 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/update/{user_id}")
+    public String update(@PathVariable("user_id") Integer user_id,  Model model){
+        User user = userService.readById(user_id);
+
+        model.addAttribute("user", user);
+
+        return "update-user";
+    }
+
+    @PostMapping("/update/{user_id}")
+    public String update(@PathVariable("user_id") Integer id, @ModelAttribute("user") User user){
+        userService.update(user);
+        user.setEditionDate(LocalDateTime.now());
+
+        return "redirect:/users/"+user.getUsername();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
@@ -42,4 +74,7 @@ public class UserController {
 
 
     }
+
+
+
 }

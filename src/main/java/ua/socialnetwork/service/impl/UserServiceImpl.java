@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
+import ua.socialnetwork.exception.NullEntityReferenceException;
 import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 
@@ -64,7 +65,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        return null;
+        if (user != null) {
+            readById(user.getId());
+            user.setPassword(encoder.encode(user.getPassword()));
+            return userRepo.save(user);
+        }
+        throw new NullEntityReferenceException("User cannot be 'null'");
     }
 
     @Override
