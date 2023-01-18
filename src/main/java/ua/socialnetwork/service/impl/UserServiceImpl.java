@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.DialectOverride;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return userRepo.save(user);
 
     }
+    @Override
     public User create(User user, MultipartFile userImage ) {
         UserImage image;
 

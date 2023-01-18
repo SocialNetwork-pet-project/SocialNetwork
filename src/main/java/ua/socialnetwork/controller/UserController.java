@@ -29,18 +29,19 @@ public class UserController {
         return "create-user";
     }
 
-    @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user){
-        //ToDo add actions with BindingResult later
-        userService.create(user);
-        return "redirect:/login";
-    }
 //    @PostMapping("/create")
-//    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
+//    public String create(@ModelAttribute("user") User user){
 //        //ToDo add actions with BindingResult later
-//        userService.create(user, userImage);
+//        userService.create(user);
 //        return "redirect:/login";
 //    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
+        //ToDo add actions with BindingResult later
+        userService.create(user, userImage);
+        return "redirect:/login";
+    }
 
     @GetMapping("/update/{user_id}")
     public String updateForm(@PathVariable("user_id") Integer user_id,  Model model){
@@ -71,9 +72,9 @@ public class UserController {
 
 
 
-    @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") Integer id, Model model){
-        User user = userService.readById(id);
+    @GetMapping("/{username}")
+    public String getUser(@PathVariable("username") String username, Model model){
+        User user = userService.readByUsername(username);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImage());
         return "profile-page";

@@ -990,12 +990,17 @@
         <div id="profile-banner-image">
             <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image">
         </div>
-        <div id="profile-d">
-            <div id="profile-pic">
-                <img th:src="@{|/images/${image.getId()}|}">
+
+        <div id="profile-d" >
+            <div id="profile-pic" >
+                <img th:if="${user.image != null}" th:src="@{|/images/${image.getId()}|}">
+                <img th:if="${user.image == null}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
             </div>
+<!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
             <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
+
         </div>
+
         <div id="black-grd"></div>
     </div>
     <div id="main-content">
