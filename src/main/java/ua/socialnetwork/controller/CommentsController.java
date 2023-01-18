@@ -18,7 +18,7 @@ public class CommentsController {
     private CommentServiceImpl commentService;
 
 
-    @GetMapping("/new")
+    @GetMapping("/add")
     public String createComment(Model model){
         model.addAttribute("comment", new Comment());
         return "create-comment";

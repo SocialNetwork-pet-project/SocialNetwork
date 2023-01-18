@@ -1,4 +1,4 @@
-package ua.socialnetwork.service;
+package ua.socialnetwork.service.impl;
 
 
 import lombok.AllArgsConstructor;
