@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.socialnetwork.Dto.CommentDto;
 import ua.socialnetwork.entity.Comment;
+import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.repo.CommentRepository;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,11 @@ public class CommentServiceImpl {
         comment.getId();
         comment.getPost();
 
+        return commentRepository.save(comment);
+    }
+
+//    @Override
+    public Comment create(Comment comment) {
         return commentRepository.save(comment);
     }
 }

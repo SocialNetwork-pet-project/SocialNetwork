@@ -2,12 +2,12 @@ package ua.socialnetwork.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ua.socialnetwork.Dto.CommentDto;
 import ua.socialnetwork.entity.Comment;
+import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.service.impl.CommentServiceImpl;
 
 @RestController
@@ -18,18 +18,21 @@ public class CommentsController {
     private CommentServiceImpl commentService;
 
 
-    //haven`t idea how to make return on HTML page
-    // improve like on screenshot
-//    @PostMapping("")
-//    public ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto) {
-////        System.out.println(commentDto);
-//        Comment comment = commentService.save(commentDto);
-//        return ResponseEntity.ok(comment);
-//    }
+    @GetMapping("/new")
+    public String createComment(Model model){
+        model.addAttribute("comment", new Comment());
+        return "create-comment";
+    }
 
+    @PostMapping("/add")
+    public String create(@ModelAttribute("post") Comment comment){
+        commentService.create(comment);
+        return "redirect:/posts";
+    }
 
-
-//new
-//    @PostMapping("/creating/comment")
-//    public String createComment(@RequestBody)
+    @PostMapping("/add")
+    public String createComment(@RequestBody CommentDto commentDto){
+        commentService.save(commentDto);
+        return "redirect:/posts";
+    }
 }

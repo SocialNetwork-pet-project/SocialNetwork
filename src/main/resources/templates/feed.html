@@ -20,7 +20,7 @@
             <th scope="col">Id</th>
             <th scope="col">Title</th>
             <th scope="col">Body</th>
-            <!--TODO  th scope="col" colspan="2">Operations</th-->
+            <th scope="col" colspan="2">Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +38,9 @@
 <!--            <td>-->
 <!--                <a th:href="@{|/users/${user.id}/delete|}">Remove</a>-->
 <!--            </td>-->
+                        <td>
+                            <a class="btn btn-default" th:href="@{|/comment/add|}">Add new comment</a>
+                        </td>
         </tr>
     </table>
 <!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
