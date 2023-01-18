@@ -49,13 +49,13 @@ public class UserController {
 
         model.addAttribute("user", user);
 
-        return "update-user";
+        return "update";
     }
 
     @PostMapping("/update")
     public String update(User user){
         userService.create(user);
-//        user.setEditionDate(LocalDateTime.now());
+        user.setEditionDate(LocalDateTime.now());
 
         return "redirect:/users/"+user.getUsername();
     }

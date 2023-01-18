@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     //ToDO implement validation and exception handler later
 
     @Override
-
     public User create(User user ) {
 
         user.setPassword(encoder.encode(user.getPassword()));
@@ -69,12 +68,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if (user != null) {
-            readById(user.getId());
-            user.setPassword(encoder.encode(user.getPassword()));
-            return userRepo.save(user);
-        }
-        throw new NullEntityReferenceException("User cannot be 'null'");
+        User oldUser = readById(user.getId());
+        user.setId(oldUser.getId());
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setEditionDate(LocalDateTime.now());
+        return userRepo.save(user);
     }
 
     @Override

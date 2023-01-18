@@ -245,8 +245,9 @@
 <div class="container">
   <div class="title">Registration</div>
   <div class="content">
-    <form th:action="@{/users/create}" th:object="${user}" enctype="multipart/form-data" method="post">
+    <form th:action="@{/users/update}" th:object="${user}" enctype="multipart/form-data" method="POST">
       <div class="user-details">
+        <input hidden type="number" th:field="*{id}" id="id" th:value="*{id}"/>
         <div class="input-box">
           <span class="details">First Name</span>
           <input type="text" th:field="*{firstName}" placeholder="Enter your first name" required>
@@ -275,7 +276,6 @@
           <span class="details">Password</span>
           <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
         </div>
-        <!--                ToDo confirm password-->
         <div class="input-box">
           <span class="details">Confirm Password</span>
           <input type="password" id="confirm_password" placeholder="Confirm your password" required>
@@ -295,7 +295,8 @@
             </option>
           </select>
         </div>
-        <input type="file" name="userImage">
+
+        <input  type="file" name="userImage">
 
         <!--                <div class="input-box">-->
         <!--                    <span class="details">Profile photo</span>-->
@@ -308,7 +309,7 @@
 
       </div>
       <div class="button">
-        <input type="submit" value="Create">
+        <input type="submit">
       </div>
     </form>
   </div>
