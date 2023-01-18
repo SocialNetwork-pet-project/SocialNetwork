@@ -973,7 +973,14 @@
             }
             /* Footer finished */
 
+
+
+
+
+
+
         </style>
+
         <div class="tb">
 <!--            todo upload own logo-->
             <div class="td" id="logo">
@@ -981,9 +988,11 @@
             </div>
             <div class="td" id="search-form">
                 <form method="get" action="#">
-                    <input type="text" placeholder="Search Facebook">
+                    <input type="text" placeholder="Search">
                     <button type="submit"><i class="material-icons">search</i></button>
                 </form>
+
+        </div>
         </div>
     </header>
     <div id="profile-upper">
@@ -1000,6 +1009,8 @@
             <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
 
         </div>
+<!--        buttons add friend, write message -->
+
 
         <div id="black-grd"></div>
     </div>
@@ -1009,18 +1020,16 @@
                 <div class="l-cnt">
                     <div class="cnt-label">
                         <i class="l-i" id="l-i-i"></i>
-                        <span>Bio</span>
-                        <div class="lb-action"><i class="material-icons">edit</i></div>
+                        <span th:text="${user.getBio()}"></span>
                     </div>
                     <div id="i-box">
 <!--                        <div id="intro-line">Front-end Enginee/r</div>-->
-                        <div id="u-occ" th:text="${user.getBio()}"></div>
+                        <div id="u-occ"></div>
                     </div>
                 </div>
                 <div id="t-box">
 <!--                    ToDo add own pages here -->
                     <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Advertising</a> <a href="#">Ad Choices</a> <a href="#">Cookies</a> <span id="t-more">More<i class="material-icons">arrow_drop_down</i></span>
-                    <div id="cpy-nt">Facebook &copy; <span id="curr-year"></span></div>
                 </div>
             </div>
             <div class="td" id="m-col">

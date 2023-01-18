@@ -2,11 +2,8 @@ package ua.socialnetwork.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
@@ -49,7 +46,7 @@ public class UserController {
 
         model.addAttribute("user", user);
 
-        return "update";
+        return "update-user";
     }
 
     @PostMapping("/update")
