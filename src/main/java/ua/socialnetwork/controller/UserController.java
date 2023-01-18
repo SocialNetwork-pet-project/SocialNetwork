@@ -37,7 +37,7 @@ public class UserController {
 //    }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage){
         //ToDo add actions with BindingResult later
         userService.create(user, userImage);
         return "redirect:/login";
@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(User user){
-        userService.create(user);
+    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
+        userService.create(user, userImage);
         user.setEditionDate(LocalDateTime.now());
 
         return "redirect:/users/"+user.getUsername();
