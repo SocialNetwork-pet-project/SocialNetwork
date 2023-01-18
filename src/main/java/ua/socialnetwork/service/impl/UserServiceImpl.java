@@ -31,20 +31,22 @@ public class UserServiceImpl implements UserService {
     //ToDO implement validation and exception handler later
 
     @Override
-    @Transactional
-    public User create(User user, MultipartFile userImage) {
-        UserImage image;
 
+    public User create(User user ) {
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
+
+    }
+    public User create(User user, MultipartFile userImage ) {
+        UserImage image;
 
         if(userImage.getSize() != 0){
             image = toImageEntity(userImage);
             user.addImageToUser(image);
         }
-
-
         log.info("Added image: " + userImage.getName());
-
-
 
         user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());

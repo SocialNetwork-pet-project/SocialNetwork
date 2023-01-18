@@ -30,14 +30,20 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
+    public String create(@ModelAttribute("user") User user){
         //ToDo add actions with BindingResult later
-        userService.create(user, userImage);
+        userService.create(user);
         return "redirect:/login";
     }
+//    @PostMapping("/create")
+//    public String create(@ModelAttribute("user") User user, @RequestParam("userImage")MultipartFile userImage){
+//        //ToDo add actions with BindingResult later
+//        userService.create(user, userImage);
+//        return "redirect:/login";
+//    }
 
     @GetMapping("/update/{user_id}")
-    public String update(@PathVariable("user_id") Integer user_id,  Model model){
+    public String updateForm(@PathVariable("user_id") Integer user_id,  Model model){
         User user = userService.readById(user_id);
 
         model.addAttribute("user", user);
@@ -45,10 +51,10 @@ public class UserController {
         return "update-user";
     }
 
-    @PostMapping("/update/{user_id}")
-    public String update(@PathVariable("user_id") Integer id, @ModelAttribute("user") User user){
-        userService.update(user);
-        user.setEditionDate(LocalDateTime.now());
+    @PostMapping("/update")
+    public String update(User user){
+        userService.create(user);
+//        user.setEditionDate(LocalDateTime.now());
 
         return "redirect:/users/"+user.getUsername();
     }
@@ -65,9 +71,9 @@ public class UserController {
 
 
 
-    @GetMapping("/{username}")
-    public String getUser(@PathVariable("username") String username, Model model){
-        User user = userService.readByUsername(username);
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable("id") Integer id, Model model){
+        User user = userService.readById(id);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImage());
         return "profile-page";

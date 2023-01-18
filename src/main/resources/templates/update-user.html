@@ -240,67 +240,49 @@
 </head>
 <body>
 <!--enctype="multipart/form-data" is used to upload user-->
-<form th:action="@{|/users/update/${user.id}|}"  th:object="${user}" enctype="multipart/form-data" method="post">
+<form th:action="@{/users/update}" enctype="multipart/form-data"  th:object="${user}" method="POST">
     <div class="user-details">
+        <input readonly type="number" th:field="*{id}" id="id" th:value="*{id}"/>
         <div class="input-box">
             <span class="details">First Name</span>
-            <input type="text" th:field="*{firstName}" th:value="${user.getFirstName()}" placeholder="Enter your first name" required>
+            <input type="text" th:field="*{firstName}"  placeholder="Enter your first name" required>
         </div>
         <div class="input-box">
             <span class="details">Last Name</span>
-            <input type="text" th:field="*{lastName}" th:value="${user.getLastName()}" placeholder="Enter your last name" required>
+            <input type="text" th:field="*{lastName}" placeholder="Enter your last name" required>
         </div>
         <div class="input-box">
             <span class="details">Username</span>
-            <input type="text" th:field="*{username}" th:value="${user.getUsername()}" placeholder="Enter your username" required>
+            <input type="text" th:field="*{username}"  placeholder="Enter your username" required>
         </div>
         <div class="input-box">
             <span class="details">Email</span>
-            <input type="text" th:field="*{email}" th:value="${user.getEmail()}" placeholder="Enter your email" required>
+            <input type="text" th:field="*{email}" placeholder="Enter your email" required>
         </div>
-<!--        ToDo change later field age to birthDate. and display it as age by formula and serialization-->
-        <div class="input-box">
-            <span class="details">Age</span>
-            <input type="number" th:field="*{age}" th:value="${user.getAge()}" placeholder="Enter your age" required>
-        </div>
-        <div class="input-box">
-            <span class="details">Employed</span>
-            <input type="checkbox" th:field="*{employed} " th:value="${user.employed}">
-        </div>
+
         <div class="input-box">
             <span class="details">Password</span>
-            <input type="password" th:field="*{password}" th:value="${user.getPassword()}" placeholder="Enter your password" id="password" required>
+            <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
         </div>
         <div class="input-box">
             <span class="details">Confirm Password</span>
             <input type="password" id="confirm_password" placeholder="Confirm your password" required>
         </div>
     </div>
-    <div class="gender-details">
-        <input type="radio" name="gender" id="dot-1">
-        <input type="radio" name="gender" id="dot-2">
-        <input type="radio" name="gender" id="dot-3">
-        <div class="select">
-            <span class="details">Gender</span>
-            <select name="format" id="format" th:field="*{gender}" >
+<!--        <input type="file" name="image">-->
 
-                <option th:each="gender : ${T(ua.socialnetwork.entity.enums.Gender).values()}"
-                        th:value="${user.getGender()}" selected="selected"
-                        th:text="${gender}">
-                </option>
-            </select>
-        </div>
-        <label class="file">
-            <span class="details">Profile photo</span>
-            <input type="file" id="file" aria-label="File browser example">
-            <span class="file-custom"></span>
-        </label>
-
+<!--        <label class="file">-->
+<!--            <span class="details">Profile photo</span>-->
+<!--            <input type="file" id="file" aria-label="File browser example">-->
+<!--            <span class="file-custom"></span>-->
+<!--        </label>-->
 
     </div>
+
     <div class="button">
-        <input type="submit" value="Create">
+        <input type="submit">
     </div>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 </div>
 </div>
