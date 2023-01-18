@@ -63,12 +63,30 @@ public class User {
 
     //here we 1 user has multiple posts, so @OneToMany
     @OneToMany(mappedBy = "user")
-    //TODO figure out what column to write here and in Post class, user field
-    //@Column(name = ??? )
     private List<Post> posts;
 
     @OneToOne(mappedBy = "user")
     private Account account;
+
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    private UserImage image;
+
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true,
+
+            cascade = CascadeType.ALL)
+    private UserImage image;
+    //ToDO set EAGER fetch
+
+
+
+
+    public void addImageToUser(UserImage userImage){
+
+        userImage.setUser(this);
+        image = userImage; //?
+    }
 
 
 

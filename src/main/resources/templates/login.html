@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,11 +112,19 @@
     <input class="login-form__input" type="text" name="username" placeholder="Username">
     <input class="login-form__input" type="password" name="password" placeholder="Password">
 
+    <p>
+      <label for="remember"> Remember me</label>
+      <input type="checkbox" name="remember" id="remember" />
+    </p>
+
     <button class="login-form__button" type="submit">Login</button>
     <div class="login-form__links">
       <a class="login-form__link" th:href="@{/users/create}">Don`t have an account? Sign up now!</a>
     </div>
   </div>
+  <input type="hidden"
+         name="${_csrf.parameterName}"
+         value="${_csrf.token}"/>
 </form>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
@@ -32,6 +32,8 @@
             <td th:text="${post.body}"/>
             <td th:text="${post.creationDate}"/>
 
+
+
 <!--            <td>-->
 <!--                <a th:href="@{|/users/${user.id}/update|}">Edit</a>-->
 <!--            </td>-->
@@ -44,6 +46,9 @@
         </tr>
     </table>
 <!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+    <a th:href="@{|/users/${#authentication.principal.username}|}">UUSER</a>
+
+
 </div>
 
 </body>
