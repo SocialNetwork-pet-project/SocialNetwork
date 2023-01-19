@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.entity.UserBackgroundImage;
 import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.exception.NullEntityReferenceException;
 import ua.socialnetwork.repo.UserRepo;
@@ -54,6 +55,26 @@ public class UserServiceImpl implements UserService {
         return userRepo.save(user);
 
     }
+    @Override
+    public User create(User user, MultipartFile userImage, MultipartFile imageBackground ) {
+        UserImage image;
+        UserBackgroundImage image2;
+
+        if(userImage.getSize() != 0){
+            image = toImageEntity(userImage);
+            user.addImageToUser(image);
+        }
+        if(imageBackground.getSize() != 0){
+            image2 = toBackgroundImageEntity(imageBackground);
+            user.addImageToUser(image2);
+        }
+        log.info("Added image: " + userImage.getName());
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
+
+    }
 
     @SneakyThrows
     private UserImage toImageEntity(MultipartFile userImage){
@@ -63,6 +84,18 @@ public class UserServiceImpl implements UserService {
         image.setContentType(userImage.getContentType());
         image.setSize(userImage.getSize());
         image.setBytes(userImage.getBytes());
+        return image;
+    }
+
+    //ToDO make 1 method to not duplicate code
+    @SneakyThrows
+    private UserBackgroundImage toBackgroundImageEntity(MultipartFile background){
+        UserBackgroundImage image = new UserBackgroundImage();
+        image.setName(background.getName());
+        image.setOriginalFileName(background.getOriginalFilename());
+        image.setContentType(background.getContentType());
+        image.setSize(background.getSize());
+        image.setBytes(background.getBytes());
         return image;
     }
 

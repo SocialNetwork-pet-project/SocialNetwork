@@ -9,6 +9,7 @@ public interface UserService {
     //User create(User user, MultipartFile userImage);
     User create(User user);
     User create(User user, MultipartFile userImage);
+    User create(User user, MultipartFile userImage, MultipartFile imageBackground );
     User update(User user);
     User delete(int id);
     User readById(int id);

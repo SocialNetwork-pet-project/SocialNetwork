@@ -34,9 +34,10 @@ public class UserController {
 //    }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage){
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
+                         @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground){
         //ToDo add actions with BindingResult later
-        userService.create(user, userImage);
+        userService.create(user, userImage, imageBackground);
         return "redirect:/login";
     }
 
@@ -50,8 +51,9 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
-        userService.create(user, userImage);
+    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
+                         @RequestParam(value = "ImageBackground", required = false) MultipartFile imageBackground){
+        userService.create(user, userImage, imageBackground);
         user.setEditionDate(LocalDateTime.now());
 
         return "redirect:/users/"+user.getUsername();
@@ -74,6 +76,7 @@ public class UserController {
         User user = userService.readByUsername(username);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImage());
+        model.addAttribute("imageBackground", user.getImageBackground());
         return "profile-page";
 
 

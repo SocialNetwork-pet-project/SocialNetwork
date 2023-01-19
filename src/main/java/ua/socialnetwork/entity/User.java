@@ -78,6 +78,12 @@ public class User {
             cascade = CascadeType.ALL)
     private UserImage image;
     //ToDO set EAGER fetch
+    @OneToOne(
+            mappedBy = "user",
+            orphanRemoval = true,
+
+            cascade = CascadeType.ALL)
+    private UserBackgroundImage imageBackground;
 
 
 
@@ -86,6 +92,12 @@ public class User {
 
         userImage.setUser(this);
         image = userImage; //?
+    }
+    public void addImageToUser(UserBackgroundImage background){
+
+
+        background.setUser(this);
+        imageBackground = background; //?
     }
 
 
