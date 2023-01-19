@@ -1,12 +1,14 @@
 package ua.socialnetwork.controller;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.service.UserService;
 
 import java.time.LocalDateTime;
@@ -77,6 +79,17 @@ public class UserController {
         User user = userService.readByUsername(username);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
+
+
+        String profileCond = user.getImages().stream().filter(userImage -> "userImage".equals(userImage.getName())).
+                map(UserImage::getName).findAny().orElseThrow();
+
+        String backGroundCond = user.getImages().stream().filter(userImage -> "imageBackground".equals(userImage.getName())).
+                map(UserImage::getName).findAny().orElseThrow();
+
+
+        model.addAttribute("profileCond", profileCond);
+        model.addAttribute("backGroundCond", backGroundCond);
         return "profile-page";
 
 
