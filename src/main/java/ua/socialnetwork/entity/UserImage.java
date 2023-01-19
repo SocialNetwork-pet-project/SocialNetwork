@@ -34,14 +34,14 @@ public class UserImage {
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
-    @JoinColumn(name = "user_id")
-    private User user;
-
-
-
-//    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
+//    @JoinColumn(name = "user_id")
 //    private User user;
+
+
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
 
 
 

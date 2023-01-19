@@ -997,13 +997,14 @@
     </header>
     <div id="profile-upper">
         <div id="profile-banner-image">
-            <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image">
+            <img th:if="${user.images.get(1) != null}" th:src="@{|/images/${image.get(1).getId()}|}">
+            <img th:if="${user.images.get(1) == null}" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5W2qWDdF7ztjYI9lL_odxd3LY3uv8BOI9Ug&usqp=CAU">
         </div>
 
         <div id="profile-d" >
             <div id="profile-pic" >
-                <img th:if="${user.image != null}" th:src="@{|/images/${image.getId()}|}">
-                <img th:if="${user.image == null}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                <img th:if="${user.images.get(0) != null}" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.get(0) == null}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
             </div>
 <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
             <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
@@ -1062,9 +1063,11 @@
                 </div>
             </div>
 
+
+
         </div>
     </div>
-ac    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">
+<!--    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">-->
 
     <a th:href="@{|/users/update/${user.getId()}|}">Update user</a>
     <script src="https://use.fontawesome.com/fe459689b4.js"></script>

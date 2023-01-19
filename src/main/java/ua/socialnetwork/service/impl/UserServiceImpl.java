@@ -32,43 +32,52 @@ public class UserServiceImpl implements UserService {
 
     //ToDO implement validation and exception handler later
 
-    @Override
-    public User create(User user ) {
+//    @Override
+//    public User create(User user ) {
+//
+//        user.setPassword(encoder.encode(user.getPassword()));
+//        user.setCreationDate(LocalDateTime.now());
+//        return userRepo.save(user);
+//
+//    }
+//
+//    @Override
+//    public User create(User user, MultipartFile userImage) {
+//        return null;
+//    }
 
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
-
-    }
-    @Override
-    public User create(User user, MultipartFile userImage ) {
-        UserImage image;
-
-        if(userImage.getSize() != 0){
-            image = toImageEntity(userImage);
-            user.addImageToUser(image);
-        }
-        log.info("Added image: " + userImage.getName());
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
-
-    }
+    //    @Override
+//    public User create(User user, MultipartFile userImage ) {
+//        UserImage image;
+//
+//        if(userImage.getSize() != 0){
+//            image = toImageEntity(userImage);
+//            user.addImageToUser(image);
+//        }
+//        log.info("Added image: " + userImage.getName());
+//
+//        user.setPassword(encoder.encode(user.getPassword()));
+//        user.setCreationDate(LocalDateTime.now());
+//        return userRepo.save(user);
+//
+//    }
     @Override
     public User create(User user, MultipartFile userImage, MultipartFile imageBackground ) {
+
         UserImage image;
-        UserBackgroundImage image2;
+        UserImage image2;
 
         if(userImage.getSize() != 0){
             image = toImageEntity(userImage);
             user.addImageToUser(image);
         }
-        if(imageBackground.getSize() != 0){
-            image2 = toBackgroundImageEntity(imageBackground);
+        if(userImage.getSize() != 0){
+            image2 = toImageEntity(imageBackground);
             user.addImageToUser(image2);
         }
+
         log.info("Added image: " + userImage.getName());
+        log.info("Added background image: " + imageBackground.getName());
 
         user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());

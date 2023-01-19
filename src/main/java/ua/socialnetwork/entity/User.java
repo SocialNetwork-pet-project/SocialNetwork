@@ -7,6 +7,9 @@ import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -71,33 +74,42 @@ public class User {
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 //    private UserImage image;
 
-    @OneToOne(
-            mappedBy = "user",
-            orphanRemoval = true,
+//    @OneToOne(
+//            mappedBy = "user",
+//            orphanRemoval = true,
+//
+//            cascade = CascadeType.ALL)
+//    private UserImage image;
+//    //ToDO set EAGER fetch
+//    @OneToOne(
+//            mappedBy = "user",
+//            orphanRemoval = true,
+//
+//            cascade = CascadeType.ALL)
+//    private UserBackgroundImage imageBackground;
 
-            cascade = CascadeType.ALL)
-    private UserImage image;
-    //ToDO set EAGER fetch
-    @OneToOne(
-            mappedBy = "user",
-            orphanRemoval = true,
-
-            cascade = CascadeType.ALL)
-    private UserBackgroundImage imageBackground;
-
-
-
-
-    public void addImageToUser(UserImage userImage){
-
-        userImage.setUser(this);
-        image = userImage; //?
-    }
-    public void addImageToUser(UserBackgroundImage background){
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private List<UserImage> images = new ArrayList<>();
 
 
-        background.setUser(this);
-        imageBackground = background; //?
+
+
+//    public void addImageToUser(UserImage userImage){
+//
+//        userImage.setUser(this);
+//        image = userImage; //?
+//    }
+//    public void addBackgroundImageToUser(UserBackgroundImage background){
+//
+//
+//        background.setUser(this);
+//        imageBackground = background; //?
+//    }
+
+    public void addImageToUser(UserImage image) {
+        image.setUser(this);
+        images.add(image);
     }
 
 

@@ -19,7 +19,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/create")
-    public String create(Model model){
+     public String create(Model model){
 
         model.addAttribute("user", new User());
 
@@ -53,6 +53,7 @@ public class UserController {
     @PostMapping("/update")
     public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
                          @RequestParam(value = "ImageBackground", required = false) MultipartFile imageBackground){
+
         userService.create(user, userImage, imageBackground);
         user.setEditionDate(LocalDateTime.now());
 
@@ -75,8 +76,7 @@ public class UserController {
     public String getUser(@PathVariable("username") String username, Model model){
         User user = userService.readByUsername(username);
         model.addAttribute("user", user);
-        model.addAttribute("image", user.getImage());
-        model.addAttribute("imageBackground", user.getImageBackground());
+        model.addAttribute("image", user.getImages());
         return "profile-page";
 
 
