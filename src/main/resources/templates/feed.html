@@ -33,20 +33,13 @@
             <td th:text="${post.creationDate}"/>
 
 
-
-<!--            <td>-->
-<!--                <a th:href="@{|/users/${user.id}/update|}">Edit</a>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <a th:href="@{|/users/${user.id}/delete|}">Remove</a>-->
-<!--            </td>-->
                         <td>
                             <a class="btn btn-default" th:href="@{|/comment/add|}">Add new comment</a>
                         </td>
         </tr>
     </table>
-<!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-<!--    <a th:href="@{|/users/${#authentication.principal.username}|}">UUSER</a>-->
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <a th:href="@{|/users/${#authentication.principal.username}|}">USER</a>
 
 
 </div>

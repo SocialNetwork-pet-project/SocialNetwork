@@ -264,71 +264,17 @@
                     <input type="text" th:field="*{email}" placeholder="Enter your email" required>
                 </div>
 
-
-<!--                <div class="input-box">-->
-<!--                    <span class="details">Age</span>-->
-<!--                    <input type="number" th:field="*{age}" placeholder="Enter your age" required>-->
-<!--                </div>-->
-<!--                <div class="input-box">-->
-<!--                    <span class="details">Employed</span>-->
-<!--                    <input type="checkbox" th:field="*{employed}">-->
-<!--                </div>-->
-
-
-<!--                <div class="input-box">-->
-<!--                    <span class="details">Password</span>-->
-<!--                    <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>-->
-<!--                </div>-->
-
-<!--                <div class="input-box">-->
-<!--                    <span class="details">Confirm Password</span>-->
-<!--                    <input type="password" id="confirm_password" placeholder="Confirm your password" required>-->
-<!--                </div>-->
-
-
             </div>
-<!--            <div class="gender-details">-->
-<!--                <input type="radio" name="gender" id="dot-1">-->
-<!--                <input type="radio" name="gender" id="dot-2">-->
-<!--                <input type="radio" name="gender" id="dot-3">-->
-<!--                <div class="select">-->
-<!--                    <span class="details">Gender</span>-->
-<!--                    <select name="format" id="format" th:field="*{gender}" >-->
 
-<!--                        <option th:each="gender : ${T(ua.socialnetwork.entity.enums.Gender).values()}"-->
-<!--                                th:value="${gender}"-->
-<!--                                th:text="${gender}">-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <input type="file" name="userImage">-->
-<!--            <input type="file" name="imageBackground">-->
 
             <div class="button">
-                <input type="submit" value="Create" >
+                <input type="submit" value="Next" >
             </div>
-            <a th:href="@{|/users/create/continue/${user.getId()}|}" th:text="'Continue registration'"></a>
+
         </form>
     </div>
 </div>
 
-<!--<script>-->
-<!--    var password = document.getElementById("password")-->
-<!--        , confirm_password = document.getElementById("confirm_password");-->
-
-<!--    function validatePassword(){-->
-<!--        if(password.value != confirm_password.value) {-->
-<!--            confirm_password.setCustomValidity("Passwords Don't Match");-->
-<!--        } else {-->
-<!--            confirm_password.setCustomValidity('');-->
-<!--        }-->
-<!--    }-->
-
-<!--    password.onchange = validatePassword;-->
-<!--    confirm_password.onkeyup = validatePassword;-->
-<!--</script>-->
 
 </body>
 </html>

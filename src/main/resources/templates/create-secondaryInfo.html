@@ -260,7 +260,7 @@
         </div>
         <div class="input-box">
           <span class="details">Bio</span>
-          <input type="checkbox" th:field="*{bio}">
+          <input type="text" th:field="*{bio}">
         </div>
 
 
@@ -305,12 +305,12 @@
         <input type="file" name="imageBackground">
       </div>
 
-
+      <a th:href="@{/posts}" th:text="'Skip'"></a>
 
 
 
       <div class="button">
-        <input type="submit" value="Edit">
+        <input type="submit" value="Create">
       </div>
     </form>
   </div>

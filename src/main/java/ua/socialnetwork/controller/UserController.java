@@ -1,16 +1,13 @@
 package ua.socialnetwork.controller;
 
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
-import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.service.UserService;
 
 import java.time.LocalDateTime;
@@ -117,6 +114,11 @@ public class UserController {
         return "profile-page";
 
 
+    }
+
+    @GetMapping("/get/a")
+    public String a(){
+        return "login-page";
     }
 
 
