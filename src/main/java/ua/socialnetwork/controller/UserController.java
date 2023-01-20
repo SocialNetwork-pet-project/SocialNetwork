@@ -4,6 +4,7 @@ package ua.socialnetwork.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/users")
 @AllArgsConstructor
+@Slf4j
 public class UserController {
 
     UserService userService;
@@ -29,24 +31,12 @@ public class UserController {
         return "create-user";
     }
 
-//    @PostMapping("/create")
-//    public String create(@ModelAttribute("user") User user){
-//        //ToDo add actions with BindingResult later
-//        userService.create(user);
-//        return "redirect:/login";
-//    }
-
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
-                         @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground){
+    public String create(@ModelAttribute("user") User user){
         //ToDo add actions with BindingResult later
 
-        if(imageBackground.getSize() == 0 || imageBackground.getOriginalFilename() == null || imageBackground.isEmpty()){
-            userService.update(user, userImage);
-            return "redirect:/login";
-        }
-        userService.create(user, userImage, imageBackground);
-        return "redirect:/login";
+        userService.create(user);
+        return "redirect:/users/create/continue/" + user.getId();
     }
 
     @GetMapping("/update/{user_id}")
@@ -57,13 +47,8 @@ public class UserController {
 
         return "update-user";
     }
-
     @PostMapping("/update")
     public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
-
-
-
-
 
 
         userService.update(user, userImage);
@@ -71,6 +56,44 @@ public class UserController {
 
         return "redirect:/users/"+user.getUsername();
     }
+
+
+    @GetMapping("/create/continue/{user_id}")
+    public String createSecondaryInfoForm(@PathVariable("user_id") Integer user_id,   Model model){
+        User user = userService.readById(user_id);
+
+        model.addAttribute("user", user);
+
+        return "create-secondaryInfo";
+    }
+
+    @PostMapping("/create/continue/{user_id}")
+    public String createSecondaryInfo(@PathVariable("user_id") Integer id,
+                                      User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
+                                      @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground){
+
+
+        User oldUser = userService.readById(id);
+
+        user.setFirstName(oldUser.getFirstName());
+        user.setLastName(oldUser.getLastName());
+        user.setUsername(oldUser.getUsername());
+        user.setEmail(oldUser.getEmail());
+
+
+        if(imageBackground.getSize() == 0 || imageBackground.getOriginalFilename() == null || imageBackground.isEmpty()){
+            userService.update(user, userImage);
+            return "redirect:/login";
+        }
+
+
+        userService.update(user, userImage, imageBackground);
+
+
+        return "redirect:/login";
+    }
+
+
 
 
 
@@ -96,17 +119,6 @@ public class UserController {
 
     }
 
-
-    @SneakyThrows
-    private UserImage toImageEntity(MultipartFile userImage){
-        UserImage image = new UserImage();
-        image.setName(userImage.getName());
-        image.setOriginalFileName(userImage.getOriginalFilename());
-        image.setContentType(userImage.getContentType());
-        image.setSize(userImage.getSize());
-        image.setBytes(userImage.getBytes());
-        return image;
-    }
 
 
 

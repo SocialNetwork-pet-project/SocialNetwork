@@ -34,19 +34,18 @@ public class UserServiceImpl implements UserService {
 
     //ToDO implement validation and exception handler later
 
-//    @Override
-//    public User create(User user ) {
-//
-//        user.setPassword(encoder.encode(user.getPassword()));
-//        user.setCreationDate(LocalDateTime.now());
-//        return userRepo.save(user);
-//
-//    }
-//
-//    @Override
-//    public User create(User user, MultipartFile userImage) {
-//        return null;
-//    }
+    @Override
+    public User create(User user ) {
+
+        if(user.getPassword() != null) {
+            user.setPassword(encoder.encode(user.getPassword()));
+        }
+
+
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
+
+    }
 
     @Override
     public User create(User user, MultipartFile userImage) {
@@ -112,6 +111,29 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());
         return userRepo.save(user);
+    }
+    @Override
+    public User update(User user, MultipartFile userImage, MultipartFile imageBackground) {
+
+        UserImage image;
+        UserImage image2;
+
+        if (userImage.getSize() != 0) {
+            image = toImageEntity(userImage);
+            user.addImageToUser(image);
+        }
+        if (userImage.getSize() != 0) {
+            image2 = toImageEntity(imageBackground);
+            user.addImageToUser(image2);
+        }
+
+        log.info("Added image: " + userImage.getName());
+        log.info("Added background image: " + imageBackground.getName());
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
+
     }
 
     @Override
