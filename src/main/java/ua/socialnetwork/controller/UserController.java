@@ -3,6 +3,7 @@ package ua.socialnetwork.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,10 +54,12 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
-                         @RequestParam(value = "ImageBackground", required = false) MultipartFile imageBackground){
+    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
 
-        userService.create(user, userImage, imageBackground);
+
+
+
+        userService.update(user, userImage);
         user.setEditionDate(LocalDateTime.now());
 
         return "redirect:/users/"+user.getUsername();
@@ -80,19 +83,22 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
 
-
-        String profileCond = user.getImages().stream().filter(userImage -> "userImage".equals(userImage.getName())).
-                map(UserImage::getName).findAny().orElseThrow();
-
-        String backGroundCond = user.getImages().stream().filter(userImage -> "imageBackground".equals(userImage.getName())).
-                map(UserImage::getName).findAny().orElseThrow();
-
-
-        model.addAttribute("profileCond", profileCond);
-        model.addAttribute("backGroundCond", backGroundCond);
+        model.addAttribute("size", user.getImages().size());
         return "profile-page";
 
 
+    }
+
+
+    @SneakyThrows
+    private UserImage toImageEntity(MultipartFile userImage){
+        UserImage image = new UserImage();
+        image.setName(userImage.getName());
+        image.setOriginalFileName(userImage.getOriginalFilename());
+        image.setContentType(userImage.getContentType());
+        image.setSize(userImage.getSize());
+        image.setBytes(userImage.getBytes());
+        return image;
     }
 
 

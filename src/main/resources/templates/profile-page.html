@@ -1003,7 +1003,7 @@
 
         <div id="profile-d" >
             <div id="profile-pic" >
-                <img th:if="${user.images.get(0) != null}" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.get(image.size() - 1) != null}" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
                 <img th:if="${user.images.get(0) == null}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
             </div>
 <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
@@ -1062,8 +1062,7 @@
                     </div>
                 </div>
             </div>
-            <div th:if="${true != null}" th:text="${true}"></div>
-            <div th:if="${true == null}" >ff</div>
+            <div th:text="${'Size ' + size}"></div>
 
 
 
