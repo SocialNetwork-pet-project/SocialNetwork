@@ -40,6 +40,11 @@ public class UserController {
     public String create(@ModelAttribute("user") User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
                          @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground){
         //ToDo add actions with BindingResult later
+
+        if(imageBackground.getSize() == 0 || imageBackground.getOriginalFilename() == null || imageBackground.isEmpty()){
+            userService.update(user, userImage);
+            return "redirect:/login";
+        }
         userService.create(user, userImage, imageBackground);
         return "redirect:/login";
     }
@@ -55,6 +60,8 @@ public class UserController {
 
     @PostMapping("/update")
     public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
+
+
 
 
 

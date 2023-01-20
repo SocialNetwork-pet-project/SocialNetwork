@@ -22,7 +22,7 @@ public class ImageController {
 
     //ToDo besides profile image add background image
     private final UserImageRepo userImageRepo;
-    private final UserBackgroundImageRepo backgroundImageRepo;
+
 
     @SneakyThrows
     @GetMapping("/images/{id}")
@@ -34,16 +34,7 @@ public class ImageController {
 
 
     }
-    @SneakyThrows
-    @GetMapping("/images/getBackground/{id}")
-    private ResponseEntity<?> getBackgroundImage(@PathVariable Integer id) {
-        //TODO Add exception handler here
-        UserBackgroundImage image = backgroundImageRepo.findById(id).orElse(null);
 
-        return ResponseEntity.ok().header("fileName", image.getOriginalFileName()).contentType(MediaType.valueOf(image.getContentType())).contentLength(image.getSize()).body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
-
-
-    }
 
 
 }
