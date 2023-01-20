@@ -44,6 +44,9 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
+    @Column(name = "country")
+    private String country;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;

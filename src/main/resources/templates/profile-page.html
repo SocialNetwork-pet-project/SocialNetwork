@@ -98,7 +98,7 @@
             }
 
             #logo a {
-                display: block;
+                /*display: block;*/
             }
 
             #logo a i {
@@ -984,8 +984,10 @@
         <div class="tb">
 <!--            todo upload own logo-->
             <div class="td" id="logo">
-                <a href="#"><i class="fab fa-facebook-square"></i></a>
+                <img src="https://previews.123rf.com/images/vectorstockcompany/vectorstockcompany1808/vectorstockcompany180815739/108455229-horse-vector-icon-isolated-on-transparent-background-horse-logo-concept.jpg"
+                     alt=""><i class="fab fa-facebook-square"></i>
             </div>
+
             <div class="td" id="search-form">
                 <form method="get" action="#">
                     <input type="text" placeholder="Search">
@@ -1027,6 +1029,10 @@
     <div id="main-content">
         <div class="tb">
             <div class="td" id="l-col">
+               <p th:text="${user.getEmail()}"></p>
+               <p th:text="${user.getCountry()}"></p>
+               <p th:text="${user.getAge() + ' years'}"></p>
+
                 <div class="l-cnt">
                     <div class="cnt-label">
                         <i class="l-i" id="l-i-i"></i>
@@ -1037,6 +1043,7 @@
                         <div id="u-occ"></div>
                     </div>
                 </div>
+
                 <div id="t-box">
 <!--                    ToDo add own pages here -->
                     <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Advertising</a> <a href="#">Ad Choices</a> <a href="#">Cookies</a> <span id="t-more">More<i class="material-icons">arrow_drop_down</i></span>
@@ -1071,7 +1078,6 @@
                     </div>
                 </div>
             </div>
-            <div th:text="${'Size ' + size}"></div>
 
 
 
