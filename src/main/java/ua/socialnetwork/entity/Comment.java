@@ -7,14 +7,19 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-//@Data
+@Data
 //@NoArgsConstructor
 @Table(name = "comment")
 public class Comment {
+
+    public Long getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private int id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -46,14 +51,6 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public User getCreatedBy() {
         return createdBy;
     }
@@ -81,6 +78,7 @@ public class Comment {
     public boolean isLiked() {
         return liked;
     }
+
 
     public void setLiked(boolean liked) {
         this.liked = liked;

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="col-md-offset-2 col-sm-8">
+  <h2>All comments</h2>
+  <br>
+<!--  <h4 th:text="post_id"></h4>-->
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+<!--      <th scope="col">Owner</th>      need completed user-->
+      <th scope="col">Text</th>
+      <th  class="text-center" scope="col">Like</th>
+      <th scope="col">Dislike</th>
+
+    </tr>
+    </thead>
+    <tbody></tbody>
+    <tr th:each="comment, iter: ${allComments}">
+
+      <td th:text="${comment.id}"></td>
+      <td th:text="${comment.text}"></td>
+<!--      <td th:text="${comment.text}"></td>-->
+<!--      <td th:text="${comment.text}"></td>-->
+
+      <td class="text-center " style="font-size: 2rem;">
+        <span th:if="${comment.liked}"><i class="glyphicon glyphicon-ok-sign text-danger"></i></span>
+          <a th:href="@{|/comment/liked/${comment.id}|}" th:unless="${comment.liked}"><i class="glyphicon glyphicon-ok-circle text-muted"></i></a>
+      </td>
+
+      <td class="text-center " style="font-size: 2rem;">
+        <span th:if="${comment.disliked}"><i class="glyphicon glyphicon-remove-sign text-info"></i></span>
+        <a th:href="@{|/comment/disliked/${comment.id}|}" th:unless="${comment.disliked}"><i class="glyphicon glyphicon-remove-circle text-muted"></i></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-default" th:href="@{/posts}">To Feed</a>
+</div>
+</body>
+</html>

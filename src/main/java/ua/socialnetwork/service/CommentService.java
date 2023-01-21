@@ -10,13 +10,15 @@ public interface CommentService {
 
     Comment update(Comment comment);
 
-    void delete(Comment comment);
+    void delete(Long id);
 
     Comment likeComment(Comment comment);
 
     Comment dislikeComment(Comment comment);
 
-    Comment readById(Integer id);
+    Comment readById(Long id);
+
+    List<Comment> getCommentsByPostId(int postId);
 
     List<Comment> getAll();
 
