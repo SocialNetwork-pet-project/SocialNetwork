@@ -21,10 +21,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/posts")
-                .permitAll()
-                .requestMatchers("/two").permitAll()
+                .authorizeHttpRequests().requestMatchers("/posts").permitAll()
                 .requestMatchers("/users/create").permitAll()
+                .requestMatchers("/a").permitAll()
+                .requestMatchers("/users/create/continue/**").permitAll()
                 .and()
 
                 .authorizeHttpRequests().anyRequest().authenticated()

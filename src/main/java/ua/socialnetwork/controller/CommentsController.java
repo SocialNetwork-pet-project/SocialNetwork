@@ -5,13 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.socialnetwork.entity.Comment;
-import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.repo.CommentRepository;
-import ua.socialnetwork.service.CommentService;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.impl.CommentServiceImpl;
 

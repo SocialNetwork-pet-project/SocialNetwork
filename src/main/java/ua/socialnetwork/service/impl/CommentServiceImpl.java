@@ -20,6 +20,4 @@ public class CommentServiceImpl {
         return commentRepository.findAllByPostId(post_id);
     }
 
-
-
 }

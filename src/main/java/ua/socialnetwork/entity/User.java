@@ -7,6 +7,9 @@ import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -41,6 +44,9 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
+    @Column(name = "country")
+    private String country;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -71,21 +77,52 @@ public class User {
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 //    private UserImage image;
 
-    @OneToOne(
-            mappedBy = "user",
-            orphanRemoval = true,
+//    @OneToOne(
+//            mappedBy = "user",
+//            orphanRemoval = true,
+//
+//            cascade = CascadeType.ALL)
+//    private UserImage image;
+//    //ToDO set EAGER fetch
+//    @OneToOne(
+//            mappedBy = "user",
+//            orphanRemoval = true,
+//
+//            cascade = CascadeType.ALL)
+//    private UserBackgroundImage imageBackground;
 
-            cascade = CascadeType.ALL)
-    private UserImage image;
-    //ToDO set EAGER fetch
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private List<UserImage> images = new ArrayList<>();
 
 
 
 
-    public void addImageToUser(UserImage userImage){
+//    public void addImageToUser(UserImage userImage){
+//
+//        userImage.setUser(this);
+//        image = userImage; //?
+//    }
+//    public void addBackgroundImageToUser(UserBackgroundImage background){
+//
+//
+//        background.setUser(this);
+//        imageBackground = background; //?
+//    }
 
-        userImage.setUser(this);
-        image = userImage; //?
+    public void addImageToUser(UserImage image) {
+        image.setUser(this);
+        images.add(image);
+    }
+
+    public void setImageToUser(UserImage image){
+        image.setUser(this);
+        if(this.getImages().size() >= 1){
+            images.add(0, image);
+        }
+        images.add(image);
+
+
     }
 
 

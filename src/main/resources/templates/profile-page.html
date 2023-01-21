@@ -98,7 +98,7 @@
             }
 
             #logo a {
-                display: block;
+                /*display: block;*/
             }
 
             #logo a i {
@@ -973,54 +973,80 @@
             }
             /* Footer finished */
 
+
+
+
+
+
+
         </style>
+
         <div class="tb">
 <!--            todo upload own logo-->
             <div class="td" id="logo">
-                <a href="#"><i class="fab fa-facebook-square"></i></a>
+                <img src="https://previews.123rf.com/images/vectorstockcompany/vectorstockcompany1808/vectorstockcompany180815739/108455229-horse-vector-icon-isolated-on-transparent-background-horse-logo-concept.jpg"
+                     alt=""><i class="fab fa-facebook-square"></i>
             </div>
+
             <div class="td" id="search-form">
                 <form method="get" action="#">
-                    <input type="text" placeholder="Search Facebook">
+                    <input type="text" placeholder="Search">
                     <button type="submit"><i class="material-icons">search</i></button>
                 </form>
+
+        </div>
         </div>
     </header>
+<!--    TodoRefactor here-->
     <div id="profile-upper">
         <div id="profile-banner-image">
-            <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image">
+            <img th:if="${user.images.size() > 1}" th:src="@{|/images/${image.get(1).getId()}|}">
+            <img th:if="${user.images.size() <= 1}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
         </div>
 
         <div id="profile-d" >
             <div id="profile-pic" >
-                <img th:if="${user.image != null}" th:src="@{|/images/${image.getId()}|}">
-                <img th:if="${user.image == null}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+
+                <img th:if="${user.images.size()  ==  2 }" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size()  >  2 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
+                <img th:if="${user.images.size()  == 1 }" th:src="@{|/images/${image.get(0).getId()}|}">
+
+
+<!--                <img th:if="${user.images.size()  >=  1 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">-->
+
+
+                <img th:if="${user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
             </div>
 <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
             <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
 
         </div>
+<!--        buttons add friend, write message -->
+
 
         <div id="black-grd"></div>
     </div>
     <div id="main-content">
         <div class="tb">
             <div class="td" id="l-col">
+               <p th:text="${user.getEmail()}"></p>
+               <p th:text="${user.getCountry()}"></p>
+               <p th:text="${user.getAge() + ' years'}"></p>
+
                 <div class="l-cnt">
                     <div class="cnt-label">
                         <i class="l-i" id="l-i-i"></i>
-                        <span>Bio</span>
-                        <div class="lb-action"><i class="material-icons">edit</i></div>
+                        <span th:text="${user.getBio()}"></span>
                     </div>
                     <div id="i-box">
 <!--                        <div id="intro-line">Front-end Enginee/r</div>-->
-                        <div id="u-occ" th:text="${user.getBio()}"></div>
+                        <div id="u-occ"></div>
                     </div>
                 </div>
+
                 <div id="t-box">
 <!--                    ToDo add own pages here -->
                     <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Advertising</a> <a href="#">Ad Choices</a> <a href="#">Cookies</a> <span id="t-more">More<i class="material-icons">arrow_drop_down</i></span>
-                    <div id="cpy-nt">Facebook &copy; <span id="curr-year"></span></div>
                 </div>
             </div>
             <div class="td" id="m-col">
@@ -1053,8 +1079,11 @@
                 </div>
             </div>
 
+
+
         </div>
     </div>
+<!--    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">-->
 
     <a th:href="@{|/users/update/${user.getId()}|}">Update user</a>
     <script src="https://use.fontawesome.com/fe459689b4.js"></script>

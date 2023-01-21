@@ -9,6 +9,11 @@ public class LoginController {
     @GetMapping("/login")
     public String login() {
 
-        return "login";
+        return "login-page";
+    }
+    @GetMapping("/a")
+    public String a() {
+
+        return "feed-scss";
     }
 }
