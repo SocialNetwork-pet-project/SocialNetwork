@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests().requestMatchers("/posts").permitAll()
                 .requestMatchers("/users/create").permitAll()
+                .requestMatchers("/a").permitAll()
                 .requestMatchers("/users/create/continue/**").permitAll()
                 .and()
 
