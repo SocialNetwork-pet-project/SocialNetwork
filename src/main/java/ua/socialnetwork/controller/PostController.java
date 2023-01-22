@@ -40,19 +40,19 @@ public class PostController {
         return "feed";
     }
 
-    @GetMapping("/new/{user_id}")
-    public String create(@PathVariable("user_id") Integer user_id, Model model){
-        User user = userService.readById(user_id);
+    @GetMapping("/new/{username}")
+    public String create(@PathVariable("username") String username, Model model){
+        User user = userService.readByUsername(username);
         model.addAttribute("post", new Post());
         model.addAttribute("owner", user);
 
         return "create-post";
     }
 
-    @PostMapping("/new/{user_id}")
-    public String create(@PathVariable("user_id") Integer user_id, @ModelAttribute("post") Post post, BindingResult result){
+    @PostMapping("/new/{username}")
+    public String create(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
 
-        post.setUser(userService.readById(user_id));
+        post.setUser(userService.readByUsername(username));
         postService.create(post);
         log.info("From PostController");
         return "redirect:/posts";

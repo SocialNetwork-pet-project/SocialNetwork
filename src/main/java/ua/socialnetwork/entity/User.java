@@ -2,7 +2,9 @@ package ua.socialnetwork.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
@@ -15,6 +17,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+
+@EqualsAndHashCode
 @Table(name = "users")
 public class User {
 
@@ -92,10 +96,28 @@ public class User {
             images.add(0, image);
         }
         images.add(image);
-
-
     }
 
-
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", bio='" + bio + '\'' +
+                ", country='" + country + '\'' +
+                ", gender=" + gender +
+                ", employed=" + employed +
+                ", role=" + role +
+                ", banned=" + banned +
+                ", creationDate=" + creationDate +
+                ", editionDate=" + editionDate +
+                ", posts=" + posts +
+                ", account=" + account +
+                '}';
+    }
 }

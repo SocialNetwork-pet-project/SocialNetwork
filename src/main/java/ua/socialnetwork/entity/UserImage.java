@@ -3,13 +3,17 @@ package ua.socialnetwork.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "images")
+@ToString
+@EqualsAndHashCode
 public class UserImage {
 
 

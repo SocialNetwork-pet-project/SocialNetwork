@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ua.socialnetwork.entity.UserBackgroundImage;
 import ua.socialnetwork.entity.UserImage;
-import ua.socialnetwork.repo.UserBackgroundImageRepo;
 import ua.socialnetwork.repo.UserImageRepo;
 
 import java.io.ByteArrayInputStream;

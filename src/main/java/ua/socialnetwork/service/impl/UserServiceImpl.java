@@ -1,27 +1,19 @@
 package ua.socialnetwork.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.DialectOverride;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
-import ua.socialnetwork.entity.UserBackgroundImage;
 import ua.socialnetwork.entity.UserImage;
-import ua.socialnetwork.exception.NullEntityReferenceException;
 import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 
 
-import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.AbstractSequentialList;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

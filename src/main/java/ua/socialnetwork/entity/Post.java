@@ -56,12 +56,17 @@ public class Post {
         return "Post{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", liked=" + liked +
+                ", disliked=" + disliked +
                 ", creationDate=" + creationDate +
-                ", user=" + user +
+                ", editionDate=" + editionDate +
+                ", deletionDate=" + deletionDate +
+                ", comments=" + comments +
                 '}';
     }
 
-//    public String getTitle() {
+    //    public String getTitle() {
 //        return title;
 //    }
 }
