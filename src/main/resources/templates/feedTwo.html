@@ -59,8 +59,8 @@
             <li>
                 <span class="profile"></span>
                 <div class="profile-pic" >
-                    <a th:if="${#authentication.principal.image != 0}" th:href="@{|/users/${#authentication.principal.username}|}"  ><img  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
-                    <a th:if="${#authentication.principal.image == 0}"  th:href="@{|/users/${#authentication.principal.username}|}"><img src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${!#authentication.principal.image}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
@@ -123,7 +123,8 @@
             <div class="post create">
                 <div class="post-top">
                     <div class="dp">
-                        <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
+                        <img th:if="${#authentication.principal.image != 0}" th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
+                        <img th:if="${#authentication.principal.image == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" >
                     </div>
                     <input type="text" th:placeholder="${'What is on your mind, ' + #authentication.principal.firstName + '?' }"
                         th:field="*{body}"/>
@@ -139,20 +140,8 @@
                     </div>
 
 
-
-
-
-<!--                    <div class="action">-->
-<!--                        <i class="fa fa-bullhorn"></i>-->
-<!--                        <span><input type="submit" value=" ">Create</span>-->
-<!--                    </div>-->
                     <input class="form-submit-button" type="submit" value="Create">
                 </div>
-
-
-
-
-
 
 
             </div>
@@ -180,8 +169,6 @@
                     <img th:if="${post.getImage() == null}" />
                 </div>
 
-
-
             </div>
 
 
@@ -191,12 +178,12 @@
                     <span>Like</span>
                 </div>
                 <div class="action">
-                    <i class="far fa-comment"></i>
-                    <span>Comment</span>
+                    <i class="far fa-thumbs-down"></i>
+                    <span>Dislike</span>
                 </div>
                 <div class="action">
-                    <i class="fa fa-share"></i>
-                    <span>Share</span>
+                    <i class="far fa-comment"></i>
+                    <span>Comment</span>
                 </div>
             </div>
         </div>
