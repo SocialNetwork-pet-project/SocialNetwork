@@ -11,9 +11,10 @@ public class LoginController {
 
         return "login-page";
     }
-    @GetMapping("/a")
-    public String a() {
 
-        return "feed-scss";
+    @GetMapping("/t")
+    public String t() {
+
+        return "feedTwo";
     }
 }

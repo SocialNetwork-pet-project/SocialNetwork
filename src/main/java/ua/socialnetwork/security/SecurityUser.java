@@ -18,6 +18,10 @@ public class SecurityUser implements UserDetails {
 
     private User user;
 
+    public String getFullName(){
+        return this.user.getFirstName() + ' ' + user.getLastName();
+    }
+
 
     @Override
     //This method represents what users are allowed to do(authorities)

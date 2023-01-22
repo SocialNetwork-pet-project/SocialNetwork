@@ -9,7 +9,7 @@
 <div class="col-md-offset-2">
     <h2>Create New Post</h2>
 </div>
-<form class="form-horizontal" th:action="@{/posts/new}" th:object="${post}" method="post">
+<form class="form-horizontal" th:action="@{|/posts/new/${user_id}}|" th:object="${post}" method="post">
     <div class="form-group">
         <label class="col-sm-2 control-label" for="first-name">Title:</label>
         <div class="col-sm-8">

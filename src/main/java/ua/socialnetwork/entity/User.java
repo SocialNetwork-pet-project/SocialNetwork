@@ -74,41 +74,12 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Account account;
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    private UserImage image;
-
-//    @OneToOne(
-//            mappedBy = "user",
-//            orphanRemoval = true,
-//
-//            cascade = CascadeType.ALL)
-//    private UserImage image;
-//    //ToDO set EAGER fetch
-//    @OneToOne(
-//            mappedBy = "user",
-//            orphanRemoval = true,
-//
-//            cascade = CascadeType.ALL)
-//    private UserBackgroundImage imageBackground;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "user")
     private List<UserImage> images = new ArrayList<>();
 
 
-
-
-//    public void addImageToUser(UserImage userImage){
-//
-//        userImage.setUser(this);
-//        image = userImage; //?
-//    }
-//    public void addBackgroundImageToUser(UserBackgroundImage background){
-//
-//
-//        background.setUser(this);
-//        imageBackground = background; //?
-//    }
 
     public void addImageToUser(UserImage image) {
         image.setUser(this);

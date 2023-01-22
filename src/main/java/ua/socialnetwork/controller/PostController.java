@@ -3,16 +3,19 @@ package ua.socialnetwork.controller;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ua.socialnetwork.entity.Post;
+import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.PostService;
+import ua.socialnetwork.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -21,28 +24,44 @@ import java.time.LocalDateTime;
 @Slf4j
 public class PostController {
 
+    private UserService userService;
     private PostService postService;
 
     @GetMapping
     public String getAll(Model model){
         model.addAttribute("posts", postService.getAll());
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("userPrincipal", currentPrincipalName);
+
+
 
         return "feed";
     }
 
-    @GetMapping("/new")
-    public String create(Model model){
+    @GetMapping("/new/{user_id}")
+    public String create(@PathVariable("user_id") Integer user_id, Model model){
+        User user = userService.readById(user_id);
         model.addAttribute("post", new Post());
+        model.addAttribute("owner", user);
 
         return "create-post";
     }
 
-    @PostMapping("/new")
-    public String create(@ModelAttribute("post") Post post, BindingResult result){
+    @PostMapping("/new/{user_id}")
+    public String create(@PathVariable("user_id") Integer user_id, @ModelAttribute("post") Post post, BindingResult result){
+
+        post.setUser(userService.readById(user_id));
         postService.create(post);
-        log.info("From PostController set creationDate");
+        log.info("From PostController");
         return "redirect:/posts";
+    }
+
+    @GetMapping("/principal")
+    public String getPrincipal(@CurrentSecurityContext(expression = "authentication.principal")
+                               Principal principal) {
+        return principal.getName();
     }
 
 

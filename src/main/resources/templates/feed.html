@@ -19,6 +19,7 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Title</th>
+            <th scope="col">Owner</th>
             <th scope="col">Body</th>
             <th scope="col" colspan="2">Operations</th>
         </tr>
@@ -27,8 +28,9 @@
         <tr th:each="post, iter: ${posts}">
             <!--th scope="row" th:text="${iStat.index + 1}"/-->
             <td th:text="${post.id}"/>
-            <td th:text="${post.title}">
-            </td>
+            <td th:text="${post.title}"/>
+            <td th:text="${post.user}"/>
+
             <td th:text="${post.body}"/>
             <td th:text="${post.creationDate}"/>
 
@@ -40,6 +42,10 @@
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <a th:href="@{|/users/${#authentication.principal.username}|}">USER</a>
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--        Authenticated as <span sec:authentication="username"></span></div>-->
+    <div th:text="${userPrincipal}"></div>
+
 
 
 </div>
