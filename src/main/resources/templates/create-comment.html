@@ -9,18 +9,24 @@
 <div class="col-md-offset-2">
     <h2>Create New Comment</h2>
 </div>
-<form class="form-horizontal" th:action="@{/comment/add}" th:object="${comment}" method="post">
+<form class="form-horizontal" th:action="@{|/comment/add/${postId}|}" th:object="${comment}" method="post">
     <div class="form-group">
+        <div>
         <label class="col-sm-2 control-label" for="last-name">Comment:</label>
         <div class="col-sm-8">
-            <input style="height: 450px" type="text" class="form-control" th:field="*{text}" id="last-name"/>
-            <small class="form-text text-muted" th:if="${#fields.hasErrors('body')}"
+            <textarea style="height: 450px" type="text" class="form-control" th:field="*{text}" id="last-name"/>
+            <small class="form-text text-muted" th:if="${#fields.hasErrors('text')}"
                    th:errors="*{text}"></small>
         </div>
-
+        </div>
         <div>
             <input style="vertical-align: bottom" type="submit" class="btn btn-info" value="Create"/>
+            <br>
+            <br>
             <input type="reset" class="btn btn" value="Clear"/>
+            <br>
+            <br>
+            <a class="btn btn-default" th:href="@{/posts}">To Feed</a>
         </div>
     </div>
 </form>

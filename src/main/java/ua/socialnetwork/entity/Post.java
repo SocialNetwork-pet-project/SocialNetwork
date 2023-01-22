@@ -44,6 +44,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;   //owner ?? TODO
+    public int getId() {
+        return id;
+    }
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
@@ -57,4 +60,8 @@ public class Post {
                 ", user=" + user +
                 '}';
     }
+
+//    public String getTitle() {
+//        return title;
+//    }
 }
