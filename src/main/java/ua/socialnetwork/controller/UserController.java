@@ -116,10 +116,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/get/a")
-    public String a(){
-        return "login-page";
-    }
+
 
 
 

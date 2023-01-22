@@ -42,6 +42,7 @@ public class PostController {
     @GetMapping("/s")
     public String getAllTwo(Model model){
         model.addAttribute("posts", postService.getAll());
+        model.addAttribute("newPost", new Post());
 
 
 
@@ -50,28 +51,52 @@ public class PostController {
         model.addAttribute("userPrincipal", currentPrincipalName);
 
 
-
-
         return "feedTwo";
     }
 
-    @GetMapping("/new/{username}")
-    public String create(@PathVariable("username") String username, Model model){
-        User user = userService.readByUsername(username);
-        model.addAttribute("post", new Post());
-        model.addAttribute("owner", user);
+//    @GetMapping("/new/{username}")
+//    public String create(@PathVariable("username") String username, Model model){
+//        User user = userService.readByUsername(username);
+//        model.addAttribute("post", new Post());
+//        model.addAttribute("owner", user);
+//
+//        return "create-post";
+//    }
 
-        return "create-post";
-    }
+//    @PostMapping("/new/{username}")
+//    public String create(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
+//
+//        post.setUser(userService.readByUsername(username));
+//        postService.create(post);
+//        log.info("From PostController");
+//        return "redirect:/posts";
+//    }
 
     @PostMapping("/new/{username}")
-    public String create(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
+    public String createTwo(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
 
         post.setUser(userService.readByUsername(username));
         postService.create(post);
         log.info("From PostController");
-        return "redirect:/posts";
+        return "redirect:/s";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/principal")
     public String getPrincipal(@CurrentSecurityContext(expression = "authentication.principal")

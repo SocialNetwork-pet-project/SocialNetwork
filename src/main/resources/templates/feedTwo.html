@@ -57,9 +57,14 @@
     <div class="left-panel">
         <ul>
             <li>
+
+
                 <span class="profile"></span>
 <!--                todo add url to profile page-->
-<!--                <p th:text="${#authentication.principal.fullName}"></p>-->
+                <div class="dp">
+                    <a th:href="@{|/users/${#authentication.principal.username}|}"><img class="circular_image" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                </div>
+                <p th:text="${#authentication.principal.fullName}"></p>
             </li>
             <li>
                 <i class="fa fa-user-friends"></i>
@@ -90,10 +95,6 @@
                 <p>Events</p>
             </li>
             <li>
-                <i class="fa fa-bullhorn"></i>
-                <p>Ads</p>
-            </li>
-            <li>
                 <i class="fas fa-hands-helping"></i>
                 <p>Offers</p>
             </li>
@@ -120,34 +121,44 @@
 
 
 
-        <div class="post create">
-            <div class="post-top">
-                <div class="dp">
-<!--                    <img th:src="@{|/images/${#authentication.principal.image}|}" alt="">-->
+        <form th:action="@{|/posts/new/${#authentication.principal.username}|}" th:object="${newPost}" method="post">
+            <div class="post create">
+                <div class="post-top">
+                    <div class="dp">
+                        <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
+                    </div>
+                    <input type="text" th:placeholder="${'What is on your mind, ' + #authentication.principal.firstName + '?' }"
+                        th:field="*{body}"/>
                 </div>
-                <input type="text" th:placeholder="${'What is on your mind, ' + #authentication.principal.firstName + '?' }" />
+
+                <div class="post-bottom">
+                    <div class="action">
+                        <i class="fa fa-image"></i>
+                        <span>Photo/Video</span>
+                    </div>
+                    <div class="action">
+                        <i class="fa fa-bullhorn"></i>
+                        <span><input type="submit" value=" ">Create</span>
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
             </div>
 
-            <div class="post-bottom">
-                <div class="action">
-                    <i class="fa fa-video"></i>
-                    <span>Live video</span>
-                </div>
-                <div class="action">
-                    <i class="fa fa-image"></i>
-                    <span>Photo/Video</span>
-                </div>
-                <div class="action">
-                    <i class="fa fa-smile"></i>
-                    <span>Feeling/Activity</span>
-                </div>
-            </div>
-        </div>
+        </form>
 
         <div class="post" th:each="post, iter : ${posts}">
             <div class="post-top">
                 <div class="dp">
-                    <img th:src="@{|/images/${post.getUser().getImages().get(0).getId()}|}" alt="">
+                    <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
                 </div>
                 <div class="post-info">
                     <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
