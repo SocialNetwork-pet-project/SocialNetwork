@@ -98,8 +98,6 @@ public class UserServiceImpl implements UserService {
 
 
 
-        // user.getImages().set(0 , i);
-
         user.setPassword(encoder.encode(user.getPassword()));
         user.setCreationDate(LocalDateTime.now());
         return userRepo.save(user);

@@ -51,8 +51,15 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
-    @OneToOne(mappedBy = "post")
-    private PostImage postImage;
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    private PostImage image;
+
+
+    public void setImageToPost(PostImage userImage){
+
+        userImage.setPost(this);
+        image = userImage; //?
+    }
 
     @Override
     public String toString() {
@@ -68,6 +75,11 @@ public class Post {
                 ", comments=" + comments +
                 '}';
     }
+
+
+
+
+
 
 
 }

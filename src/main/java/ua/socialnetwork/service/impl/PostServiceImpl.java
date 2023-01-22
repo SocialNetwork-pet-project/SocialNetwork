@@ -31,6 +31,21 @@ public class PostServiceImpl implements PostService {
         post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
         return postRepo.save(post);
     }
+    @Override
+    public Post create(Post post, MultipartFile postImage) {
+        PostImage image;
+
+        if (postImage.getSize() != 0) {
+            image = toImageEntity(postImage);
+            post.setImageToPost(image);
+        }
+
+        //TODO make validations and exc handler
+        log.info("A post " + post.toString() + " was created in PostServiceImpl");
+        ;
+        post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        return postRepo.save(post);
+    }
 
     @Override
     public Post update(Post post) {

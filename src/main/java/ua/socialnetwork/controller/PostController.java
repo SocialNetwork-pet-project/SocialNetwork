@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.PostService;
@@ -27,19 +28,7 @@ public class PostController {
     private UserService userService;
     private PostService postService;
 
-    @GetMapping
-    public String getAll(Model model){
-        model.addAttribute("posts", postService.getAll());
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        model.addAttribute("userPrincipal", currentPrincipalName);
-
-
-
-        return "feed";
-    }
-    @GetMapping("/s")
+    @GetMapping("/feed")
     public String getAllTwo(Model model){
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
@@ -54,31 +43,17 @@ public class PostController {
         return "feedTwo";
     }
 
-//    @GetMapping("/new/{username}")
-//    public String create(@PathVariable("username") String username, Model model){
-//        User user = userService.readByUsername(username);
-//        model.addAttribute("post", new Post());
-//        model.addAttribute("owner", user);
-//
-//        return "create-post";
-//    }
-
-//    @PostMapping("/new/{username}")
-//    public String create(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
-//
-//        post.setUser(userService.readByUsername(username));
-//        postService.create(post);
-//        log.info("From PostController");
-//        return "redirect:/posts";
-//    }
-
     @PostMapping("/new/{username}")
-    public String createTwo(@PathVariable("username") String username, @ModelAttribute("post") Post post, BindingResult result){
+    public String createTwo(@PathVariable("username") String username, Post post,
+                            @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
+
+
+
 
         post.setUser(userService.readByUsername(username));
-        postService.create(post);
+        postService.create(post, postImage);
         log.info("From PostController");
-        return "redirect:/s";
+        return "redirect:/feed";
     }
 
 

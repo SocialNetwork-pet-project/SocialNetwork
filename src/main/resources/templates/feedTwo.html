@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
@@ -57,14 +57,12 @@
     <div class="left-panel">
         <ul>
             <li>
-
-
                 <span class="profile"></span>
-<!--                todo add url to profile page-->
-                <div class="dp">
-                    <a th:href="@{|/users/${#authentication.principal.username}|}"><img class="circular_image" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                <div class="profile-pic" >
+                    <a th:if="${#authentication.principal.image != 0}" th:href="@{|/users/${#authentication.principal.username}|}"  ><img  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                    <a th:if="${#authentication.principal.image == 0}"  th:href="@{|/users/${#authentication.principal.username}|}"><img src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
                 </div>
-                <p th:text="${#authentication.principal.fullName}"></p>
+                <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
             <li>
                 <i class="fa fa-user-friends"></i>
@@ -121,7 +119,7 @@
 
 
 
-        <form th:action="@{|/posts/new/${#authentication.principal.username}|}" th:object="${newPost}" method="post">
+        <form enctype="multipart/form-data" th:action="@{|/posts/new/${#authentication.principal.username}|}" th:object="${newPost}"  method="post">
             <div class="post create">
                 <div class="post-top">
                     <div class="dp">
@@ -132,17 +130,23 @@
                 </div>
 
                 <div class="post-bottom">
-                    <div class="action">
-                        <i class="fa fa-image"></i>
-                        <span>Photo/Video</span>
+
+                    <div class="upload">
+                        <button type = "button" class = "btn-warning">
+                            <i class = "fa fa-upload"></i> Upload File
+                            <input type="file" name="postImage">
+                        </button>
                     </div>
-                    <div class="action">
-                        <i class="fa fa-bullhorn"></i>
-                        <span><input type="submit" value=" ">Create</span>
 
 
 
-                    </div>
+
+
+<!--                    <div class="action">-->
+<!--                        <i class="fa fa-bullhorn"></i>-->
+<!--                        <span><input type="submit" value=" ">Create</span>-->
+<!--                    </div>-->
+                    <input class="form-submit-button" type="submit" value="Create">
                 </div>
 
 
@@ -168,10 +172,18 @@
                 <i class="fas fa-ellipsis-h"></i>
             </div>
 
-            <div class="post-content" th:text="${post.getBody()}">
+            <div class="post-content">
+                <div th:text="${post.body}"></div>
 
-                <img src="images/mountains.jpg" />
+                <div>
+                    <img th:if="${post.getImage() != null}"  th:src="@{|/post/images/${post.getImage().id}|}" />
+                    <img th:if="${post.getImage() == null}" />
+                </div>
+
+
+
             </div>
+
 
             <div class="post-bottom">
                 <div class="action">

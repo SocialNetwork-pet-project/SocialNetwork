@@ -94,16 +94,6 @@ public class UserController {
 
 
 
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
         User user = userService.readByUsername(username);

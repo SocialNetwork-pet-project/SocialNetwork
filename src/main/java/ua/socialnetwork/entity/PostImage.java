@@ -11,7 +11,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "images")
+@Table(name = "postImages")
 @ToString
 @EqualsAndHashCode
 public class PostImage {
