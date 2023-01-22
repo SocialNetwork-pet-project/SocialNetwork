@@ -2,9 +2,13 @@ package ua.socialnetwork.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
+import ua.socialnetwork.entity.PostImage;
+import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
 
@@ -54,5 +58,16 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getByUserId(int userId) {
         return null;
+    }
+
+    @SneakyThrows
+    private PostImage toImageEntity(MultipartFile postImage) {
+        PostImage image = new PostImage();
+        image.setName(postImage.getName());
+        image.setOriginalFileName(postImage.getOriginalFilename());
+        image.setContentType(postImage.getContentType());
+        image.setSize(postImage.getSize());
+        image.setBytes(postImage.getBytes());
+        return image;
     }
 }

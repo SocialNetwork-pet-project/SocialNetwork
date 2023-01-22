@@ -51,6 +51,9 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
+    @OneToOne(mappedBy = "post")
+    private PostImage postImage;
+
     @Override
     public String toString() {
         return "Post{" +
@@ -66,7 +69,5 @@ public class Post {
                 '}';
     }
 
-    //    public String getTitle() {
-//        return title;
-//    }
+
 }
