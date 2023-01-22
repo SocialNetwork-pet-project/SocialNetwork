@@ -12,9 +12,4 @@ public class LoginController {
         return "login-page";
     }
 
-    @GetMapping("/t")
-    public String t() {
-
-        return "feedTwo";
-    }
 }

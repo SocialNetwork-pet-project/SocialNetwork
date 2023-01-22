@@ -9,6 +9,7 @@ import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -23,7 +24,7 @@ public class PostServiceImpl implements PostService {
         //TODO make validations and exc handler
         log.info("A post " + post.toString() + " was created in PostServiceImpl");
         ;
-        post.setCreationDate(LocalDateTime.now());
+        post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
         return postRepo.save(post);
     }
 

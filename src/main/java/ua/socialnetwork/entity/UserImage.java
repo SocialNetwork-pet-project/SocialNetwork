@@ -44,7 +44,8 @@ public class UserImage {
 
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //, fetch = FetchType.EAGER
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
 

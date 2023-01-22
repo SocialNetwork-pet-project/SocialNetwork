@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.entity.UserImage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,9 +19,7 @@ public class SecurityUser implements UserDetails {
 
     private User user;
 
-    public String getFullName(){
-        return this.user.getFirstName() + ' ' + user.getLastName();
-    }
+
 
 
     @Override
@@ -64,4 +63,18 @@ public class SecurityUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getFullName(){
+        return user.getFirstName() + ' ' + user.getLastName();
+    }
+    public int getAge(){
+        return user.getAge();
+    }
+    public String getFirstName(){
+        return user.getFirstName();
+    }
+    public int getImage(){
+        return user.getImages().get(0).getId();
+    }
+
 }

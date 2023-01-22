@@ -33,8 +33,6 @@
 
             <td th:text="${post.body}"/>
             <td th:text="${post.creationDate}"/>
-
-
                         <td>
                             <a class="btn btn-default" th:href="@{|/comment/add/${post.getId()}|}">Add new comment</a>
                         </td>
@@ -42,7 +40,11 @@
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <a th:href="@{|/users/${#authentication.principal.username}|}">USER</a>
-<!--    <div sec:authorize="isAuthenticated()">-->
+
+    <div th:text="${#authentication.principal.fullName}"></div>
+    <div th:text="${#authentication.principal.fullName}"></div>
+
+<!--    < div sec:authorize="isAuthenticated()">-->
 <!--        Authenticated as <span sec:authentication="username"></span></div>-->
     <div th:text="${userPrincipal}"></div>
 

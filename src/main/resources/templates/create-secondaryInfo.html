@@ -245,7 +245,7 @@
 <div class="container">
   <div class="title">Registration</div>
   <div class="content">
-    <form th:action="@{|/users/create/continue/${user.getId()}|}" th:object="${user}" enctype="multipart/form-data" method="POST">
+    <form name="myForm" th:action="@{|/users/create/continue/${user.getId()}|}" th:object="${user}" enctype="multipart/form-data" method="POST">
       <div class="user-details">
 
         <input hidden type="number" th:field="*{id}" id="id" th:value="*{id}"/>
@@ -290,7 +290,7 @@
 
         <div class="input-box">
           <span class="details">Password</span>
-          <input type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
+          <input name="p" type="password" th:field="*{password}" placeholder="Enter your password" id="password" required>
         </div>
         <div class="input-box">
           <span class="details">Confirm Password</span>
@@ -335,6 +335,14 @@
 
   password.onchange = validatePassword;
   confirm_password.onkeyup = validatePassword;
+
+  function validateForm() {
+    var x = document.forms["myForm"]["p"].value;
+    if (x == "") {
+      alert("Name must be filled out");
+      return false;
+    }
+  }
 </script>
 
 </body>

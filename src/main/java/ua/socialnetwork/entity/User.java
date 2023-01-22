@@ -79,7 +79,7 @@ public class User {
     private Account account;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
     private List<UserImage> images = new ArrayList<>();
 

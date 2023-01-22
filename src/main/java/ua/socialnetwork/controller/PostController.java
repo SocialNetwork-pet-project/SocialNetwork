@@ -1,6 +1,6 @@
 package ua.socialnetwork.controller;
 
-import jakarta.persistence.Column;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -38,6 +38,21 @@ public class PostController {
 
 
         return "feed";
+    }
+    @GetMapping("/s")
+    public String getAllTwo(Model model){
+        model.addAttribute("posts", postService.getAll());
+
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("userPrincipal", currentPrincipalName);
+
+
+
+
+        return "feedTwo";
     }
 
     @GetMapping("/new/{username}")
