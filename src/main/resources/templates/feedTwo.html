@@ -59,8 +59,8 @@
             <li>
                 <span class="profile"></span>
                 <div class="profile-pic" >
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${!#authentication.principal.image}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img   class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+<!--                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img   src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>-->
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
@@ -173,14 +173,33 @@
 
 
             <div class="post-bottom">
-                <div class="action">
-                    <i class="far fa-thumbs-up"></i>
-                    <span>Like</span>
-                </div>
-                <div class="action">
-                    <i class="far fa-thumbs-down"></i>
-                    <span>Dislike</span>
-                </div>
+
+
+                <button class="like__btn">
+                    <a th:href="@{|/posts/like/${post.id}|}">
+                    <span id="icon"><i class="far fa-thumbs-up"></i></span>
+                    <span id="count">0</span> Like
+                    </a>
+                </button>
+                <button  class="like__btn-2">
+                    <a th:href="@{|/posts/dislike/${post.id}|}">
+                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>
+                    <span id="count-2">0</span> Dislike
+                    </a>
+                </button>
+<!--                -->
+<!--                <div class="action">-->
+<!--                    <button id="green" class="btn"><a th:href="@{|/posts/like/${post.id}|}" ><i class="far fa-thumbs-up"></i></a></button>-->
+<!--                    <span>Like</span>-->
+<!--                </div>-->
+<!--                -->
+<!--                -->
+<!--                <div  class="action">-->
+<!--                    <button id="red" class="btn"><a th:href="@{|/posts/like/${post.id}|}"><i class="far fa-thumbs-down"></i></a></button>-->
+<!--                    <span>Dislike</span>-->
+<!--                </div>-->
+
+
                 <div class="action">
                     <i class="far fa-comment"></i>
                     <span>Comment</span>
@@ -260,8 +279,57 @@
             </a>
 
         </div>
+        <div th:text="${userPrincipal}"> fsdgs</div>
+
+
+
+
     </div>
+
 </div>
+<script>
+    const likeBtn = document.querySelector(".like__btn");
+    let likeIcon = document.querySelector("#icon"),
+        count = document.querySelector("#count");
+
+    let clicked = false;
+
+
+    likeBtn.addEventListener("click", () => {
+        if (!clicked) {
+            clicked = true;
+            likeIcon.innerHTML = `<i class="fas fa-thumbs-up"></i>`;
+            count.textContent++;
+        } else {
+            clicked = false;
+            likeIcon.innerHTML = `<i class="far fa-thumbs-up"></i>`;
+            count.textContent--;
+        }
+    });
+
+    const likeBtn2 = document.querySelector(".like__btn-2");
+    let likeIcon2 = document.querySelector("#icon-2"),
+        count2 = document.querySelector("#count-2");
+
+    let clicked2 = false;
+
+
+    likeBtn2.addEventListener("click", () => {
+        if (!clicked2) {
+            clicked2 = true;
+            likeIcon2.innerHTML = `<i class="fas fa-thumbs-down"></i>`;
+            count2.textContent++;
+        } else {
+            clicked2 = false;
+            likeIcon2.innerHTML = `<i class="far fa-thumbs-down"></i>`;
+            count2.textContent--;
+        }
+    });
+
+
+</script>
+
 </body>
+
 
 </html>

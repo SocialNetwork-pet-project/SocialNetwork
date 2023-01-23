@@ -35,8 +35,10 @@ public class PostController {
 
 
 
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
+        Object currentPrincipalName = authentication.getCredentials();
         model.addAttribute("userPrincipal", currentPrincipalName);
 
 
@@ -59,7 +61,25 @@ public class PostController {
 
 
 
+    @GetMapping("/like/{post_id}")
+    public String like(@PathVariable("post_id") Integer post_id, Model model){
+        Post post = postService.readById(post_id);
+        post.setLiked(true);
+        post.setDisliked(false);
 
+        postService.create(post);
+        return "redirect:/feed";
+
+    }
+    @GetMapping("/dislike/{post_id}")
+    public String dislike(@PathVariable("post_id") Integer post_id, Model model){
+        Post post = postService.readById(post_id);
+        post.setDisliked(true);
+        post.setLiked(false);
+        postService.create(post);
+        return "redirect:/feed";
+
+    }
 
 
 
