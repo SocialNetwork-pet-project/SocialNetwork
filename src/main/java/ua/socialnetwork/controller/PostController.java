@@ -12,9 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
-import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
+
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -57,6 +57,27 @@ public class PostController {
     }
 
 
+    @GetMapping("/edit/{post_id}")
+    public String editForm(@PathVariable("post_id") Integer id, Model model){
+        Post post = postService.readById(id);
+
+        model.addAttribute("post", post);
+
+        return "update-post";
+
+    }
+
+    @PostMapping("/edit")
+    public String edit(Post post, BindingResult result,
+                       @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
+
+        postService.update(post, postImage);
+        post.setEditionDate(LocalDateTime.now());
+
+
+
+        return "redirect:/feed";
+    }
 
 
 

@@ -32,13 +32,13 @@ public class Post {
     private boolean disliked;
 
     @Column(name = "creationDate")
-    private String creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "editionDate")
-    private String editionDate;
+    private LocalDateTime editionDate;
 
     @Column(name = "deletionDate")
-    private String deletionDate;
+    private LocalDateTime deletionDate;
 
     //here a multiple posts has 1 user, so @ManyToOne
     @ManyToOne

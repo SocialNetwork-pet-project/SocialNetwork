@@ -59,8 +59,8 @@
             <li>
                 <span class="profile"></span>
                 <div class="profile-pic" >
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${!#authentication.principal.image}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image != 0}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${#authentication.principal.image == 0}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
@@ -158,7 +158,7 @@
 <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
                     <span class="time" th:text="${post.getCreationDate()}"></span>
                 </div>
-                <i class="fas fa-ellipsis-h"></i>
+                <i class="fas fa-edit"></i>
             </div>
 
             <div class="post-content">
