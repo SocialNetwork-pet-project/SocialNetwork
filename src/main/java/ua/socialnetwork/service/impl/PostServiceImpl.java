@@ -29,7 +29,7 @@ public class PostServiceImpl implements PostService {
     public Post create(Post post) {
         //TODO make validations and exc handler
         log.info("A post " + post.toString() + " was created in PostServiceImpl");
-        ;
+
         post.setCreationDate(LocalDateTime.now());
         return postRepo.save(post);
     }
@@ -44,7 +44,7 @@ public class PostServiceImpl implements PostService {
 
         //TODO make validations and exc handler
         log.info("A post " + post.toString() + " was created in PostServiceImpl");
-        ;
+
         post.setCreationDate(LocalDateTime.now());
         return postRepo.save(post);
     }
@@ -64,19 +64,22 @@ public class PostServiceImpl implements PostService {
         }
 
 
+
+        post.setEditionDate(LocalDateTime.now());
         return postRepo.save(post);
     }
 
-    @Override
-    public void delete(int id) {
-
-    }
 
     @Override
     public Post readById(int id) {
         log.info("A post with id: " + id + " was read in PostServiceImpl");
         return postRepo.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Post with id: " + id + "has not been found"));
+    }
+    @Override
+    public void delete(int id) {
+
+        postRepo.delete(readById(id));
     }
 
     @Override
@@ -94,7 +97,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPostsByUser_Username(String username){
-        List<Post> posts = postRepo.getPostsByUser_Username(username);
+        List<Post> posts = postRepo.getPostsByUser_Username(username, Sort.by(Sort.Direction.DESC, "id"));
         return posts;
 
     }

@@ -1,7 +1,6 @@
 package ua.socialnetwork.controller;
 
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -12,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
+import ua.socialnetwork.repo.PostImageRepo;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
@@ -31,9 +31,11 @@ public class PostController {
     private final UserService userService;
     private final PostService postService;
 
-    public PostController(UserService userService, PostService postService) {
+    private final PostImageRepo postImageRepo;
+    public PostController(UserService userService, PostService postService, PostImageRepo postImageRepo) {
         this.userService = userService;
         this.postService = postService;
+        this.postImageRepo = postImageRepo;
     }
 
     @GetMapping("/feed")
@@ -67,7 +69,7 @@ public class PostController {
     }
 
 
-    @GetMapping("/edit/{post_id}")
+    @GetMapping("/update/{post_id}")
     public String editForm(@PathVariable("post_id") Integer id, Model model){
         Post post = postService.readById(id);
 
@@ -77,9 +79,12 @@ public class PostController {
 
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/update")
     public String edit(Post post, BindingResult result,
                        @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
+
+
+
 
         postService.update(post, postImage);
         post.setEditionDate(LocalDateTime.now());
@@ -88,6 +93,15 @@ public class PostController {
 
         return "redirect:/feed";
     }
+    @GetMapping("/delete/{post_id}")
+    public String delete(@PathVariable("post_id") Integer post_id){
+        postService.delete(post_id);
+
+
+        return "redirect:/feed";
+    }
+
+
 
 
     @GetMapping("/like/{post_id}")

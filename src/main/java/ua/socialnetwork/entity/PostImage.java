@@ -38,15 +38,12 @@ public class PostImage {
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
+    @OneToOne(mappedBy = "image",cascade = CascadeType.ALL) //cascade = CascadeType.ALL
     @JoinColumn(name = "post_id")
     private Post post;
 
 
 
-//    //, fetch = FetchType.EAGER
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private User user;
 
 
 

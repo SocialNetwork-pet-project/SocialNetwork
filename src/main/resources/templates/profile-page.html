@@ -1,6 +1,7 @@
 <main xmlns:th="http://www.thymeleaf.org">
     <header>
         <link rel="stylesheet" href="/profile-page.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         <div class="tb">
 <!--            todo upload own logo-->
             <div class="td" id="logo">
@@ -20,15 +21,15 @@
 <!--    TodoRefactor here-->
     <div id="profile-upper">
         <div id="profile-banner-image">
-            <img th:if="${user.images.size() > 1}" th:src="@{|/images/${image.get(1).getId()}|}">
-            <img th:if="${user.images.size() <= 1}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
+            <img th:if="${user.images.size() > 3}" th:src="@{|/images/${image.get(1).getId()}|}">
+            <img th:if="${user.images.size() <= 2}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
         </div>
 
         <div id="profile-d" >
             <div id="profile-pic" >
 
-                <img th:if="${user.images.size()  ==  2 }" th:src="@{|/images/${image.get(0).getId()}|}">
-                <img th:if="${user.images.size()  >  2 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
+                <img th:if="${user.images.size()  ==  2 }" th:src="@{|/images/${image.get(1).getId()}|}">
+                <img th:if="${user.images.size()  >  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
                 <img th:if="${user.images.size()  == 1 }" th:src="@{|/images/${image.get(0).getId()}|}">
 
 
@@ -71,31 +72,86 @@
             </div>
             <div class="td" id="m-col">
                 <div>
-<!--                    <div class="post">-->
-<!--                        <div class="tb">-->
-<!--                            <a href="#" class="td p-p-pic"><img src="https://imagizer.imageshack.com/img923/2452/zifFKH.jpg" alt="Rajeev's profile pic"></a>-->
-<!--                            <div class="td p-r-hdr">-->
-<!--                                <div class="p-u-info">-->
-<!--                                    <a href="#">Rajeev Singh</a> shared a memory with <a href="#">Himalaya Singh</a>-->
-<!--                                </div>-->
-<!--                                <div class="p-dt">-->
-<!--                                    <i class="material-icons">calendar_today</i>-->
-<!--                                    <span>January 28, 2015</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <a href="#" class="p-cnt-v">-->
-<!--                            <img src="https://imagizer.imageshack.com/img923/8568/6LwtUa.jpg">-->
-<!--                        </a>-->
-<!--                        <div>-->
-<!--                            <div class="p-acts">-->
+                    <div class="post" th:each="post, iter : ${posts}">
+                        <div class="post-top">
+                            <div class="dp">
+                                <img th:src="@{|/images/${post.getUser().getImages().get(0).getId()}|}" alt="" >
+                            </div>
+                            <div class="post-info">
+                                <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
+                                <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
+                                <span class="time" th:text="${post.getCreationDate()}"></span>
+                            </div>
+                            <i class="fas fa-edit"></i>
+                        </div>
+
+                        <div class="post-content">
+                            <div th:text="${post.body}"></div>
+
+                            <div id="post-image" th:if="${post.getImage() != null}" >
+                                <a th:href="'http://localhost:2402/post/images/' + ${post.getImage().id}" target="_blank" >
+                                    <img th:src="@{|/post/images/${post.getImage().id}|}"  />
+                                    <img th:if="${post.getImage() == null}" />
+                                </a>
+                            </div>
+
+                        </div>
 
 
-<!--                                <button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>-->
-<!--                                <button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                        <div class="post-bottom">
+
+                            <button class="like__btn">
+                                <span id="count" th:text="${post.likeCounter}"></span>
+                                <span id="icon" th:if="${post.liked}"><i class="fas fa-thumbs-up"></i></span>
+                                <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="far fa-thumbs-up"></i></a>
+                            </button>
+                            <button class="like__btn-2">
+                                <span id="count-2" th:text="${post.dislikeCounter}"></span>
+                                <span id="icon-2" th:if="${post.disliked}"><i class="fas fa-thumbs-down"></i></span>
+                                <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="far fa-thumbs-down"></i></a>
+                            </button>
+
+                            <!--                <span id="icon" th:if="${post.liked}"><i class="far fa-thumbs-up"></i></span>-->
+                            <!--                <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="fas fa-thumbs-up"></i></a>-->
+<!--                            <span th:if="${post.disliked}"><i class="glyphicon glyphicon-remove-sign text-info"></i></span>-->
+<!--                            <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="glyphicon glyphicon-remove-circle text-muted"></i></a>-->
+
+
+                            <!--                <button class="like__btn">-->
+
+                            <!--                    <span id="icon" th:unless="${post.liked}" ><i class="far fa-thumbs-up"></i></span>-->
+                            <!--                    <span id="count" th:text="${post.likeCounter}"></span>-->
+                            <!--                    <a th:href="@{|/posts/like/${post.id}|}" th:text="'Like'"><i class="fas fa-thumbs-up"></i></a>-->
+                            <!--                </button>-->
+                            <!--                <button  class="like__btn-2">-->
+
+                            <!--                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>-->
+                            <!--                    <span id="count-2" th:text="${post.dislikeCounter}" ></span>-->
+                            <!--                    <a th:href="@{|/posts/dislike/${post.id}|}">Dislike</a>-->
+
+                            <!--                </button>-->
+
+
+
+                            <!--                -->
+                            <!--                <div class="action">-->
+                            <!--                    <button id="green" class="btn"><a th:href="@{|/posts/like/${post.id}|}" ><i class="far fa-thumbs-up"></i></a></button>-->
+                            <!--                    <span>Like</span>-->
+                            <!--                </div>-->
+                            <!--                -->
+                            <!--                -->
+                            <!--                <div  class="action">-->
+                            <!--                    <button id="red" class="btn"><a th:href="@{|/posts/like/${post.id}|}"><i class="far fa-thumbs-down"></i></a></button>-->
+                            <!--                    <span>Dislike</span>-->
+                            <!--                </div>-->
+
+
+                            <div class="action">
+                                <i class="far fa-comment"></i>
+                                <span>Comment</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -103,45 +159,7 @@
 
         </div>
     </div>
-    <div class="post" th:each="post, iter : ${posts}">
-        <div class="post-top">
-            <div class="dp">
-                <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
-            </div>
-            <div class="post-info">
-                <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
-                <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
-                <span class="time" th:text="${post.getCreationDate()}"></span>
-            </div>
-            <i class="fas fa-edit"></i>
-        </div>
 
-        <div class="post-content">
-            <div th:text="${post.body}"></div>
-
-            <div>
-                <img th:if="${post.getImage() != null}"  th:src="@{|/post/images/${post.getImage().id}|}" />
-                <img th:if="${post.getImage() == null}" />
-            </div>
-
-        </div>
-
-
-        <div class="post-bottom">
-            <div class="action">
-                <i class="far fa-thumbs-up"></i>
-                <span>Like</span>
-            </div>
-            <div class="action">
-                <i class="far fa-thumbs-down"></i>
-                <span>Dislike</span>
-            </div>
-            <div class="action">
-                <i class="far fa-comment"></i>
-                <span>Comment</span>
-            </div>
-        </div>
-    </div>
 <!--    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">-->
 
     <a th:href="@{|/users/update/${user.getId()}|}">Update user</a>

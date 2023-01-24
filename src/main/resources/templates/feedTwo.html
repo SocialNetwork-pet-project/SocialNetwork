@@ -164,7 +164,8 @@
 <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
                     <span class="time" th:text="${post.getCreationDate()}"></span>
                 </div>
-                <i class="fas fa-edit"></i>
+
+                <a th:href="@{|/posts/update/${post.id}|}"><i class="fas fa-edit"></i></a>
             </div>
 
             <div class="post-content">
@@ -193,39 +194,6 @@
                     <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="far fa-thumbs-down"></i></a>
                 </button>
 
-<!--                <span id="icon" th:if="${post.liked}"><i class="far fa-thumbs-up"></i></span>-->
-<!--                <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="fas fa-thumbs-up"></i></a>-->
-                <span th:if="${post.disliked}"><i class="glyphicon glyphicon-remove-sign text-info"></i></span>
-                <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="glyphicon glyphicon-remove-circle text-muted"></i></a>
-
-
-<!--                <button class="like__btn">-->
-
-<!--                    <span id="icon" th:unless="${post.liked}" ><i class="far fa-thumbs-up"></i></span>-->
-<!--                    <span id="count" th:text="${post.likeCounter}"></span>-->
-<!--                    <a th:href="@{|/posts/like/${post.id}|}" th:text="'Like'"><i class="fas fa-thumbs-up"></i></a>-->
-<!--                </button>-->
-<!--                <button  class="like__btn-2">-->
-
-<!--                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>-->
-<!--                    <span id="count-2" th:text="${post.dislikeCounter}" ></span>-->
-<!--                    <a th:href="@{|/posts/dislike/${post.id}|}">Dislike</a>-->
-
-<!--                </button>-->
-
-
-
-<!--                -->
-<!--                <div class="action">-->
-<!--                    <button id="green" class="btn"><a th:href="@{|/posts/like/${post.id}|}" ><i class="far fa-thumbs-up"></i></a></button>-->
-<!--                    <span>Like</span>-->
-<!--                </div>-->
-<!--                -->
-<!--                -->
-<!--                <div  class="action">-->
-<!--                    <button id="red" class="btn"><a th:href="@{|/posts/like/${post.id}|}"><i class="far fa-thumbs-down"></i></a></button>-->
-<!--                    <span>Dislike</span>-->
-<!--                </div>-->
 
 
                 <div class="action">
