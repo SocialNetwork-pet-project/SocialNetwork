@@ -18,7 +18,7 @@
         </div>
         </div>
     </header>
-<!--    TodoRefactor here-->
+<!--    Todo Refactor here-->
     <div id="profile-upper">
         <div id="profile-banner-image">
             <img th:if="${user.images.size() > 3}" th:src="@{|/images/${image.get(1).getId()}|}">
@@ -33,7 +33,7 @@
                 <img th:if="${user.images.size()  == 1 }" th:src="@{|/images/${image.get(0).getId()}|}">
 
 
-<!--                <img th:if="${user.images.size()  >=  1 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">-->
+
 
 
                 <img th:if="${user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
@@ -110,41 +110,6 @@
                                 <span id="icon-2" th:if="${post.disliked}"><i class="fas fa-thumbs-down"></i></span>
                                 <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="far fa-thumbs-down"></i></a>
                             </button>
-
-                            <!--                <span id="icon" th:if="${post.liked}"><i class="far fa-thumbs-up"></i></span>-->
-                            <!--                <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="fas fa-thumbs-up"></i></a>-->
-<!--                            <span th:if="${post.disliked}"><i class="glyphicon glyphicon-remove-sign text-info"></i></span>-->
-<!--                            <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="glyphicon glyphicon-remove-circle text-muted"></i></a>-->
-
-
-                            <!--                <button class="like__btn">-->
-
-                            <!--                    <span id="icon" th:unless="${post.liked}" ><i class="far fa-thumbs-up"></i></span>-->
-                            <!--                    <span id="count" th:text="${post.likeCounter}"></span>-->
-                            <!--                    <a th:href="@{|/posts/like/${post.id}|}" th:text="'Like'"><i class="fas fa-thumbs-up"></i></a>-->
-                            <!--                </button>-->
-                            <!--                <button  class="like__btn-2">-->
-
-                            <!--                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>-->
-                            <!--                    <span id="count-2" th:text="${post.dislikeCounter}" ></span>-->
-                            <!--                    <a th:href="@{|/posts/dislike/${post.id}|}">Dislike</a>-->
-
-                            <!--                </button>-->
-
-
-
-                            <!--                -->
-                            <!--                <div class="action">-->
-                            <!--                    <button id="green" class="btn"><a th:href="@{|/posts/like/${post.id}|}" ><i class="far fa-thumbs-up"></i></a></button>-->
-                            <!--                    <span>Like</span>-->
-                            <!--                </div>-->
-                            <!--                -->
-                            <!--                -->
-                            <!--                <div  class="action">-->
-                            <!--                    <button id="red" class="btn"><a th:href="@{|/posts/like/${post.id}|}"><i class="far fa-thumbs-down"></i></a></button>-->
-                            <!--                    <span>Dislike</span>-->
-                            <!--                </div>-->
-
 
                             <div class="action">
                                 <i class="far fa-comment"></i>

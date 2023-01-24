@@ -52,7 +52,7 @@ public class PostController {
         model.addAttribute("userPrincipal", currentPrincipalName);
 
 
-        return "feedTwo";
+        return "feed";
     }
 
     @PostMapping("/new/{username}")
