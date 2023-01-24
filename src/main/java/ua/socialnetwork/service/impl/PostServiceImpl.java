@@ -4,10 +4,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.PostImage;
+import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
@@ -28,7 +30,7 @@ public class PostServiceImpl implements PostService {
         //TODO make validations and exc handler
         log.info("A post " + post.toString() + " was created in PostServiceImpl");
         ;
-        post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        post.setCreationDate(LocalDateTime.now());
         return postRepo.save(post);
     }
     @Override
@@ -43,13 +45,26 @@ public class PostServiceImpl implements PostService {
         //TODO make validations and exc handler
         log.info("A post " + post.toString() + " was created in PostServiceImpl");
         ;
-        post.setCreationDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        post.setCreationDate(LocalDateTime.now());
         return postRepo.save(post);
     }
 
     @Override
     public Post update(Post post) {
         return null;
+    }
+
+    @Override
+    public Post update(Post post, MultipartFile postImage) {
+        PostImage image;
+
+        if (postImage.getSize() != 0) {
+            image = toImageEntity(postImage);
+            post.setImageToPost(image);
+        }
+
+
+        return postRepo.save(post);
     }
 
     @Override
@@ -67,12 +82,21 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getAll() {
         //ToDO add validation and stuff later
-        return postRepo.findAll();
+
+
+        return postRepo.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Override
     public List<Post> getByUserId(int userId) {
         return null;
+    }
+
+    @Override
+    public List<Post> getPostsByUser_Username(String username){
+        List<Post> posts = postRepo.getPostsByUser_Username(username);
+        return posts;
+
     }
 
     @SneakyThrows

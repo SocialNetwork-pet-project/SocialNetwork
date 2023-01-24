@@ -10,6 +10,7 @@
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/feedTwo.css">
+
     <title>Socialhorse</title>
 </head>
 
@@ -59,8 +60,13 @@
             <li>
                 <span class="profile"></span>
                 <div class="profile-pic" >
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img   class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ></a>
 <!--                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img   src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>-->
+
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image != 0}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${#authentication.principal.image == 0}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
+
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
             </li>
@@ -151,14 +157,14 @@
         <div class="post" th:each="post, iter : ${posts}">
             <div class="post-top">
                 <div class="dp">
-                    <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
+                    <img th:src="@{|/images/${post.getUser().getImages().get(0).getId()}|}" alt="" >
                 </div>
                 <div class="post-info">
                     <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
 <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
                     <span class="time" th:text="${post.getCreationDate()}"></span>
                 </div>
-                <i class="fas fa-ellipsis-h"></i>
+                <i class="fas fa-edit"></i>
             </div>
 
             <div class="post-content">
@@ -174,19 +180,39 @@
 
             <div class="post-bottom">
 
-
                 <button class="like__btn">
-                    <a th:href="@{|/posts/like/${post.id}|}">
-                    <span id="icon"><i class="far fa-thumbs-up"></i></span>
-                    <span id="count">0</span> Like
-                    </a>
+                    <span id="count" th:text="${post.likeCounter}"></span>
+                    <span id="icon" th:if="${post.liked}"><i class="fas fa-thumbs-up"></i></span>
+                    <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="far fa-thumbs-up"></i></a>
                 </button>
-                <button  class="like__btn-2">
-                    <a th:href="@{|/posts/dislike/${post.id}|}">
-                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>
-                    <span id="count-2">0</span> Dislike
-                    </a>
+                <button class="like__btn-2">
+                    <span id="count-2" th:text="${post.dislikeCounter}"></span>
+                    <span id="icon-2" th:if="${post.disliked}"><i class="fas fa-thumbs-down"></i></span>
+                    <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="far fa-thumbs-down"></i></a>
                 </button>
+
+<!--                <span id="icon" th:if="${post.liked}"><i class="far fa-thumbs-up"></i></span>-->
+<!--                <a th:href="@{|/posts/like/${post.id}|}" th:unless="${post.liked}"><i class="fas fa-thumbs-up"></i></a>-->
+                <span th:if="${post.disliked}"><i class="glyphicon glyphicon-remove-sign text-info"></i></span>
+                <a th:href="@{|/posts/dislike/${post.id}|}" th:unless="${post.disliked}"><i class="glyphicon glyphicon-remove-circle text-muted"></i></a>
+
+
+<!--                <button class="like__btn">-->
+
+<!--                    <span id="icon" th:unless="${post.liked}" ><i class="far fa-thumbs-up"></i></span>-->
+<!--                    <span id="count" th:text="${post.likeCounter}"></span>-->
+<!--                    <a th:href="@{|/posts/like/${post.id}|}" th:text="'Like'"><i class="fas fa-thumbs-up"></i></a>-->
+<!--                </button>-->
+<!--                <button  class="like__btn-2">-->
+
+<!--                    <span id="icon-2"><i class="far fa-thumbs-down"></i></span>-->
+<!--                    <span id="count-2" th:text="${post.dislikeCounter}" ></span>-->
+<!--                    <a th:href="@{|/posts/dislike/${post.id}|}">Dislike</a>-->
+
+<!--                </button>-->
+
+
+
 <!--                -->
 <!--                <div class="action">-->
 <!--                    <button id="green" class="btn"><a th:href="@{|/posts/like/${post.id}|}" ><i class="far fa-thumbs-up"></i></a></button>-->
@@ -288,43 +314,43 @@
 
 </div>
 <script>
-    const likeBtn = document.querySelector(".like__btn");
-    let likeIcon = document.querySelector("#icon"),
-        count = document.querySelector("#count");
-
-    let clicked = false;
-
-
-    likeBtn.addEventListener("click", () => {
-        if (!clicked) {
-            clicked = true;
-            likeIcon.innerHTML = `<i class="fas fa-thumbs-up"></i>`;
-            count.textContent++;
-        } else {
-            clicked = false;
-            likeIcon.innerHTML = `<i class="far fa-thumbs-up"></i>`;
-            count.textContent--;
-        }
-    });
-
-    const likeBtn2 = document.querySelector(".like__btn-2");
-    let likeIcon2 = document.querySelector("#icon-2"),
-        count2 = document.querySelector("#count-2");
-
-    let clicked2 = false;
-
-
-    likeBtn2.addEventListener("click", () => {
-        if (!clicked2) {
-            clicked2 = true;
-            likeIcon2.innerHTML = `<i class="fas fa-thumbs-down"></i>`;
-            count2.textContent++;
-        } else {
-            clicked2 = false;
-            likeIcon2.innerHTML = `<i class="far fa-thumbs-down"></i>`;
-            count2.textContent--;
-        }
-    });
+    // const likeBtn = document.querySelector(".like__btn");
+    // let likeIcon = document.querySelector("#icon"),
+    //     count = document.querySelector("#count");
+    //
+    // let clicked = false;
+    //
+    //
+    // likeBtn.addEventListener("click", () => {
+    //     if (!clicked) {
+    //         clicked = true;
+    //         likeIcon.innerHTML = `<i class="fas fa-thumbs-up"></i>`;
+    //         count.textContent++;
+    //     } else {
+    //         clicked = false;
+    //         likeIcon.innerHTML = `<i class="far fa-thumbs-up"></i>`;
+    //         count.textContent--;
+    //     }
+    // });
+    //
+    // const likeBtn2 = document.querySelector(".like__btn-2");
+    // let likeIcon2 = document.querySelector("#icon-2"),
+    //     count2 = document.querySelector("#count-2");
+    //
+    // let clicked2 = false;
+    //
+    //
+    // likeBtn2.addEventListener("click", () => {
+    //     if (!clicked2) {
+    //         clicked2 = true;
+    //         likeIcon2.innerHTML = `<i class="fas fa-thumbs-down"></i>`;
+    //         count2.textContent++;
+    //     } else {
+    //         clicked2 = false;
+    //         likeIcon2.innerHTML = `<i class="far fa-thumbs-down"></i>`;
+    //         count2.textContent--;
+    //     }
+    // });
 
 
 </script>

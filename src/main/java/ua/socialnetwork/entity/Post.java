@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+
+
 @Table(name = "post")
 public class Post {
 
@@ -25,9 +27,10 @@ public class Post {
     @Column(name = "body")
     private String body;
 
+
+    //TODO make like/dislike attacked to an user
     @Column(name = "liked")
     private boolean liked;
-
     @Column(name = "disliked")
     private boolean disliked;
 
@@ -38,21 +41,18 @@ public class Post {
     private int dislikeCounter;
 
     @Column(name = "creationDate")
-    private String creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "editionDate")
-    private String editionDate;
+    private LocalDateTime editionDate;
 
     @Column(name = "deletionDate")
-    private String deletionDate;
+    private LocalDateTime deletionDate;
 
     //here a multiple posts has 1 user, so @ManyToOne
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;   //owner ?? TODO
-    public int getId() {
-        return id;
-    }
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;

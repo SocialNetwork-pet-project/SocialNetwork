@@ -42,7 +42,7 @@ public class ImageController {
         //TODO Add exception handler here
         PostImage image =  postImageRepo.findById(id).orElse(null);
 
-        return ResponseEntity.ok().header("fileName", image.getOriginalFileName()).contentType(MediaType.valueOf(image.getContentType())).contentLength(image.getSize()).body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+        return ResponseEntity.ok().header("postFileName", image.getOriginalFileName()).contentType(MediaType.valueOf(image.getContentType())).contentLength(image.getSize()).body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
 
 
     }

@@ -71,36 +71,75 @@
             </div>
             <div class="td" id="m-col">
                 <div>
-                    <div class="post">
-                        <div class="tb">
-                            <a href="#" class="td p-p-pic"><img src="https://imagizer.imageshack.com/img923/2452/zifFKH.jpg" alt="Rajeev's profile pic"></a>
-                            <div class="td p-r-hdr">
-                                <div class="p-u-info">
-                                    <a href="#">Rajeev Singh</a> shared a memory with <a href="#">Himalaya Singh</a>
-                                </div>
-                                <div class="p-dt">
-                                    <i class="material-icons">calendar_today</i>
-                                    <span>January 28, 2015</span>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" class="p-cnt-v">
-                            <img src="https://imagizer.imageshack.com/img923/8568/6LwtUa.jpg">
-                        </a>
-                        <div>
-                            <div class="p-acts">
+<!--                    <div class="post">-->
+<!--                        <div class="tb">-->
+<!--                            <a href="#" class="td p-p-pic"><img src="https://imagizer.imageshack.com/img923/2452/zifFKH.jpg" alt="Rajeev's profile pic"></a>-->
+<!--                            <div class="td p-r-hdr">-->
+<!--                                <div class="p-u-info">-->
+<!--                                    <a href="#">Rajeev Singh</a> shared a memory with <a href="#">Himalaya Singh</a>-->
+<!--                                </div>-->
+<!--                                <div class="p-dt">-->
+<!--                                    <i class="material-icons">calendar_today</i>-->
+<!--                                    <span>January 28, 2015</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <a href="#" class="p-cnt-v">-->
+<!--                            <img src="https://imagizer.imageshack.com/img923/8568/6LwtUa.jpg">-->
+<!--                        </a>-->
+<!--                        <div>-->
+<!--                            <div class="p-acts">-->
 
 
-                                <button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
-                                <button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
+<!--                                <button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>-->
+<!--                                <button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
 
 
 
+        </div>
+    </div>
+    <div class="post" th:each="post, iter : ${posts}">
+        <div class="post-top">
+            <div class="dp">
+                <img th:src="@{|/images/${#authentication.principal.image}|}" alt="" >
+            </div>
+            <div class="post-info">
+                <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
+                <!--                    todo make proper show of creation data(1 day ago, 1 week ago , etc)-->
+                <span class="time" th:text="${post.getCreationDate()}"></span>
+            </div>
+            <i class="fas fa-edit"></i>
+        </div>
+
+        <div class="post-content">
+            <div th:text="${post.body}"></div>
+
+            <div>
+                <img th:if="${post.getImage() != null}"  th:src="@{|/post/images/${post.getImage().id}|}" />
+                <img th:if="${post.getImage() == null}" />
+            </div>
+
+        </div>
+
+
+        <div class="post-bottom">
+            <div class="action">
+                <i class="far fa-thumbs-up"></i>
+                <span>Like</span>
+            </div>
+            <div class="action">
+                <i class="far fa-thumbs-down"></i>
+                <span>Dislike</span>
+            </div>
+            <div class="action">
+                <i class="far fa-comment"></i>
+                <span>Comment</span>
+            </div>
         </div>
     </div>
 <!--    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">-->

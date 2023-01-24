@@ -12,21 +12,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
-import ua.socialnetwork.entity.User;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
+
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping({"/posts", "/"})
-@AllArgsConstructor
+
 @Slf4j
 public class PostController {
+    private int likeCounter;
+    private int dislikeCounter;
 
-    private UserService userService;
-    private PostService postService;
+
+    private final UserService userService;
+    private final PostService postService;
+
+    public PostController(UserService userService, PostService postService) {
+        this.userService = userService;
+        this.postService = postService;
+    }
 
     @GetMapping("/feed")
     public String getAllTwo(Model model){
@@ -59,12 +67,41 @@ public class PostController {
     }
 
 
+    @GetMapping("/edit/{post_id}")
+    public String editForm(@PathVariable("post_id") Integer id, Model model){
+        Post post = postService.readById(id);
+
+        model.addAttribute("post", post);
+
+        return "update-post";
+
+    }
+
+    @PostMapping("/edit")
+    public String edit(Post post, BindingResult result,
+                       @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
+
+        postService.update(post, postImage);
+        post.setEditionDate(LocalDateTime.now());
+
+
+
+        return "redirect:/feed";
+    }
 
 
     @GetMapping("/like/{post_id}")
     public String like(@PathVariable("post_id") Integer post_id, Model model){
+
         Post post = postService.readById(post_id);
         post.setLiked(true);
+        likeCounter++;
+        if(dislikeCounter != 0){
+            dislikeCounter--;
+
+        }
+        post.setLikeCounter(likeCounter);
+        post.setDislikeCounter(dislikeCounter);
         post.setDisliked(false);
 
         postService.create(post);
@@ -75,7 +112,13 @@ public class PostController {
     public String dislike(@PathVariable("post_id") Integer post_id, Model model){
         Post post = postService.readById(post_id);
         post.setDisliked(true);
+
+        if(likeCounter != 0){
+            likeCounter--;
+        }
         post.setLiked(false);
+        post.setDislikeCounter(dislikeCounter);
+        post.setDislikeCounter(likeCounter);
         postService.create(post);
         return "redirect:/feed";
 

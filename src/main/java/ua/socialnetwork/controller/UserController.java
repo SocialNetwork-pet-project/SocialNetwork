@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -19,6 +22,7 @@ import java.time.LocalDateTime;
 public class UserController {
 
     UserService userService;
+    PostService postService;
 
     @GetMapping("/create")
      public String create(Model model){
@@ -96,9 +100,13 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
+
         User user = userService.readByUsername(username);
+        List<Post> posts = postService.getPostsByUser_Username(username);
+        model.addAttribute("posts", posts);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
+
 
         model.addAttribute("size", user.getImages().size());
         return "profile-page";
