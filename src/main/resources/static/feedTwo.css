@@ -429,7 +429,8 @@ nav .nav-right a > i{
     border-radius: 3px;
     color: #fff;
     /*background-color: #ffc100;*/
-    background-color: #d74;
+    /*background-color: #d74;*/
+    background-color: forestgreen;
     border: 0;
     transition: 0.2s;
     overflow: hidden;
@@ -456,31 +457,32 @@ nav .nav-right a > i{
     border-radius: 3px;
     font-family:sans-serif;
     font-size: 16px;
-    background: #d74;
+    /*background: #d74;*/
+    background: forestgreen;
     color: white;
     height: 46px;
     width: 126px;
 }
 .form-submit-button:hover{
-    background-color: #d9a400;
+    /*background-color: #d9a400;*/
+    background-color: forestgreen;
 }
 .button-profile {
 
-    float: left;
     width: 80px;
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
     background-color: blue;
-    /* commented for demo
-    float: left;
-    margin-left: 125px;
-    margin-top: 20px;
-    */
+    /*commented for demo*/
+    /*float: left;*/
+    /*margin-left: 10px;*/
+    /*margin-top: 40px;*/
+
 
     /*for demo*/
     display:inline-block;
-    vertical-align:middle;
+    vertical-align: baseline;
 }
 .button-profile img{
     float: left;
@@ -491,24 +493,11 @@ nav .nav-right a > i{
 
 
 
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
-/** {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    box-sizing: border-box;*/
-/*}*/
-/*body {*/
-/*    background: #e8efff;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*}*/
-
 .like__btn {
     padding: 10px 15px;
-    background: #d74;
+    /*background: #d74;*/
+    background: forestgreen;
+
     font-size: 18px;
     font-family: "Open Sans", sans-serif;
     border-radius: 5px;
@@ -519,7 +508,7 @@ nav .nav-right a > i{
 }
 .like__btn-2 {
     padding: 10px 15px;
-    background: #d74;
+    background: forestgreen;
     font-size: 18px;
     font-family: "Open Sans", sans-serif;
     border-radius: 5px;
@@ -527,4 +516,14 @@ nav .nav-right a > i{
     outline: none;
     border: none;
     cursor: pointer;
+}
+
+#post-image {
+    width: 500px;
+    height: 170px;
+}
+
+#post-image img {
+    max-width: 100%;
+    max-height: 100%;
 }

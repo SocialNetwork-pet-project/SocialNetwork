@@ -170,9 +170,11 @@
             <div class="post-content">
                 <div th:text="${post.body}"></div>
 
-                <div>
-                    <img th:if="${post.getImage() != null}"  th:src="@{|/post/images/${post.getImage().id}|}" />
+                <div id="post-image" th:if="${post.getImage() != null}" >
+                    <a th:href="'http://localhost:2402/post/images/' + ${post.getImage().id}" target="_blank" >
+                    <img th:src="@{|/post/images/${post.getImage().id}|}"  />
                     <img th:if="${post.getImage() == null}" />
+                    </a>
                 </div>
 
             </div>
