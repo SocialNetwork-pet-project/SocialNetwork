@@ -3,9 +3,11 @@ package ua.socialnetwork.security;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Comment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
+@Component
 public class SecurityUser implements UserDetails {
 
     private User user;
@@ -74,7 +77,11 @@ public class SecurityUser implements UserDetails {
         return user.getFirstName();
     }
     public int getImage(){
-        return user.getImages().get(0).getId();
+        if(user.getImages().get(0).getId() != 0 || user.getImages().get(0).getId() != null  ){
+            return user.getImages().get(0).getId();
+
+        }
+        return -1;
     }
 
 }

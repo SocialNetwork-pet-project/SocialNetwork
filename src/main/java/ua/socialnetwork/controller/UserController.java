@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
@@ -22,7 +23,10 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
+
     PostService postService;
+    SecurityUser su;
+
 
     @GetMapping("/create")
      public String create(Model model){
@@ -100,12 +104,15 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
+        int imgId = su.getImage();
+
 
         User user = userService.readByUsername(username);
         List<Post> posts = postService.getPostsByUser_Username(username);
         model.addAttribute("posts", posts);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
+        model.addAttribute("imgId",imgId);
 
 
         model.addAttribute("size", user.getImages().size());

@@ -5,7 +5,6 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -59,13 +58,13 @@
         <ul>
             <li>
                 <span class="profile"></span>
-                <div class="profile-pic" >
+                <div class="profile-pic" th:if="${#authentication.principal.username != null}">
 
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ></a>
+<!--                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ></a>-->
 <!--                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img   src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>-->
 
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img th:if="${#authentication.principal.image != 0}"  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
-                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img th:if="${#authentication.principal.image == 0}"  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"  ><img  class="button-profile" th:src="@{|/images/${#authentication.principal.image}|}" alt="" ></a>
+                    <a  th:href="@{|/users/${#authentication.principal.username}|}"><img  src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" ></a>
 
                 </div>
                 <p th:href="@{|/users/${#authentication.principal.username}|}" th:text="${#authentication.principal.fullName}"></p>
@@ -125,7 +124,7 @@
 
 
 
-        <form enctype="multipart/form-data" th:action="@{|/posts/new/${#authentication.principal.username}|}" th:object="${newPost}"  method="post">
+        <form enctype="multipart/form-data" th:if="${#authentication.principal.username != null}" th:action="@{|/posts/new/${#authentication.principal.username}|}" th:object="${newPost}"  method="post">
             <div class="post create">
                 <div class="post-top">
                     <div class="dp">
@@ -165,7 +164,7 @@
                     <span class="time" th:text="${post.getCreationDate()}"></span>
                 </div>
 
-                <a th:href="@{|/posts/update/${post.id}|}"><i class="fas fa-edit"></i></a>
+                <a th:href="@{|/posts/update/${post.id}|}" style="position: relative;left: 291px"><i class="fas fa-edit"></i></a>
             </div>
 
             <div class="post-content">
@@ -275,7 +274,8 @@
             </a>
 
         </div>
-        <div th:text="${userPrincipal}"> fsdgs</div>
+
+        <div th:text="${auth.principal.username}"> fsdgs</div>
 
 
 
@@ -283,49 +283,7 @@
     </div>
 
 </div>
-<script>
-    // const likeBtn = document.querySelector(".like__btn");
-    // let likeIcon = document.querySelector("#icon"),
-    //     count = document.querySelector("#count");
-    //
-    // let clicked = false;
-    //
-    //
-    // likeBtn.addEventListener("click", () => {
-    //     if (!clicked) {
-    //         clicked = true;
-    //         likeIcon.innerHTML = `<i class="fas fa-thumbs-up"></i>`;
-    //         count.textContent++;
-    //     } else {
-    //         clicked = false;
-    //         likeIcon.innerHTML = `<i class="far fa-thumbs-up"></i>`;
-    //         count.textContent--;
-    //     }
-    // });
-    //
-    // const likeBtn2 = document.querySelector(".like__btn-2");
-    // let likeIcon2 = document.querySelector("#icon-2"),
-    //     count2 = document.querySelector("#count-2");
-    //
-    // let clicked2 = false;
-    //
-    //
-    // likeBtn2.addEventListener("click", () => {
-    //     if (!clicked2) {
-    //         clicked2 = true;
-    //         likeIcon2.innerHTML = `<i class="fas fa-thumbs-down"></i>`;
-    //         count2.textContent++;
-    //     } else {
-    //         clicked2 = false;
-    //         likeIcon2.innerHTML = `<i class="far fa-thumbs-down"></i>`;
-    //         count2.textContent--;
-    //     }
-    // });
-
-
-</script>
 
 </body>
-
 
 </html>

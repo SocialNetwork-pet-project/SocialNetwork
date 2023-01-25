@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
@@ -17,7 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-
+@Component
 @EqualsAndHashCode
 @Table(name = "users")
 public class User {

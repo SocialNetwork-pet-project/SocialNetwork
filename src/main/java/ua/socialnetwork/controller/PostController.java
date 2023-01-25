@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping({"/posts", "/"})
-
 @Slf4j
 public class PostController {
     private int likeCounter;
@@ -31,13 +30,12 @@ public class PostController {
     private final UserService userService;
     private final PostService postService;
 
-    private final PostImageRepo postImageRepo;
-    public PostController(UserService userService, PostService postService, PostImageRepo postImageRepo) {
+
+    public PostController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
-        this.postImageRepo = postImageRepo;
     }
-
+    //ToDO make validation and exc handling
     @GetMapping("/feed")
     public String getAllTwo(Model model){
         model.addAttribute("posts", postService.getAll());
@@ -45,11 +43,9 @@ public class PostController {
 
 
 
-
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object currentPrincipalName = authentication.getCredentials();
-        model.addAttribute("userPrincipal", currentPrincipalName);
+
+        model.addAttribute("auth", authentication);
 
 
         return "feed";
@@ -121,41 +117,23 @@ public class PostController {
         postService.create(post);
         return "redirect:/feed";
 
+
     }
     @GetMapping("/dislike/{post_id}")
     public String dislike(@PathVariable("post_id") Integer post_id, Model model){
         Post post = postService.readById(post_id);
         post.setDisliked(true);
-
+        dislikeCounter++;
         if(likeCounter != 0){
             likeCounter--;
+
         }
-        post.setLiked(false);
+        post.setLikeCounter(likeCounter);
         post.setDislikeCounter(dislikeCounter);
-        post.setDislikeCounter(likeCounter);
+        post.setLiked(false);
+
         postService.create(post);
         return "redirect:/feed";
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @GetMapping("/principal")
-    public String getPrincipal(@CurrentSecurityContext(expression = "authentication.principal")
-                               Principal principal) {
-        return principal.getName();
-    }
-
-
-
 }
