@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.repo.PostImageRepo;
+import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
@@ -29,21 +30,27 @@ public class PostController {
 
     private final UserService userService;
     private final PostService postService;
+    private final SecurityUser authData;
 
 
-    public PostController(UserService userService, PostService postService) {
+    public PostController(UserService userService, PostService postService, SecurityUser authData) {
         this.userService = userService;
         this.postService = postService;
+        this.authData = authData;
     }
+
     //ToDO make validation and exc handling
     @GetMapping("/feed")
     public String getAllTwo(Model model){
+        boolean ifImageIsPresent = authData.imageIsPresent();;
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
+        model.addAttribute("ifImageIsPresent", ifImageIsPresent);
 
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
         model.addAttribute("auth", authentication);
 

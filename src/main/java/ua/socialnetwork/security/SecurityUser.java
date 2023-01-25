@@ -77,11 +77,18 @@ public class SecurityUser implements UserDetails {
         return user.getFirstName();
     }
     public int getImage(){
-        if(user.getImages().get(0).getId() != 0 || user.getImages().get(0).getId() != null  ){
+        if(user.getImages().size() != 0 || user.getImages().get(1) != null  ){
             return user.getImages().get(0).getId();
 
         }
         return -1;
+    }
+    public boolean imageIsPresent(){
+        if(user.getImages().size() >= 1) {
+            return true;
+        }
+        return false;
+
     }
 
 }

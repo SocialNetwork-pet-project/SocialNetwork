@@ -104,7 +104,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
-        int imgId = su.getImage();
+
 
 
         User user = userService.readByUsername(username);
@@ -112,7 +112,7 @@ public class UserController {
         model.addAttribute("posts", posts);
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
-        model.addAttribute("imgId",imgId);
+
 
 
         model.addAttribute("size", user.getImages().size());
