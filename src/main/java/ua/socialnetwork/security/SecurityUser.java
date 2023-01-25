@@ -4,6 +4,7 @@ package ua.socialnetwork.security;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Comment;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,16 +12,18 @@ import org.springframework.stereotype.Component;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
-@Component
 public class SecurityUser implements UserDetails {
 
-    private User user;
+
+
+    private  User user;
 
 
 
@@ -76,19 +79,11 @@ public class SecurityUser implements UserDetails {
     public String getFirstName(){
         return user.getFirstName();
     }
-    public int getImage(){
-        if(user.getImages().size() != 0 || user.getImages().get(1) != null  ){
-            return user.getImages().get(0).getId();
-
-        }
-        return -1;
+    public List<UserImage> getImages(){
+        return user.getImages();
     }
-    public boolean imageIsPresent(){
-        if(user.getImages().size() >= 1) {
-            return true;
-        }
-        return false;
-
+    public int getImage() {
+        return user.getImages().get(0).getId();
     }
 
 }

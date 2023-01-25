@@ -25,7 +25,7 @@ public class UserController {
     UserService userService;
 
     PostService postService;
-    SecurityUser su;
+
 
 
     @GetMapping("/create")

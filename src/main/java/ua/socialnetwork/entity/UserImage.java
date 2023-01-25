@@ -43,8 +43,4 @@ public class UserImage {
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-
-
-
-
 }

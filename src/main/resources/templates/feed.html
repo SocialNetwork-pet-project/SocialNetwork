@@ -156,7 +156,8 @@
         <div class="post" th:each="post, iter : ${posts}">
             <div class="post-top">
                 <div class="dp">
-                    <img th:src="@{|/images/${post.getUser().getImages().get(0).getId()}|}" alt="" >
+                    <img th:if="${ifImageIsPresent == true}" th:src="@{|/images/${post.getUser().getImages().get(0).getId()}|}" alt="" >
+                    <img th:if="${ifImageIsPresent == false}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png" alt="" >
                 </div>
                 <div class="post-info">
                     <p class="name" th:text="${post.getUser().getFirstName() + ' ' +  post.getUser().getLastName()}"></p>
@@ -276,6 +277,7 @@
         </div>
 
         <div th:text="${auth.principal.username}"> fsdgs</div>
+        <div th:text="${pr}"> fsdgs</div>
 
 
 

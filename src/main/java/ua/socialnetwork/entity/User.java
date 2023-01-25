@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Component
 @EqualsAndHashCode
 @Table(name = "users")
 public class User {
@@ -84,8 +83,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
     private List<UserImage> images = new ArrayList<>();
-
-
 
 
 

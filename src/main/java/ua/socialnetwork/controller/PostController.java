@@ -2,8 +2,10 @@ package ua.socialnetwork.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
-import ua.socialnetwork.repo.PostImageRepo;
+import ua.socialnetwork.entity.User;
 import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
@@ -23,6 +25,7 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping({"/posts", "/"})
 @Slf4j
+
 public class PostController {
     private int likeCounter;
     private int dislikeCounter;
@@ -30,26 +33,46 @@ public class PostController {
 
     private final UserService userService;
     private final PostService postService;
-    private final SecurityUser authData;
 
 
-    public PostController(UserService userService, PostService postService, SecurityUser authData) {
+
+
+
+    public PostController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
-        this.authData = authData;
     }
+
+
 
     //ToDO make validation and exc handling
     @GetMapping("/feed")
+
     public String getAllTwo(Model model){
-        boolean ifImageIsPresent = authData.imageIsPresent();;
+
+        boolean ifImageIsPresent = false;
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        SecurityUser u = (SecurityUser) authentication.getPrincipal();
+
+        if(u.getImages().size() > 0){
+            ifImageIsPresent = true;
+        }
+
+
+
+
+
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
+
+
+
         model.addAttribute("ifImageIsPresent", ifImageIsPresent);
+//        model.addAttribute("pr", user.getName());
 
-
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
         model.addAttribute("auth", authentication);
