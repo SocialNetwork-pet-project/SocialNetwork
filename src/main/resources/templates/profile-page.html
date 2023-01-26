@@ -21,17 +21,15 @@
 <!--    Todo Refactor here-->
     <div id="profile-upper">
         <div id="profile-banner-image">
-            <img th:if="${user.images.size() > 3}" th:src="@{|/images/${image.get(1).getId()}|}">
-            <img th:if="${user.images.size() < 2}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
-            <img th:if="${user.images.size() == 2}" th:src="@{|/images/${image.get(1).getId()}|}">
+            <img th:if="${user.images.size() >= 2}" th:src="@{|/images/${image.get(1).getId()}|}">
+            <img th:if="${user.images.size() == 1}" src="https://wallpapers.com/images/hd/hd-country-life-at-night-vvxmbqzkr4uumuni.jpg">
         </div>
 
         <div id="profile-d" >
             <div id="profile-pic" >
 
-                <img th:if="${user.images.size()  ==  2 }" th:src="@{|/images/${image.get(0).getId()}|}">
-                <img th:if="${user.images.size()  >  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
-                <img th:if="${user.images.size()  == 1 }" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size()  <=  2 }" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${user.images.size()  >=  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
                 <img th:if="${user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
             </div>
 <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->

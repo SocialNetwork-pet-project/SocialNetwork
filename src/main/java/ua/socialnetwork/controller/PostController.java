@@ -62,17 +62,11 @@ public class PostController {
         }
 
 
-
-
-
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
 
 
-
         model.addAttribute("ifImageIsPresent", ifImageIsPresent);
-//        model.addAttribute("pr", user.getName());
-
 
 
         model.addAttribute("auth", authentication);

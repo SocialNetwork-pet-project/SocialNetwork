@@ -86,4 +86,14 @@ public class SecurityUser implements UserDetails {
         return user.getImages().get(0).getId();
     }
 
+    public int getImageForFeed(){
+        List<UserImage> out = user.getImages();
+
+        if(out.size() == 1 || out.size() == 2 ){
+            return out.get(0).getId();
+        }
+        return out.get(user.getImages().size() -1).getId();
+
+
+    }
 }
