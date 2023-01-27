@@ -42,14 +42,27 @@
 
 
 
+
+
         <div id="black-grd"></div>
+
     </div>
     <div id="main-content">
         <div class="tb">
             <div class="td" id="l-col">
+<!--                Make this button invisible if we are on own page-->
+                    <button class="button-44" role="button">Add Friend</button>
+                    <button class="button-44" role="button">Write Msg</button>
+                <br><br>
+                    <div>
+                        <button class="button-44" role="button">Follow</button>
+                        <button class="button-44" role="button"><a th:href="@{|/users/update/${user.getId()}|}">Update user</a></button>
+                    </div>
+
+
                <p th:text="${user.getEmail()}"></p>
                <p th:text="${user.getCountry()}"></p>
-               <p th:text="${user.getAge() + ' years'}"></p>
+               <p th:if="${user.getAge() != 0}" th:text="${user.getAge() + ' years'}"></p>
 
                 <div class="l-cnt">
                     <div class="cnt-label">
@@ -61,7 +74,6 @@
                         <div id="u-occ"></div>
                     </div>
                 </div>
-
                 <div id="t-box">
 <!--                    ToDo add own pages here -->
                     <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Advertising</a> <a href="#">Ad Choices</a> <a href="#">Cookies</a> <span id="t-more">More<i class="material-icons">arrow_drop_down</i></span>
@@ -120,12 +132,14 @@
 
 
 
+
+
         </div>
     </div>
 
 <!--    <img th:src="@{|/images/${imageBackground.getId()}|}" alt="">-->
 
-    <a th:href="@{|/users/update/${user.getId()}|}">Update user</a>
+
     <script src="https://use.fontawesome.com/fe459689b4.js"></script>
     <script>var btn1 = document.querySelector('#green');
     var btn2 = document.querySelector('#red');
