@@ -3,13 +3,17 @@ package ua.socialnetwork.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "images")
+@ToString
+@EqualsAndHashCode
 public class UserImage {
 
 
@@ -34,17 +38,9 @@ public class UserImage {
     @Lob
     private byte[] bytes;
 
-//    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
-
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //, fetch = FetchType.EAGER
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-
-
-
-
 
 }

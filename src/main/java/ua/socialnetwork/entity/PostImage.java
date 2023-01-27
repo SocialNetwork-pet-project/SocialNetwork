@@ -3,14 +3,18 @@ package ua.socialnetwork.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "background")
-public class UserBackgroundImage {
+@Table(name = "postImages")
+@ToString
+@EqualsAndHashCode
+public class PostImage {
 
 
     @Id
@@ -34,14 +38,12 @@ public class UserBackgroundImage {
     @Lob
     private byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.ALL) //cascade = CascadeType.ALL
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToOne(mappedBy = "image",cascade = CascadeType.ALL) //cascade = CascadeType.ALL
+    @JoinColumn(name = "post_id")
+    private Post post;
 
 
 
-//    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-//    private User user;
 
 
 

@@ -25,11 +25,18 @@ public class Post {
     @Column(name = "body")
     private String body;
 
+
+    //TODO make like/dislike attacked to an user
     @Column(name = "liked")
     private boolean liked;
-
     @Column(name = "disliked")
     private boolean disliked;
+
+    @Column(name = "likeCounter")
+    private int likeCounter;
+
+    @Column(name = "dislikeCounter")
+    private int dislikeCounter;
 
     @Column(name = "creationDate")
     private LocalDateTime creationDate;
@@ -44,24 +51,39 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;   //owner ?? TODO
-    public int getId() {
-        return id;
-    }
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private PostImage image;
+
+
+    public void setImageToPost(PostImage userImage){
+
+        userImage.setPost(this);
+        image = userImage; //?
+    }
 
     @Override
     public String toString() {
         return "Post{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", liked=" + liked +
+                ", disliked=" + disliked +
                 ", creationDate=" + creationDate +
-                ", user=" + user +
+                ", editionDate=" + editionDate +
+                ", deletionDate=" + deletionDate +
+                ", comments=" + comments +
                 '}';
     }
 
-//    public String getTitle() {
-//        return title;
-//    }
+
+
+
+
+
+
 }

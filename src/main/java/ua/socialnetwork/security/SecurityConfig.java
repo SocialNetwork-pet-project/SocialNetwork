@@ -21,9 +21,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/posts").permitAll()
+                .authorizeHttpRequests()
                 .requestMatchers("/users/create").permitAll()
-                .requestMatchers("/a").permitAll()
+                .requestMatchers("/feed").permitAll()
                 .requestMatchers("/users/create/continue/**").permitAll()
                 .and()
 
@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/posts", true)
+                .defaultSuccessUrl("/feed", true)
                 .and()
 
 

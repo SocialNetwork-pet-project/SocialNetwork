@@ -8,12 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
-import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 import ua.socialnetwork.service.impl.UserServiceImpl;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -22,9 +20,7 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
-    UserServiceImpl userServiceimpl;
-
-//    UserRepo userRepository;
+    UserServiceImpl userServiceImpl;
 
     @GetMapping("/create")
      public String create(Model model){
@@ -95,10 +91,9 @@ public class UserController {
 
         return "redirect:/login";
     }
-
     @GetMapping("/search")
     public String getAll(Model model){
-        model.addAttribute("users", userServiceimpl.getAll());
+        model.addAttribute("users", userServiceImpl.getAll());
         return "Searchbar";
     }
 
@@ -115,9 +110,31 @@ public class UserController {
 //        return "profile-page";
 //    }
 
+//    @GetMapping("/get/a")
+//    public String a(){
+//        return "login-page";
+//    }
+
+
+
+    @GetMapping("/{username}")
+    public String getUser(@PathVariable("username") String username, Model model){
+        User user = userService.readByUsername(username);
+        model.addAttribute("user", user);
+        model.addAttribute("image", user.getImages());
+
+        model.addAttribute("size", user.getImages().size());
+        return "profile-page";
+
+
+    }
+
     @GetMapping("/get/a")
     public String a(){
         return "login-page";
     }
+
+
+
 
 }
