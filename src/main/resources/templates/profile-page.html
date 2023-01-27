@@ -28,9 +28,10 @@
         <div id="profile-d" >
             <div id="profile-pic" >
 
-                <img th:if="${user.images.size()  <=  2 }" th:src="@{|/images/${image.get(0).getId()}|}">
-                <img th:if="${user.images.size()  >=  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
-                <img th:if="${user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                <img th:if="${imageIsPresent == false and user.images.size() == 0}" src="https://www.ohlq.com/ui/dist/assets/toolkit/images/product/no-product-image.png">
+                <img th:if="${imageIsPresent == true and user.images.size()  <=  2 and user.images.size()  >  0 }" th:src="@{|/images/${image.get(0).getId()}|}">
+                <img th:if="${imageIsPresent == true and user.images.size()  >=  3 }" th:src="@{|/images/${image.get(image.size() - 1).getId()}|}">
+
             </div>
 <!--            ToDo add if image is not present -> add custom image, like 'unavailable"-->
             <div id="u-name" th:text="${user.getFirstName() + ' '+ user.getLastName()}"></div>
@@ -38,8 +39,7 @@
         </div>
 <!--        buttons add friend, write message -->
 
-        <div th:if="${imageIsPresent == true}">true</div>
-        <div th:if="${imageIsPresent == false}">false</div>
+
 
 
         <div id="black-grd"></div>

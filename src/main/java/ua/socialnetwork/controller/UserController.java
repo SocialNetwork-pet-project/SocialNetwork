@@ -3,6 +3,8 @@ package ua.socialnetwork.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -105,6 +107,19 @@ public class UserController {
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
 
+        boolean ifImageIsPresent = false;
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        SecurityUser u = (SecurityUser) authentication.getPrincipal();
+
+        if(u.getImages().size() > 0){
+            ifImageIsPresent = true;
+        }
+
+
+        model.addAttribute("imageIsPresent", ifImageIsPresent);
 
 
         User user = userService.readByUsername(username);
