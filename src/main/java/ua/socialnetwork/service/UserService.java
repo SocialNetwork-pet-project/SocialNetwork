@@ -15,6 +15,10 @@ public interface UserService {
     User delete(int id);
     User readById(int id);
     User readByUsername(String username);
+
     List<User> getAll();
+
+//    Object getAll();
+//    List<User> getAll();
 
 }

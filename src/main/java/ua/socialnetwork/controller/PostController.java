@@ -26,8 +26,6 @@ public class PostController {
     @GetMapping
     public String getAll(Model model){
         model.addAttribute("posts", postService.getAll());
-
-
         return "feed";
     }
 

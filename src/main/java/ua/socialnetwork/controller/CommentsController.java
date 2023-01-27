@@ -11,6 +11,7 @@ import ua.socialnetwork.entity.Comment;
 import ua.socialnetwork.repo.CommentRepository;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.impl.CommentServiceImpl;
+import ua.socialnetwork.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class CommentsController {
 
     private final CommentServiceImpl commentService;
     private final PostService postService;
-
     private CommentRepository commentRepository;
+    private UserServiceImpl userService;
 
     @GetMapping("/add/{post_id}")
     public String createComment(@PathVariable("post_id") long post_id, Model model) {
@@ -67,6 +68,7 @@ public class CommentsController {
         List<Comment> allComments = commentService.getCommentsByPostId(post_id);
         model.addAttribute("allComments", allComments);
         model.addAttribute("post", postService.readById(post_id));
+        model.addAttribute("users", userService.getAll());
 
         log.info("Comments have been reading");
         return "post-comments";

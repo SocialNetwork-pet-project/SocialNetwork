@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    //toDo change Bootstrap on 5
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -32,14 +33,34 @@
             <td th:text="${post.body}"/>
             <td th:text="${post.creationDate}"/>
 
+            <!--            <td>-->
+            <!--                <a th:href="@{|/users/${user.id}/update|}">Edit</a>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--                <a th:href="@{|/users/${user.id}/delete|}">Remove</a>-->
+            <!--            </td>-->
+            <td>
+                <a class="btn btn-default" th:href="@{|/comment/add/${post.id}|}">Add new comment</a>
+            </td>
+            <td>
+                <a class="btn btn-default" th:href="@{|/comment/all/${post.id}|}">All comments</a>
+            </td>
 
-                        <td>
-                            <a class="btn btn-default" th:href="@{|/comment/add|}">Add new comment</a>
-                        </td>
+        </tr>
+    </table>
+    <!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+
+
+<!--    <a th:href="@{|/users/${#authentication.principal.username}|}">UUSER</a>-->
+
+<!--                        <td>-->
+<!--                            <a class="btn btn-default" th:href="@{|/comment/add|}">Add new comment</a>-->
+<!--                        </td>-->
         </tr>
     </table>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <a th:href="@{|/users/${#authentication.principal.username}|}">USER</a>
+
 
 
 </div>

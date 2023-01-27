@@ -29,8 +29,4 @@ public class CommentDto {
     public void setUser(String user) {
         this.user = user;
     }
-
-    public int getPost_id() {
-        return post_id;
-    }
 }
