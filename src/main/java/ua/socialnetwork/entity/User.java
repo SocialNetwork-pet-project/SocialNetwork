@@ -76,8 +76,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-    @OneToOne(mappedBy = "user")
-    private Account account;
+
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
@@ -118,7 +117,6 @@ public class User {
                 ", creationDate=" + creationDate +
                 ", editionDate=" + editionDate +
                 ", posts=" + posts +
-                ", account=" + account +
                 '}';
     }
 }
