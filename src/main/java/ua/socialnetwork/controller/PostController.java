@@ -65,7 +65,7 @@ public class PostController {
         model.addAttribute("ifImageIsPresent", ifImageIsPresent);
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
-
+        model.addAttribute("users", userService.getAll());
 
 
 
