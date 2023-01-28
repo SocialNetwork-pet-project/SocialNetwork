@@ -13,7 +13,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.Registration;
 
-@Route("chat")
+@Route(value = "chat/yes")
 @Push
 public class MainView extends VerticalLayout {
     private final Storage storage;

@@ -1,23 +1,57 @@
 <main xmlns:th="http://www.thymeleaf.org">
-    <header>
-        <link rel="stylesheet" href="/profile-page.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        <div class="tb">
-<!--            todo upload own logo-->
-            <div class="td" id="logo">
-                <img src="https://previews.123rf.com/images/vectorstockcompany/vectorstockcompany1808/vectorstockcompany180815739/108455229-horse-vector-icon-isolated-on-transparent-background-horse-logo-concept.jpg"
-                     alt=""><i class="fab fa-facebook-square"></i>
+    <link rel="stylesheet" href="/profile-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!--    <header>-->
+        <nav>
+            <div class="nav-left">
+                <img  alt="">
+                <input type="text" placeholder="Search Socialhorse..">
+
             </div>
 
-            <div class="td" id="search-form">
-                <form method="get" action="#">
-                    <input type="text" placeholder="Search">
-                    <button type="submit"><i class="material-icons">search</i></button>
-                </form>
+            <div class="nav-middle">
+                <a th:href="@{/feed}" >
+                    <i class="fa fa-home"></i>
+                </a>
 
-        </div>
-        </div>
-    </header>
+                <a href="#">
+                    <i class="fa fa-user-friends"></i>
+                </a>
+
+                <a th:href="@{|/users/${#authentication.principal.username}|}" class="active">
+                    <i class="fa fa-users"></i>
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <span class="profile"></span>
+
+                <a href="#">
+                    <i class="fa fa-bell"></i>
+                </a>
+
+            </div>
+        </nav>
+
+
+<!--        <div class="tb">-->
+<!--&lt;!&ndash;            todo upload own logo&ndash;&gt;-->
+<!--            <div class="td" id="logo">-->
+<!--                <img src="https://previews.123rf.com/images/vectorstockcompany/vectorstockcompany1808/vectorstockcompany180815739/108455229-horse-vector-icon-isolated-on-transparent-background-horse-logo-concept.jpg"-->
+<!--                     alt=""><i class="fab fa-facebook-square"></i>-->
+<!--            </div>-->
+
+<!--            <div class="td" id="search-form">-->
+<!--                <form method="get" action="#">-->
+<!--                    <input type="text" placeholder="Search">-->
+<!--                    <button type="submit"><i class="material-icons">search</i></button>-->
+<!--                </form>-->
+
+<!--        </div>-->
+<!--        </div>-->
+<!--    </header>-->
+
 <!--    Todo Refactor here-->
     <div id="profile-upper">
         <div id="profile-banner-image">
