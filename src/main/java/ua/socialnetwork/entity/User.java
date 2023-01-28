@@ -1,6 +1,7 @@
 package ua.socialnetwork.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode
+@ToString
 @Table(name = "users")
 public class User {
 
@@ -28,19 +30,24 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(name = "firstName")
+    @Column(name = "firstName", nullable = false)
+    @NotBlank(message = "First Name can not be blank")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "lastName", nullable = false)
+    @NotBlank(message = "Last Name can not be blank")
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
+    @NotBlank(message = "Username can not be blank")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
+    @NotBlank(message = "Password can not be blank")
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank(message = "Email can not be blank")
     private String email;
 
     @Column(name = "age")
@@ -98,25 +105,4 @@ public class User {
         images.add(image);
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", bio='" + bio + '\'' +
-                ", country='" + country + '\'' +
-                ", gender=" + gender +
-                ", employed=" + employed +
-                ", role=" + role +
-                ", banned=" + banned +
-                ", creationDate=" + creationDate +
-                ", editionDate=" + editionDate +
-                ", posts=" + posts +
-                '}';
-    }
 }

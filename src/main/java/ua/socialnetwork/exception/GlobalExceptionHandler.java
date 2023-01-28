@@ -19,6 +19,13 @@ public class GlobalExceptionHandler {
 
     //ToDO add different exceptions here
 
+
+    @ExceptionHandler(NullEntityReferenceException.class)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public ModelAndView nullEntityReferenceExceptionHandler(HttpServletRequest request, NullEntityReferenceException exception) {
+        return getModelAndView(request, HttpStatus.NO_CONTENT, exception);
+    }
+
     private ModelAndView getModelAndView(HttpServletRequest request, HttpStatus httpStatus, Exception exception) {
         log.error("Exception raised = {} :: URL = {}", exception.getMessage(), request.getRequestURL());
 

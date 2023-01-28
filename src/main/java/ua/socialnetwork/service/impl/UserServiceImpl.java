@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
+import ua.socialnetwork.exception.NullEntityReferenceException;
 import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 
@@ -28,30 +29,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user ) {
+        if(user != null){
+            if(user.getPassword() != null) {
+                user.setPassword(encoder.encode(user.getPassword()));
+            }
 
-        if(user.getPassword() != null) {
-            user.setPassword(encoder.encode(user.getPassword()));
+
+            user.setCreationDate(LocalDateTime.now());
+            return userRepo.save(user);
+
+
+
         }
+        throw new NullEntityReferenceException("User can not be null");
 
-
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
 
     }
 
     @Override
     public User create(User user, MultipartFile userImage) {
         UserImage image;
+        if(user != null){
+            if (userImage.getSize() != 0) {
+                image = toImageEntity(userImage);
+                user.addImageToUser(image);
+            }
+            log.info("Added image: " + userImage.getName());
 
-        if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.addImageToUser(image);
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setCreationDate(LocalDateTime.now());
+            return userRepo.save(user);
+
         }
-        log.info("Added image: " + userImage.getName());
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
+        throw new NullEntityReferenceException("User can not be null");
 
     }
 
@@ -61,27 +71,27 @@ public class UserServiceImpl implements UserService {
         UserImage image;
         UserImage image2;
 
-        if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.addImageToUser(image);
+        if(user != null){
+            if (userImage.getSize() != 0) {
+                image = toImageEntity(userImage);
+                user.addImageToUser(image);
+            }
+            if (userImage.getSize() != 0) {
+                image2 = toImageEntity(imageBackground);
+                user.addImageToUser(image2);
+            }
+
+            log.info("Added image: " + userImage.getName());
+            log.info("Added background image: " + imageBackground.getName());
+
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setCreationDate(LocalDateTime.now());
+            return userRepo.save(user);
+
+
         }
-        if (userImage.getSize() != 0) {
-            image2 = toImageEntity(imageBackground);
-            user.addImageToUser(image2);
-        }
+        throw new NullEntityReferenceException("User can not be null");
 
-        log.info("Added image: " + userImage.getName());
-        log.info("Added background image: " + imageBackground.getName());
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
-
-    }
-
-    @Override
-    public User update(User user) {
-        return null;
     }
 
 
@@ -91,38 +101,44 @@ public class UserServiceImpl implements UserService {
     public User update(User user, MultipartFile userImage) {
         UserImage image;
 
-        if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.setImageToUser(image);
+        if(user != null){
+            if (userImage.getSize() != 0) {
+                image = toImageEntity(userImage);
+                user.setImageToUser(image);
+            }
+
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setCreationDate(LocalDateTime.now());
+            return userRepo.save(user);
+
         }
+        throw new NullEntityReferenceException("User can not be null");
 
-
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
     }
     @Override
     public User update(User user, MultipartFile userImage, MultipartFile imageBackground) {
 
         UserImage image;
         UserImage image2;
+        if(user != null){
+            if (userImage.getSize() != 0) {
+                image = toImageEntity(userImage);
+                user.addImageToUser(image);
+            }
+            if (userImage.getSize() != 0) {
+                image2 = toImageEntity(imageBackground);
+                user.addImageToUser(image2);
+            }
 
-        if (userImage.getSize() != 0) {
-            image = toImageEntity(userImage);
-            user.addImageToUser(image);
+            log.info("Added image: " + userImage.getName());
+            log.info("Added background image: " + imageBackground.getName());
+
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setCreationDate(LocalDateTime.now());
+            return userRepo.save(user);
+
         }
-        if (userImage.getSize() != 0) {
-            image2 = toImageEntity(imageBackground);
-            user.addImageToUser(image2);
-        }
-
-        log.info("Added image: " + userImage.getName());
-        log.info("Added background image: " + imageBackground.getName());
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setCreationDate(LocalDateTime.now());
-        return userRepo.save(user);
+        throw new NullEntityReferenceException("User can not be null");
 
     }
 
@@ -148,6 +164,10 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return userRepo.findAll();
     }
+
+
+
+
 
     @SneakyThrows
     private UserImage toImageEntity(MultipartFile userImage) {
