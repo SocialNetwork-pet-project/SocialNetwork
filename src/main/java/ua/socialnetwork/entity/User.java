@@ -31,23 +31,20 @@ public class User {
     private int id;
 
     @Column(name = "firstName", nullable = false)
-    @NotBlank(message = "First Name can not be blank")
+
     private String firstName;
 
     @Column(name = "lastName", nullable = false)
-    @NotBlank(message = "Last Name can not be blank")
+
     private String lastName;
 
-    @Column(name = "username", nullable = false, unique = true)
-    @NotBlank(message = "Username can not be blank")
+    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
-    @NotBlank(message = "Password can not be blank")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "email", nullable = false, unique = true)
-    @NotBlank(message = "Email can not be blank")
     private String email;
 
     @Column(name = "age")

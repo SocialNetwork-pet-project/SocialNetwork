@@ -10,12 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
 import ua.socialnetwork.exception.NullEntityReferenceException;
+import ua.socialnetwork.exception.UserAlreadyExistsException;
 import ua.socialnetwork.repo.UserRepo;
 import ua.socialnetwork.service.UserService;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -29,19 +31,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user ) {
-        if(user != null){
-            if(user.getPassword() != null) {
-                user.setPassword(encoder.encode(user.getPassword()));
-            }
 
+        if(ifUsernameExists(user.getUsername())){
 
-            user.setCreationDate(LocalDateTime.now());
-            return userRepo.save(user);
-
-
-
+            throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
         }
-        throw new NullEntityReferenceException("User can not be null");
+        else if(user.getPassword() != null) {
+            user.setPassword(encoder.encode(user.getPassword()));
+        }
+
+
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
 
 
     }
@@ -49,19 +50,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user, MultipartFile userImage) {
         UserImage image;
-        if(user != null){
-            if (userImage.getSize() != 0) {
-                image = toImageEntity(userImage);
-                user.addImageToUser(image);
-            }
-            log.info("Added image: " + userImage.getName());
 
-            user.setPassword(encoder.encode(user.getPassword()));
-            user.setCreationDate(LocalDateTime.now());
-            return userRepo.save(user);
+        if(ifUsernameExists(user.getUsername())){
 
+            throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
         }
-        throw new NullEntityReferenceException("User can not be null");
+        else if(userImage.getSize() != 0) {
+            image = toImageEntity(userImage);
+            user.addImageToUser(image);
+        }
+        log.info("Added image: " + userImage.getName());
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
 
     }
 
@@ -70,27 +72,27 @@ public class UserServiceImpl implements UserService {
 
         UserImage image;
         UserImage image2;
+        if(ifUsernameExists(user.getUsername())){
 
-        if(user != null){
-            if (userImage.getSize() != 0) {
-                image = toImageEntity(userImage);
-                user.addImageToUser(image);
-            }
-            if (userImage.getSize() != 0) {
-                image2 = toImageEntity(imageBackground);
-                user.addImageToUser(image2);
-            }
-
-            log.info("Added image: " + userImage.getName());
-            log.info("Added background image: " + imageBackground.getName());
-
-            user.setPassword(encoder.encode(user.getPassword()));
-            user.setCreationDate(LocalDateTime.now());
-            return userRepo.save(user);
-
-
+            throw new UserAlreadyExistsException("There already is an account with username: " + user.getUsername());
         }
-        throw new NullEntityReferenceException("User can not be null");
+
+        else if (userImage.getSize() != 0) {
+            image = toImageEntity(userImage);
+            user.addImageToUser(image);
+        }
+        else if (userImage.getSize() != 0) {
+            image2 = toImageEntity(imageBackground);
+            user.addImageToUser(image2);
+        }
+
+        log.info("Added image: " + userImage.getName());
+        log.info("Added background image: " + imageBackground.getName());
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setCreationDate(LocalDateTime.now());
+        return userRepo.save(user);
+
 
     }
 
@@ -169,6 +171,17 @@ public class UserServiceImpl implements UserService {
 
 
 
+
+
+
+    private boolean ifUsernameExists(String username){
+        Optional<User> user = userRepo.findUserByUsername(username);
+
+
+        User ifUser = user.orElse(null);
+        return ifUser != null;
+    }
+
     @SneakyThrows
     private UserImage toImageEntity(MultipartFile userImage) {
         UserImage image = new UserImage();
@@ -179,4 +192,8 @@ public class UserServiceImpl implements UserService {
         image.setBytes(userImage.getBytes());
         return image;
     }
+
+
+
+
 }
