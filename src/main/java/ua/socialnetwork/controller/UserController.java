@@ -11,13 +11,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.exception.UserAlreadyExistsException;
 import ua.socialnetwork.security.SecurityUser;
+import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
-import ua.socialnetwork.service.impl.UserServiceImpl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -25,8 +27,9 @@ import java.time.LocalDateTime;
 @Slf4j
 public class UserController {
 
+
     UserService userService;
-    UserServiceImpl userServiceImpl;
+    PostService postService;
 
     @GetMapping("/create")
      public String create(Model model){
@@ -119,7 +122,7 @@ public class UserController {
     }
     @GetMapping("/search")
     public String getAll(Model model){
-        model.addAttribute("users", userServiceImpl.getAll());
+        model.addAttribute("users", userService.getAll());
         return "Searchbar";
     }
 
@@ -130,12 +133,12 @@ public class UserController {
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
         User user = userService.readByUsername(username);
+        List<Post> posts = postService.getPostsByUser_Username(username);
 
         boolean ifImageIsPresent = false;
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
         if(u.getImages().size() > 0){
@@ -144,9 +147,11 @@ public class UserController {
 
 
         model.addAttribute("imageIsPresent", ifImageIsPresent);
+        model.addAttribute("posts", posts);
 
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
+
 
         model.addAttribute("size", user.getImages().size());
         return "profile-page";
