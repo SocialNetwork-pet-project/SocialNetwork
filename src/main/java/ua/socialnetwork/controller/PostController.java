@@ -55,8 +55,15 @@ public class PostController {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
-        SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
+        try{
+            SecurityUser u = (SecurityUser) authentication.getPrincipal();
+
+        }catch (ClassCastException ex){
+            //toDO add log here
+            ex.getCause();
+            ex.printStackTrace();
+        }
         if(u.getImages().size() > 0){
             ifImageIsPresent = true;
         }
