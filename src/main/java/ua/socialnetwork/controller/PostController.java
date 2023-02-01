@@ -2,10 +2,7 @@ package ua.socialnetwork.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
-import ua.socialnetwork.entity.User;
 import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
-
-import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -52,18 +46,10 @@ public class PostController {
 
         boolean ifImageIsPresent = false;
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
-        try{
-            SecurityUser u = (SecurityUser) authentication.getPrincipal();
-
-        }catch (ClassCastException ex){
-            //toDO add log here
-            ex.getCause();
-            ex.printStackTrace();
-        }
         if(u.getImages().size() > 0){
             ifImageIsPresent = true;
         }
@@ -83,7 +69,7 @@ public class PostController {
     }
 
     @PostMapping("/new/{username}")
-    public String createTwo(@PathVariable("username") String username, Post post,
+    public String create(@PathVariable("username") String username, Post post,
                             @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
 
 
@@ -122,10 +108,15 @@ public class PostController {
     }
     @GetMapping("/delete/{post_id}")
     public String delete(@PathVariable("post_id") Integer post_id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser u = (SecurityUser) authentication.getPrincipal();
+
+        String username = u.getUsername();
+
         postService.delete(post_id);
 
 
-        return "redirect:/feed";
+        return "redirect:/users/"+username;
     }
 
 
@@ -134,6 +125,7 @@ public class PostController {
     @GetMapping("/like/{post_id}")
     public String like(@PathVariable("post_id") Integer post_id, Model model){
 
+        //ToDO fix likeCounter (attach to an post , the bug is each every post gets all previous post likes)
         Post post = postService.readById(post_id);
         post.setLiked(true);
         likeCounter++;

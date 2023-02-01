@@ -32,6 +32,15 @@ public class Post {
     @Column(name = "disliked")
     private boolean disliked;
 
+
+
+
+
+
+
+
+
+
     @Column(name = "likeCounter")
     private int likeCounter;
 
