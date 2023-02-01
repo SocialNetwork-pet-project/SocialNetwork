@@ -50,6 +50,8 @@ public class UserController {
             userService.create(user);
 
         }catch (UserAlreadyExistsException ex){
+            log.warn("UserAlreadyExistsException is caught in UserController with mesasge: " + ex.getMessage() + " and" +
+                            "cause " + ex.getCause()) ;
             model.addAttribute("message", "An account for that username/email already exists.");
             return "login-page";
         }
@@ -70,13 +72,14 @@ public class UserController {
                                                                                             BindingResult result){
 
         if(result.hasErrors()){
+            log.warn("Binding result had an error in User Controller update with user: " +user.getUsername());
             return "update-user";
 
         }
 
         userService.update(user, userImage);
         user.setEditionDate(LocalDateTime.now());
-
+        log.info("User with id: " + user.getId() + " has been updated");
         return "redirect:/users/"+user.getUsername();
     }
 

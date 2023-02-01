@@ -33,14 +33,6 @@ public class Post {
     private boolean disliked;
 
 
-
-
-
-
-
-
-
-
     @Column(name = "likeCounter")
     private int likeCounter;
 
@@ -67,13 +59,6 @@ public class Post {
     @OneToOne(cascade = CascadeType.ALL)
     private PostImage image;
 
-
-    public void setImageToPost(PostImage userImage){
-
-        userImage.setPost(this);
-        image = userImage; //?
-    }
-
     @Override
     public String toString() {
         return "Post{" +
@@ -93,6 +78,11 @@ public class Post {
 
 
 
+    public void setImageToPost(PostImage userImage){
+
+        userImage.setPost(this);
+        image = userImage; //?
+    }
 
 
 }

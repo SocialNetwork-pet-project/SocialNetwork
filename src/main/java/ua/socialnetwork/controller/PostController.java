@@ -77,7 +77,7 @@ public class PostController {
 
         post.setUser(userService.readByUsername(username));
         postService.create(post, postImage);
-        log.info("From PostController");
+        log.info("From PostController a Post has been created, id: " + post.getId());
         return "redirect:/feed";
     }
 
@@ -97,8 +97,16 @@ public class PostController {
                        @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
 
 
+        if(result.hasErrors()){
+            log.warn("Binding result had an error in Post Controller update with post, id: " + post.getId());
+
+            return "update-post";
+        }
 
 
+
+
+        log.info("A post has been edited " + post.getId());
         postService.update(post, postImage);
         post.setEditionDate(LocalDateTime.now());
 
@@ -113,8 +121,11 @@ public class PostController {
 
         String username = u.getUsername();
 
-        postService.delete(post_id);
-
+        if(post_id != 0){
+            log.error("An error occurred in Post Controller, id " + post_id );
+            postService.delete(post_id);
+        }
+        log.info("A post with id" + post_id+ "has been deleted");
 
         return "redirect:/users/"+username;
     }
@@ -137,6 +148,7 @@ public class PostController {
         post.setDislikeCounter(dislikeCounter);
         post.setDisliked(false);
 
+        log.info("Post with id: " + post.getId() + " is liked");
         postService.create(post);
         return "redirect:/feed";
 
@@ -155,6 +167,7 @@ public class PostController {
         post.setDislikeCounter(dislikeCounter);
         post.setLiked(false);
 
+        log.info("Post with id: " + post.getId() + " is disliked");
         postService.create(post);
         return "redirect:/feed";
 
