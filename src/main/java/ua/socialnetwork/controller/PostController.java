@@ -71,10 +71,6 @@ public class PostController {
     @PostMapping("/new/{username}")
     public String create(@PathVariable("username") String username, Post post,
                             @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
-
-
-
-
         post.setUser(userService.readByUsername(username));
         postService.create(post, postImage);
         log.info("From PostController a Post has been created, id: " + post.getId());

@@ -20,10 +20,10 @@
 <!--<div th:replace="_searchbar"></div>-->
 <nav>
     <div class="nav-left position-relative d-flex flex-column">
-        <div class="card mt-4 mb-1" >
+        <div class="card mt-3 mb-1 border-0" >
             <div class="header">
          <img  alt="">
-         <input class="input-search border-0" type="text" placeholder="Search Socialhorse`s..." data-search >
+         <input class="input-search border-0" style="background-color: #eee; border-radius: 25px; padding: 7px;" type="text" placeholder="Search Socialhorse`s..." data-search >
             </div>
         </div>
         <div class="user-cards d-flex flex-column w-100">
@@ -64,7 +64,7 @@
 </nav>
 
 
-<div class="container">
+<div class="container" style="max-width: 100%;">
     <div class="left-panel">
         <ul>
             <li>
@@ -289,9 +289,9 @@
 
         </div>
 
-
+        <div th:text="${auth.principal.username}"> fsdgs</div>
+        <div th:text="${pr}"> fsdgs</div>
     </div>
-
 </div>
 
 <script>
@@ -319,12 +319,6 @@
                 }
             })
         }
-        // users.forEach(user => {
-        //     const isVisible =
-        //         user.name.toLowerCase().includes(value) ||
-        //         user.email.toLowerCase().includes(value)
-        //     user.element.classList.toggle("hide", !isVisible)
-        // })
     })
 
 </script>
