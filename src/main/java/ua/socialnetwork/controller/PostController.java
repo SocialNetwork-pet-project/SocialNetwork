@@ -2,10 +2,7 @@ package ua.socialnetwork.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
-import ua.socialnetwork.entity.User;
 import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
-
-import javax.annotation.Nullable;
-import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -53,9 +46,8 @@ public class PostController {
 
         boolean ifImageIsPresent = false;
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
         if(u.getImages().size() > 0){
@@ -77,11 +69,11 @@ public class PostController {
     }
 
     @PostMapping("/new/{username}")
-    public String createTwo(@PathVariable("username") String username, Post post,
+    public String create(@PathVariable("username") String username, Post post,
                             @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
         post.setUser(userService.readByUsername(username));
         postService.create(post, postImage);
-        log.info("From PostController");
+        log.info("From PostController a Post has been created, id: " + post.getId());
         return "redirect:/feed";
     }
 
@@ -101,8 +93,16 @@ public class PostController {
                        @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
 
 
+        if(result.hasErrors()){
+            log.warn("Binding result had an error in Post Controller update with post, id: " + post.getId());
+
+            return "update-post";
+        }
 
 
+
+
+        log.info("A post has been edited " + post.getId());
         postService.update(post, postImage);
         post.setEditionDate(LocalDateTime.now());
 
@@ -112,10 +112,18 @@ public class PostController {
     }
     @GetMapping("/delete/{post_id}")
     public String delete(@PathVariable("post_id") Integer post_id){
-        postService.delete(post_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
+        String username = u.getUsername();
 
-        return "redirect:/feed";
+        if(post_id != 0){
+            log.error("An error occurred in Post Controller, id " + post_id );
+            postService.delete(post_id);
+        }
+        log.info("A post with id" + post_id+ "has been deleted");
+
+        return "redirect:/users/"+username;
     }
 
 
@@ -124,6 +132,7 @@ public class PostController {
     @GetMapping("/like/{post_id}")
     public String like(@PathVariable("post_id") Integer post_id, Model model){
 
+        //ToDO fix likeCounter (attach to an post , the bug is each every post gets all previous post likes)
         Post post = postService.readById(post_id);
         post.setLiked(true);
         likeCounter++;
@@ -135,6 +144,7 @@ public class PostController {
         post.setDislikeCounter(dislikeCounter);
         post.setDisliked(false);
 
+        log.info("Post with id: " + post.getId() + " is liked");
         postService.create(post);
         return "redirect:/feed";
 
@@ -153,6 +163,7 @@ public class PostController {
         post.setDislikeCounter(dislikeCounter);
         post.setLiked(false);
 
+        log.info("Post with id: " + post.getId() + " is disliked");
         postService.create(post);
         return "redirect:/feed";
 

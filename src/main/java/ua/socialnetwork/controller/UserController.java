@@ -7,14 +7,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.User;
+import ua.socialnetwork.exception.UserAlreadyExistsException;
 import ua.socialnetwork.security.SecurityUser;
+import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
-import ua.socialnetwork.service.impl.UserServiceImpl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -22,8 +27,9 @@ import java.time.LocalDateTime;
 @Slf4j
 public class UserController {
 
+
     UserService userService;
-    UserServiceImpl userServiceImpl;
+    PostService postService;
 
     @GetMapping("/create")
      public String create(Model model){
@@ -34,10 +40,22 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user){
+    public String create(@Validated  @ModelAttribute("user") User user, BindingResult result, Model model){
         //ToDo add actions with BindingResult later
+        if(result.hasErrors()){
+            return "create-user";
 
-        userService.create(user);
+        }
+        try{
+            userService.create(user);
+
+        }catch (UserAlreadyExistsException ex){
+            log.warn("UserAlreadyExistsException is caught in UserController with mesasge: " + ex.getMessage() + " and" +
+                            "cause " + ex.getCause()) ;
+            model.addAttribute("message", "An account for that username/email already exists.");
+            return "login-page";
+        }
+
         return "redirect:/users/create/continue/" + user.getId();
     }
 
@@ -50,12 +68,18 @@ public class UserController {
         return "update-user";
     }
     @PostMapping("/update")
-    public String update(User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage){
+    public String update(@Validated User user, @RequestParam(value = "userImage", required = false) MultipartFile userImage,
+                                                                                            BindingResult result){
 
+        if(result.hasErrors()){
+            log.warn("Binding result had an error in User Controller update with user: " +user.getUsername());
+            return "update-user";
+
+        }
 
         userService.update(user, userImage);
         user.setEditionDate(LocalDateTime.now());
-
+        log.info("User with id: " + user.getId() + " has been updated");
         return "redirect:/users/"+user.getUsername();
     }
 
@@ -71,9 +95,14 @@ public class UserController {
 
     @PostMapping("/create/continue/{user_id}")
     public String createSecondaryInfo(@PathVariable("user_id") Integer id,
-                                      User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
-                                      @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground){
+                                      @Validated User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
+                                      @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground,
+                                      BindingResult result){
 
+        if(result.hasErrors()){
+
+            return "create-secondaryInfo";
+        }
 
         User oldUser = userService.readById(id);
 
@@ -96,39 +125,23 @@ public class UserController {
     }
     @GetMapping("/search")
     public String getAll(Model model){
-        model.addAttribute("users", userServiceImpl.getAll());
+        model.addAttribute("users", userService.getAll());
         return "Searchbar";
     }
 
 
     /// toDo give some errors
 
-//    @GetMapping("/{username}")
-//    public String getUser(@PathVariable("username") String username, Model model){
-//        User user = userService.readByUsername(username);
-//        model.addAttribute("user", user);
-//        model.addAttribute("image", user.getImages());
-//
-//        model.addAttribute("size", user.getImages().size());
-//        return "profile-page";
-//    }
-
-//    @GetMapping("/get/a")
-//    public String a(){
-//        return "login-page";
-//    }
-
-
 
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
         User user = userService.readByUsername(username);
+        List<Post> posts = postService.getPostsByUser_Username(username);
 
         boolean ifImageIsPresent = false;
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
         if(u.getImages().size() > 0){
@@ -137,22 +150,15 @@ public class UserController {
 
 
         model.addAttribute("imageIsPresent", ifImageIsPresent);
+        model.addAttribute("posts", posts);
 
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
 
+
         model.addAttribute("size", user.getImages().size());
         return "profile-page";
-
-
     }
-
-    @GetMapping("/get/a")
-    public String a(){
-        return "login-page";
-    }
-
-
 
 
 }

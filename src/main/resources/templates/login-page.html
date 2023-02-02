@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <link rel="stylesheet" href="/login.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/login-page.css">
+
+
     <title>Login</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
@@ -185,7 +187,7 @@
             text-decoration: none;
             color: white;
 
-        }3
+        }
     </style>
 
 </head>
@@ -197,11 +199,13 @@
 
     <form th:action="@{/login}" method="post">
 
-        <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
-        <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
+
 
         <header>
             <div class="box">
+                <p th:if="${param.error}" class="alert alert-danger text-center">Username or password is not correct!</p>
+                <p th:if="${param.logout}" class="alert alert-info text-center">You have been logged out.</p>
+                <p th:if="${message}" th:text="${message}" class="alert alert-info text-center"></p>
                 <input type="text" name="username" id="email" placeholder="Username"><br>
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>

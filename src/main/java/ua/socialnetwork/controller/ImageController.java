@@ -25,7 +25,7 @@ public class ImageController {
     private final PostImageRepo postImageRepo;
 
 
-    @SneakyThrows
+
     @GetMapping("/images/{id}")
     private ResponseEntity<?> getImage(@PathVariable Integer id) {
         //TODO Add exception handler here
@@ -36,7 +36,7 @@ public class ImageController {
 
     }
 
-    @SneakyThrows
+
     @GetMapping("/post/images/{id}")
     private ResponseEntity<?> getPostImage(@PathVariable Integer id) {
         //TODO Add exception handler here
