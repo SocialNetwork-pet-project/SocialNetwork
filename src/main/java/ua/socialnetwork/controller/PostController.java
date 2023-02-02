@@ -19,6 +19,7 @@ import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
 
 
+import javax.annotation.Nullable;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
@@ -78,10 +79,6 @@ public class PostController {
     @PostMapping("/new/{username}")
     public String createTwo(@PathVariable("username") String username, Post post,
                             @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
-
-
-
-
         post.setUser(userService.readByUsername(username));
         postService.create(post, postImage);
         log.info("From PostController");
