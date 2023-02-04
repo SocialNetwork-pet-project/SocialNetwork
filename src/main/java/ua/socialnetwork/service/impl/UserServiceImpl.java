@@ -23,11 +23,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
-
     private PasswordEncoder encoder;
     private UserRepo userRepo;
-
-    //ToDO implement validation and exception handler later
 
     @Override
     public User create(User user ) {
@@ -40,11 +37,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(encoder.encode(user.getPassword()));
         }
 
-
         user.setCreationDate(LocalDateTime.now());
         return userRepo.save(user);
-
-
     }
 
     @Override
@@ -57,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
         else if(userImage.getSize() != 0) {
             image = toImageEntity(userImage);
-            user.addImageToUser(image);
+            user.setProfileImageToUser(image);
         }
         log.info("Added image: " + userImage.getName());
 
@@ -79,11 +73,11 @@ public class UserServiceImpl implements UserService {
 
         else if (userImage.getSize() != 0) {
             image = toImageEntity(userImage);
-            user.addImageToUser(image);
+            user.setProfileImageToUser(image);
         }
         else if (userImage.getSize() != 0) {
             image2 = toImageEntity(imageBackground);
-            user.addImageToUser(image2);
+            user.setProfileImageToUser(image2);
         }
 
         log.info("Added image: " + userImage.getName());
@@ -106,7 +100,7 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             if (userImage.getSize() != 0) {
                 image = toImageEntity(userImage);
-                user.setImageToUser(image);
+                user.setBackgroundImageToUser(image);
             }
 
             user.setPassword(encoder.encode(user.getPassword()));
@@ -125,11 +119,11 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             if (userImage.getSize() != 0) {
                 image = toImageEntity(userImage);
-                user.addImageToUser(image);
+                user.setProfileImageToUser(image);
             }
             if (userImage.getSize() != 0) {
                 image2 = toImageEntity(imageBackground);
-                user.addImageToUser(image2);
+                user.setProfileImageToUser(image2);
             }
 
             log.info("Added image: " + userImage.getName());
@@ -166,12 +160,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return userRepo.findAll();
     }
-
-
-
-
-
-
 
 
     private boolean ifUsernameExists(String username){

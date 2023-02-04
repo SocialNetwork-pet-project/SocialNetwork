@@ -15,8 +15,6 @@ import org.hibernate.annotations.Type;
 @ToString
 @EqualsAndHashCode
 public class UserImage {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -38,8 +36,6 @@ public class UserImage {
     @Lob
     private byte[] bytes;
 
-
-    //, fetch = FetchType.EAGER
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 

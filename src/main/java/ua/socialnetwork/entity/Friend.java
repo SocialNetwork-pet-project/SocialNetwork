@@ -28,22 +28,12 @@ public class Friend {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-//    private User sender;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-//    private User receiver;
-
-
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
 
     /*ToDo PROBABLY make another field -> boolean accepted = false, when receiver accept friend request, this
     variables goes true and the status changes to accepted, whatever its called
     */
-
 
 }

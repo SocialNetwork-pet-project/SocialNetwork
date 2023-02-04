@@ -4,6 +4,7 @@ package ua.socialnetwork.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "post")
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -25,8 +25,7 @@ public class Post {
     @Column(name = "body")
     private String body;
 
-
-    //TODO make like/dislike attacked to an user
+    //TODO make like/dislike attached to an user
     @Column(name = "liked")
     private boolean liked;
     @Column(name = "disliked")
@@ -43,15 +42,15 @@ public class Post {
     private LocalDateTime creationDate;
 
     @Column(name = "editionDate")
+    @UpdateTimestamp
     private LocalDateTime editionDate;
 
     @Column(name = "deletionDate")
     private LocalDateTime deletionDate;
 
-    //here a multiple posts has 1 user, so @ManyToOne
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
-    private User user;   //owner ?? TODO
+    private User user;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
@@ -74,15 +73,10 @@ public class Post {
                 '}';
     }
 
-
-
-
-
     public void setImageToPost(PostImage userImage){
 
         userImage.setPost(this);
-        image = userImage; //?
+        image = userImage;
     }
-
 
 }

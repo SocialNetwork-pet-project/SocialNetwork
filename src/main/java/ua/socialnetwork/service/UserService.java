@@ -17,7 +17,5 @@ public interface UserService {
 
     List<User> getAll();
 
-//    Object getAll();
-//    List<User> getAll();
 
 }

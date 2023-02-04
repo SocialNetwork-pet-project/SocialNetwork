@@ -1,6 +1,7 @@
 package ua.socialnetwork.controller;
 
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.socialnetwork.entity.Post;
+import ua.socialnetwork.entity.enums.PostAction;
 import ua.socialnetwork.security.SecurityUser;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.UserService;
@@ -19,49 +21,29 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping({"/posts", "/"})
 @Slf4j
-
+@AllArgsConstructor
 public class PostController {
-    private int likeCounter;
-    private int dislikeCounter;
-
-
     private final UserService userService;
     private final PostService postService;
 
 
-
-
-
-    public PostController(UserService userService, PostService postService) {
-        this.userService = userService;
-        this.postService = postService;
-    }
-
-
-
-    //ToDO make validation and exc handling
     @GetMapping("/feed")
-
-    public String getAllTwo(Model model){
-
+    public String getAll(Model model){
         boolean ifImageIsPresent = false;
 
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        //ToDO put in try catch
         SecurityUser u = (SecurityUser) authentication.getPrincipal();
 
         if(u.getImages().size() > 0){
             ifImageIsPresent = true;
         }
 
-
         model.addAttribute("ifImageIsPresent", ifImageIsPresent);
         model.addAttribute("posts", postService.getAll());
         model.addAttribute("newPost", new Post());
         model.addAttribute("users", userService.getAll());
-
-
-
 
         model.addAttribute("auth", authentication);
 
@@ -72,6 +54,7 @@ public class PostController {
     public String create(@PathVariable("username") String username, Post post,
                             @RequestParam(value = "postImage", required = false) MultipartFile postImage, BindingResult result){
         post.setUser(userService.readByUsername(username));
+
         postService.create(post, postImage);
         log.info("From PostController a Post has been created, id: " + post.getId());
         return "redirect:/feed";
@@ -85,13 +68,10 @@ public class PostController {
         model.addAttribute("post", post);
 
         return "update-post";
-
     }
 
     @PostMapping("/update")
-    public String edit(Post post, BindingResult result,
-                       @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
-
+    public String edit(Post post, BindingResult result, @RequestParam(value = "postImage", required = false) MultipartFile postImage ){
 
         if(result.hasErrors()){
             log.warn("Binding result had an error in Post Controller update with post, id: " + post.getId());
@@ -99,14 +79,9 @@ public class PostController {
             return "update-post";
         }
 
-
-
-
         log.info("A post has been edited " + post.getId());
         postService.update(post, postImage);
         post.setEditionDate(LocalDateTime.now());
-
-
 
         return "redirect:/feed";
     }
@@ -134,38 +109,27 @@ public class PostController {
 
         //ToDO fix likeCounter (attach to an post , the bug is each every post gets all previous post likes)
         Post post = postService.readById(post_id);
-        post.setLiked(true);
-        likeCounter++;
-        if(dislikeCounter != 0){
-            dislikeCounter--;
 
-        }
-        post.setLikeCounter(likeCounter);
-        post.setDislikeCounter(dislikeCounter);
-        post.setDisliked(false);
-
-        log.info("Post with id: " + post.getId() + " is liked");
+        postService.makeReaction(post, PostAction.LIKE);
         postService.create(post);
         return "redirect:/feed";
-
-
     }
+
+
+
     @GetMapping("/dislike/{post_id}")
     public String dislike(@PathVariable("post_id") Integer post_id, Model model){
+
+        //ToDO fix likeCounter (attach to an post , the bug is each every post gets all previous post likes)
         Post post = postService.readById(post_id);
-        post.setDisliked(true);
-        dislikeCounter++;
-        if(likeCounter != 0){
-            likeCounter--;
 
-        }
-        post.setLikeCounter(likeCounter);
-        post.setDislikeCounter(dislikeCounter);
-        post.setLiked(false);
-
-        log.info("Post with id: " + post.getId() + " is disliked");
+        postService.makeReaction(post, PostAction.DISLIKE);
         postService.create(post);
         return "redirect:/feed";
-
     }
+
+
+
+
+
 }

@@ -15,8 +15,6 @@ import org.hibernate.annotations.Type;
 @ToString
 @EqualsAndHashCode
 public class PostImage {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,22 +29,14 @@ public class PostImage {
     @Column(name = "size")
     private Long size;
 
-
     @Column(name = "contentType")
     private String contentType;
 
     @Lob
     private byte[] bytes;
 
-    @OneToOne(mappedBy = "image",cascade = CascadeType.ALL) //cascade = CascadeType.ALL
+    @OneToOne(mappedBy = "image",cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
-
-
-
-
-
-
-
 
 }

@@ -20,13 +20,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
-
-
-
     private  User user;
-
-
-
 
     @Override
     //This method represents what users are allowed to do(authorities)
@@ -37,14 +31,11 @@ public class SecurityUser implements UserDetails {
         return roleList;
     }
 
-
     @Override
     public String getPassword() {
         return user.getPassword();
     }
 
-
-    //toDo think of adding username field to login via email or username
     @Override
     public String getUsername() {
         return user.getUsername();

@@ -24,22 +24,16 @@ public class ImageController {
     private final UserImageRepo userImageRepo;
     private final PostImageRepo postImageRepo;
 
-
-
     @GetMapping("/images/{id}")
     private ResponseEntity<?> getImage(@PathVariable Integer id) {
-        //TODO Add exception handler here
+
         UserImage image = userImageRepo.findById(id).orElse(null);
 
         return ResponseEntity.ok().header("fileName", image.getOriginalFileName()).contentType(MediaType.valueOf(image.getContentType())).contentLength(image.getSize()).body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
-
-
     }
-
-
     @GetMapping("/post/images/{id}")
     private ResponseEntity<?> getPostImage(@PathVariable Integer id) {
-        //TODO Add exception handler here
+
         PostImage image =  postImageRepo.findById(id).orElse(null);
 
         return ResponseEntity.ok().header("postFileName", image.getOriginalFileName()).contentType(MediaType.valueOf(image.getContentType())).contentLength(image.getSize()).body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));

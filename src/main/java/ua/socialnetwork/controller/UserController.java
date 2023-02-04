@@ -26,10 +26,8 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class UserController {
-
-
-    UserService userService;
-    PostService postService;
+    private UserService userService;
+    private PostService postService;
 
     @GetMapping("/create")
      public String create(Model model){
@@ -41,11 +39,10 @@ public class UserController {
 
     @PostMapping("/create")
     public String create(@Validated  @ModelAttribute("user") User user, BindingResult result, Model model){
-        //ToDo add actions with BindingResult later
         if(result.hasErrors()){
             return "create-user";
-
         }
+
         try{
             userService.create(user);
 
@@ -74,7 +71,6 @@ public class UserController {
         if(result.hasErrors()){
             log.warn("Binding result had an error in User Controller update with user: " +user.getUsername());
             return "update-user";
-
         }
 
         userService.update(user, userImage);
@@ -94,8 +90,8 @@ public class UserController {
     }
 
     @PostMapping("/create/continue/{user_id}")
-    public String createSecondaryInfo(@PathVariable("user_id") Integer id,
-                                      @Validated User user, @RequestParam(value = "userImage", required = false)MultipartFile userImage,
+    public String createSecondaryInfo(@PathVariable("user_id") Integer id, @Validated User user,
+                                      @RequestParam(value = "userImage", required = false)MultipartFile userImage,
                                       @RequestParam(value = "imageBackground", required = false)MultipartFile imageBackground,
                                       BindingResult result){
 
@@ -129,17 +125,12 @@ public class UserController {
         return "Searchbar";
     }
 
-
-    /// toDo give some errors
-
-
     @GetMapping("/{username}")
     public String getUser(@PathVariable("username") String username, Model model){
         User user = userService.readByUsername(username);
         List<Post> posts = postService.getPostsByUser_Username(username);
 
         boolean ifImageIsPresent = false;
-
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser u = (SecurityUser) authentication.getPrincipal();
@@ -148,13 +139,11 @@ public class UserController {
             ifImageIsPresent = true;
         }
 
-
         model.addAttribute("imageIsPresent", ifImageIsPresent);
         model.addAttribute("posts", posts);
 
         model.addAttribute("user", user);
         model.addAttribute("image", user.getImages());
-
 
         model.addAttribute("size", user.getImages().size());
         return "profile-page";

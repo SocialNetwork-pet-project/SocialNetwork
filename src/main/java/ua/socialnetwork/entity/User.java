@@ -1,22 +1,19 @@
 package ua.socialnetwork.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import ua.socialnetwork.entity.enums.Gender;
 import ua.socialnetwork.entity.enums.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
+@JsonSerialize(using = ua.test.testtask.UserSerializer.class)
 @Data
 @NoArgsConstructor
 @Entity
@@ -76,25 +73,23 @@ public class User {
     @Column(name = "editionDate")
     private LocalDateTime editionDate;
 
-    //here we 1 user has multiple posts, so @OneToMany
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-
-
+    @OneToMany(mappedBy = "user")
+    private List<Friend> friends;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
     private List<UserImage> images = new ArrayList<>();
 
-
-
-    public void addImageToUser(UserImage image) {
+    public void setProfileImageToUser(UserImage image) {
         image.setUser(this);
         images.add(image);
     }
 
-    public void setImageToUser(UserImage image){
+    //Needed to set user`s BACKGROUND image (which can not be changed)
+    public void setBackgroundImageToUser(UserImage image){
         image.setUser(this);
         if(this.getImages().size() >= 1){
             images.add(0, image);

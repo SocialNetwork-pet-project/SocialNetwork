@@ -11,6 +11,7 @@ import ua.socialnetwork.entity.Post;
 import ua.socialnetwork.entity.PostImage;
 import ua.socialnetwork.entity.User;
 import ua.socialnetwork.entity.UserImage;
+import ua.socialnetwork.entity.enums.PostAction;
 import ua.socialnetwork.repo.PostRepo;
 import ua.socialnetwork.service.PostService;
 
@@ -28,7 +29,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post create(Post post) {
         //TODO make validations and exc handler
-        log.info("A post " + post.toString() + " was created in PostServiceImpl");
+//        log.info("A post " + post.toString() + " was created in PostServiceImpl");
 
         post.setCreationDate(LocalDateTime.now());
         return postRepo.save(post);
@@ -111,5 +112,37 @@ public class PostServiceImpl implements PostService {
         image.setSize(postImage.getSize());
         image.setBytes(postImage.getBytes());
         return image;
+    }
+    public void makeReaction(Post post, PostAction action){
+        int likeCounter = post.getLikeCounter();
+        int dislikeCounter = post.getDislikeCounter();
+
+        switch (action) {
+            case LIKE -> {
+                post.setLiked(true);
+                likeCounter++;
+                post.setLikeCounter(likeCounter);
+                if (dislikeCounter != 0) {
+                    dislikeCounter--;
+
+                }
+                post.setDislikeCounter(dislikeCounter);
+                post.setDisliked(false);
+                log.info("Post with id: " + post.getId() + " is liked");
+            }
+            case DISLIKE -> {
+                post.setDisliked(true);
+                dislikeCounter++;
+                post.setDislikeCounter(dislikeCounter);
+                if (likeCounter != 0) {
+                    likeCounter--;
+
+                }
+                post.setLikeCounter(likeCounter);
+                post.setLiked(false);
+                log.info("Post with id: " + post.getId() + " is disliked");
+            }
+        }
+
     }
 }

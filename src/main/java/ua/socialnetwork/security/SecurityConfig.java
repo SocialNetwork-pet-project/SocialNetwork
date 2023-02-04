@@ -22,6 +22,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/users/create").permitAll()
                 .requestMatchers("/feed").permitAll()
                 .requestMatchers("/users/create/continue/**").permitAll()
@@ -36,8 +37,6 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/feed", true)
                 .and()
 
-
-                //we dont have .deleteCookies() because logout function provides it automaticly
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .invalidateHttpSession(true)
@@ -45,20 +44,13 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login");
 
 
-
         return http.build();
     }
 
-
-    //ToDo change later to BCyrpt
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
-
-
-
-
 
 
 
