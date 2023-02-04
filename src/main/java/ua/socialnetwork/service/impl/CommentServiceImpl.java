@@ -7,6 +7,7 @@ import ua.socialnetwork.entity.Comment;
 import ua.socialnetwork.repo.CommentRepository;
 import ua.socialnetwork.service.CommentService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,7 +24,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(Long id) {}
+    public void delete(Long id) {
+    }
 
     @Override
     public Comment likeComment(Comment comment) {

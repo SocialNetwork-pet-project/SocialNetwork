@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.socialnetwork.entity.Comment;
 import ua.socialnetwork.repo.CommentRepository;
+import ua.socialnetwork.service.CommentService;
 import ua.socialnetwork.service.PostService;
 import ua.socialnetwork.service.impl.CommentServiceImpl;
 import ua.socialnetwork.service.impl.UserServiceImpl;
